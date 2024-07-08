@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest",
+    "test:husky":"vitest --detectOpenHandles",
     "coverage": "vitest run --coverage",
     "lint": "next lint",
     "format": "prettier --write",
@@ -46,7 +47,8 @@
   },
   "lint-staged": {
     "*.{css,ts,tsx}": [
-      "npm run format"
+      "npm run format",
+      "npm run test:husky"
     ]
   }
 }

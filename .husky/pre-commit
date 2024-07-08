@@ -1,0 +1,5 @@
+ echo "Current directory: $(pwd)"
+ echo "Running tests..."
+ 
+ npm run lint
+ npx lint-staged

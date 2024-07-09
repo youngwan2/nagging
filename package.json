@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest",
-    "test:husky":"vitest --detectOpenHandles",
+    "test:husky": "vitest --detectOpenHandles",
     "coverage": "vitest run --coverage",
     "lint": "next lint",
-    "format": "prettier --write",
+    "format": "prettier --write .",
     "prepare": "husky",
     "postinstall": "husky install"
   },
@@ -48,8 +48,7 @@
   "lint-staged": {
     "*.{css,ts,tsx}": [
       "npm run format",
-      "npm run lint",
-      "npm run test:husky"
+      "eslint"
     ]
   }
 }

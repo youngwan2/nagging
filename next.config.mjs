@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
-import withPWAInit from '@ducanh2912/next-pwa'
+import withPWAInit from '@ducanh2912/next-pwa';
 
 const withPWA = withPWAInit({
-  dest:"public"
-})
+  dest: 'public',
+});
 
 const nextConfig = {
   reactStrictMode: true,
@@ -26,7 +26,8 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: 'https://ssl.gstatic.com/accessibility/javascript/ext/loader.js?1709880302058', // t
+            value:
+              'https://ssl.gstatic.com/accessibility/javascript/ext/loader.js?1709880302058', // t
           },
           {
             key: 'Access-Control-Allow-Methods',
@@ -38,8 +39,8 @@ const nextConfig = {
           },
         ],
       },
-    ]
+    ];
   },
-}
+};
 
-export default withPWA(nextConfig)
+export default withPWA(nextConfig);

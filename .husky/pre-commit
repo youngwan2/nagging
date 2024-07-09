@@ -1,3 +1,6 @@
- echo "Current directory: $(pwd)"
-  
- npx lint-staged
+# .husky/pre-commit
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Current directory: $(pwd)"
+npx lint-staged

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DarkMode from './DarkMode';
-import Notification from './Notification';
-import MenuIcon from './MenuIcon';
+import DarkMode from '../../DarkMode';
+import NotificationIcon from '../icon/NotificationIcon';
+import MenuIcon from '../icon/MenuIcon';
+import { SignOutIcon } from '../../Auth/SignOutIcon';
 
 export default function Header() {
   return (
@@ -20,9 +21,11 @@ export default function Header() {
         </Link>
         <DarkMode />
       </div>
-      <div className="flex items-center">
+
+      <div className="flex items-center justify-center ">
         <MenuIcon />
-        <Notification />
+        <NotificationIcon />
+        <SignOutIcon />
       </div>
     </header>
   );

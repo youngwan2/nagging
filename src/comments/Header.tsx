@@ -13,7 +13,7 @@ export default function Header() {
             className="rounded-full"
             width={24}
             height={24}
-            src="icons/android-launchericon-48-48.png"
+            src="/icons/android-launchericon-48-48.png"
             alt="사이트 로고"
           />
           <h1 className="dark:text-[white] px-[5px]">잔소리</h1>

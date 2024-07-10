@@ -7,13 +7,15 @@ export default function DarkMode() {
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     if (
-      localStorage.theme === 'dark' ||
+      localStorage.theme !== 'dark' ||
       (!('theme' in localStorage) &&
         window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       setIsDark(true);
+      document.documentElement.classList.add('dark');
     } else {
       setIsDark(false);
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 

@@ -1,13 +1,33 @@
-// reference: https://authjs.dev/getting-started/installation
-// reference: https://authjs.dev/getting-started/authentication/oauth
-// reference: https://authjs.dev/getting-started/session-management/protecting
+// install: https://authjs.dev/getting-started/installation
+// oauth: https://authjs.dev/getting-started/authentication/oauth
+// session-management: https://authjs.dev/getting-started/session-management/protecting
+// db adapter: https://authjs.dev/getting-started/adapters/prisma
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
 import NextAuth from 'next-auth';
+import Nodemailer from 'next-auth/providers/nodemailer';
 import Google from 'next-auth/providers/google';
 
+const prisma = new PrismaClient();
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Google],
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    Google,
+    Nodemailer({
+      server: {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+      },
+      from: process.env.SMTP_USER,
+    }),
+  ],
   pages: {
-    signIn: '/auth/signin',
+    // signIn: '/auth/signin',
     signOut: '/auth/signout',
   },
   callbacks: {

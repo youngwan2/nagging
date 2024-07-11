@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import DarkMode from './DarkMode';
-import Notification from './Notification';
-import MenuIcon from './MenuIcon';
+import DarkMode from '../../DarkMode';
+import NotificationIcon from '../icon/NotificationIcon';
+import MenuIcon from '../icon/MenuIcon';
+import { SignOutIcon } from '../../Auth/SignOutIcon';
 
 export default function Header() {
   return (
@@ -13,16 +14,18 @@ export default function Header() {
             className="rounded-full"
             width={24}
             height={24}
-            src="icons/android-launchericon-48-48.png"
+            src="/icons/android-launchericon-48-48.png"
             alt="사이트 로고"
           />
           <h1 className="dark:text-[white] px-[5px]">잔소리</h1>
         </Link>
         <DarkMode />
       </div>
-      <div className="flex items-center">
+
+      <div className="flex items-center justify-center ">
         <MenuIcon />
-        <Notification />
+        <NotificationIcon />
+        <SignOutIcon />
       </div>
     </header>
   );

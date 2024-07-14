@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@src/comments/ui/layout/Header';
 import Footer from '@src/comments/ui/layout/Footer';
 import Navigation from '@src/comments/Navigation';
+import { ToastContainer } from 'react-toastify';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -62,8 +63,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <div className="flex w-full">
+          <ToastContainer />
           <Navigation />
-          <main className="flex min-h-screen  w-full flex-col items-center justify-between p-24 dark:bg-black transition-colors">
+          <main className="justify-start  flex min-h-screen  w-full flex-col items-center  p-24 dark:bg-black transition-colors">
             {children}
           </main>
         </div>

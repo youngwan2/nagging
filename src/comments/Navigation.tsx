@@ -7,12 +7,19 @@ import useResize from '@src/hooks/useResize';
 import { IoHomeOutline } from 'react-icons/io5';
 import { CiSettings } from 'react-icons/ci';
 import { GoGraph } from 'react-icons/go';
+import { RiFileListFill } from 'react-icons/ri';
 
 export default function Navigation() {
   const { isOpen } = useResize();
 
   const navItems = [
     { href: '/dashboard', title: '홈 이동', icon: IoHomeOutline, label: '홈' },
+    {
+      href: '/dashboard/info',
+      title: '정보글',
+      icon: RiFileListFill,
+      label: '정보',
+    },
     {
       href: '/dashboard/notification-setting',
       title: '알림 설정',

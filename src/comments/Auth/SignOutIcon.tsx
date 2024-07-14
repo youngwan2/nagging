@@ -10,7 +10,6 @@ export async function SignOutIcon() {
   };
 
   const { email } = session.user as User;
-  console.log(email);
   if (!email)
     return (
       <form

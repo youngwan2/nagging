@@ -3,7 +3,8 @@ import Image from 'next/image';
 import DarkMode from '../../DarkMode';
 import NotificationIcon from '../icon/NotificationIcon';
 import MenuIcon from '../icon/MenuIcon';
-import { SignOutIcon } from '../../Auth/SignOutIcon';
+import { SignOutIcon } from '../../auth/SignOutIcon';
+import { AdsenseButton } from '@src/comments/ui/button/AdsenseButton';
 
 export default function Header() {
   return (
@@ -26,6 +27,7 @@ export default function Header() {
         <MenuIcon />
         <NotificationIcon />
         <SignOutIcon />
+        <AdsenseButton />
       </div>
     </header>
   );

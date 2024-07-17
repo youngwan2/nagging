@@ -18,7 +18,7 @@ export default function useResize() {
   useEffect(() => {
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
-  }, [isOpen]);
+  }, [isOpen, resize]);
 
   return { isOpen };
 }

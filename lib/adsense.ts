@@ -61,21 +61,19 @@ export async function getPayments(
   }
 }
 
+export type CustomDate = {
+  day?: number;
+  month?: number;
+  year: number;
+};
+
 export interface ReportRequest {
   dateRange: 'CUSTOM';
   dimensions: string[];
-  endDate: {
-    day: number;
-    month: number;
-    year: number;
-  };
+  endDate: CustomDate;
   metrics: string[];
   reportingTimeZone: 'ACCOUNT_TIME_ZONE';
-  startDate: {
-    day: number;
-    month: number;
-    year: number;
-  };
+  startDate: CustomDate;
 }
 
 /**
@@ -106,7 +104,9 @@ export async function generateReport(
       'startDate.year': dateRange.startDate.year,
     });
 
-    const result = (await response).data.totalMatchedRows;
+    const { rows, totals, totalMatchedRows } = (await response).data;
+    const result = { rows, totals, totalMatchedRows };
+
     return result;
   } catch (error) {
     console.error('보고서 생성 실패:', error);

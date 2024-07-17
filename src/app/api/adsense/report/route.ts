@@ -1,53 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
-import {
-  ReportRequest,
-  generateReport,
-  getAccountInfo,
-} from '@src/../lib/adsense';
+import { generateReport, getAccountInfo } from '@src/../lib/adsense';
 
-export async function GET(req: NextRequest) {
-  const startYear = req.headers.get('start-year')!;
-  const startMonth = req.headers.get('start-month')!;
-  const startDay = req.headers.get('start-day')!;
-  const endYeaer = req.headers.get('end-year')!;
-  const endMonth = req.headers.get('end-month')!;
-  const endDay = req.headers.get('end-day')!;
-
-  // 보고서 조회 필터
-  const dateRange: ReportRequest = {
-    dateRange: 'CUSTOM',
-    dimensions: ['MONTH'],
-    endDate: {
-      day: parseInt(endDay),
-      month: parseInt(endMonth),
-      year: parseInt(endYeaer),
-    },
-    metrics: ['ESTIMATED_EARNINGS'],
-    reportingTimeZone: 'ACCOUNT_TIME_ZONE',
-    startDate: {
-      day: parseInt(startDay),
-      month: parseInt(startMonth),
-      year: parseInt(startYear),
-    },
-  };
-
+export async function POST(req: NextRequest) {
+  const dateRange = await req.json();
   const accessToken = req.headers.get('Authorization')?.split(' ')[1];
 
   if (!accessToken)
     return NextResponse.json(
-      { error: 'Access Token 없음' },
-      { status: 401, statusText: 'Access Token 없음' },
+      { error: '접근 권한이 없음' },
+      { status: 401, statusText: '접근권한이 없음' },
     );
 
   try {
     const auth = new google.auth.OAuth2();
     auth.setCredentials({ access_token: accessToken });
+
     const accountName = await getAccountInfo(auth);
+    const reports = await generateReport(accountName, auth, dateRange);
 
-    const reports = generateReport(accountName, auth, dateRange);
-
-    console.log('보고서:', reports);
+    return NextResponse.json(reports, { status: 201 });
   } catch (error) {
     console.error('/api/adsense', error);
     return NextResponse.json(

@@ -1,9 +1,11 @@
-import { Method, adsenseService } from '@src/services/adsense.service';
 import Card from '../card/Card';
 import Container from '../container/Container';
 import Heading from '../heading/Heading';
 import Section from './Section';
 import { auth } from '@src/auth';
+import { Method } from '@src/configs/fetch.config';
+
+import { commonService } from '@src/services/common.service';
 
 interface Payment {
   payments: {
@@ -16,17 +18,15 @@ interface Payment {
     };
   }[];
 }
+
+// reference : SSR Query | https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr
 export default async function ProfitSection() {
   const session = await auth();
-
   const accessToken = session?.access_token || '';
   const userId = session?.userId;
-
   const url = '/api/adsense/payments';
-  const body = {
-    userId: userId,
-  };
-  const { payments }: Payment = (await adsenseService({
+  const body = { userId: userId };
+  const { payments }: Payment = (await commonService({
     reqUrl: url,
     method: Method.POST,
     token: accessToken,
@@ -61,6 +61,7 @@ export default async function ProfitSection() {
           Revenue Statistics
         </span>
       </Heading>
+
       <Container
         elName={'div'}
         className="grid sm:grid-cols-1  2xl:grid-cols-2"

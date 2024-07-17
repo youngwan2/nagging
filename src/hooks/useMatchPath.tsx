@@ -17,7 +17,7 @@ export default function useMatchPath(targetPathName: string) {
     } else {
       setIsMatch(false);
     }
-  }, []);
+  }, [pathname, targetPathName]);
 
   return { isMatch };
 }

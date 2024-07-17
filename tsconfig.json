@@ -20,13 +20,13 @@
       }
     ],
     "paths": {
-      "@lib":["./lib"],
+      "@lib": ["./lib"],
       "@src/*": ["./src/*"],
       "@app": ["./src/app/*"],
       "@api": ["./src/app/api/*"],
       "@commponents": ["./src/commponents/*"]
     },
-    "types": ["vitest/globals", "vitest/jsdom","next-auth/jwt"]
+    "types": ["vitest/globals", "vitest/jsdom", "next-auth/jwt"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

@@ -35,11 +35,11 @@ export default async function ProfitSection() {
 
   if (payments.length < 1)
     return (
-      <Section className="mb-[5rem]">
+      <Section className="mb-[5rem] mt-[2.5rem]">
         <Heading level="2" className="pb-[0.75em]">
-          수익 통계
+          지급액 통계
           <span className="text-[0.55em] pl-4 text-gray-500">
-            Revenue Statistics
+            Payment Statistics
           </span>
           <p className="text-[1rem] font-light">
             접근 권한 혹은 네트워크 문제로 조회에 실패하였습니다.
@@ -54,11 +54,11 @@ export default async function ProfitSection() {
     day: payments[1].date?.day,
   };
   return (
-    <Section className="mb-[5rem]">
+    <Section className="mb-[5rem] mt-[2.5rem]">
       <Heading level="2" className="pb-[0.75em]">
-        수익 통계
+        지급액 통계
         <span className="text-[0.55em] pl-4 text-gray-500">
-          Revenue Statistics
+          Payment Statistics
         </span>
       </Heading>
 

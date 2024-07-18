@@ -105,6 +105,7 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
+
 // npm exec prisma migrate dev 스키마 변경사항 때 마다 실행(스키마 적용)
 
 // npx prisma generate 클라이언트 인스턴스로 추가 혹은 변경된 스키마 접근이 안 되는 경우 실행

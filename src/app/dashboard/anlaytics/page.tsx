@@ -1,6 +1,9 @@
 import { auth } from '@src/auth';
 import AnlayticsContainer from '@src/comments/ui/container/AnlayticsContainer';
 import Heading from '@src/comments/ui/heading/Heading';
+import ProfitSection from '@src/comments/ui/section/ProfitSection';
+import CardSkeleton from '@src/comments/ui/skeleton/CardSkeleton';
+import { Suspense } from 'react';
 export default async function page() {
   const session = await auth();
 
@@ -12,5 +15,12 @@ export default async function page() {
     );
 
   const token = session.access_token;
-  return <AnlayticsContainer token={token} />;
+  return (
+    <>
+      <AnlayticsContainer token={token} />
+      <Suspense fallback={<CardSkeleton orientation="horizontal" />}>
+        <ProfitSection />
+      </Suspense>
+    </>
+  );
 }

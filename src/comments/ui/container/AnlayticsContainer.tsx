@@ -21,6 +21,7 @@ import {
 
 import { PiFileCsvThin } from 'react-icons/pi';
 import Button from '../button/Button';
+import GraphSkeleton from '../skeleton/GraphSkeleton';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {
@@ -112,16 +113,13 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
     onUpdateYear(startYear, endYear);
   }
 
-  if (isError)
-    return (
-      <Heading level="2" className="text-[1em] font-normal text-center">
-        데이터 조회중 문제가 발생하였습니다. 나중에 다시시도 해주세요.
-      </Heading>
-    );
   return (
     <Container elName={'div'} className="w-full relative">
-      <Heading level="2" className="text-center">
-        시계열 수익 통계
+      <Heading level="2" className="pb-[0.75em]">
+        예상 수익 통계
+        <span className="text-[0.55em] pl-4 text-gray-500">
+          Expected Return Statistics
+        </span>
       </Heading>
       <Text elementName="p" className="mt-8 text-center">
         1달 간격으로 연간 수익을 확인할 수 있습니다.
@@ -138,11 +136,11 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
       </Button>
 
       {/* 총 수익 */}
-      {flatRows?.length > 1 ? (
-        <Text elementName="p" className="mt-[0.5rem] text-center">
-          조회 기간 동안 ${totalProfit?.toFixed(2)} 수익을 달성하셨습니다.
-        </Text>
-      ) : null}
+      <Text elementName="p" className="mt-[0.5rem] text-center min-h-[30px]">
+        {flatRows?.length > 1
+          ? `조회 기간 동안 $${totalProfit?.toFixed(2)} 수익을 달성하셨습니다.`
+          : null}
+      </Text>
 
       {/* 검색범위  */}
       <CalendarContainer onSearch={onSearch} />
@@ -154,7 +152,11 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
       >
         {isPending || isRefetching ? (
           <Heading level="2" className="text-[1em] font-normal text-center">
-            잠시만 기다려주세요. 데이터를 조회중 입니다.
+            {isError ? (
+              '접근 권한 혹은 네트워크 문제로 조회에 실패하였습니다. 나중에 다시시도 해주세요.'
+            ) : (
+              <GraphSkeleton />
+            )}
           </Heading>
         ) : (
           <LineGraph data={flatRows} />

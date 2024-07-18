@@ -1,21 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function useTextSplit(ref: React.RefObject<HTMLSpanElement>) {
-  const textRefs = useRef<React.JSX.Element[]>([]);
+export default function useTextSplit(text: string) {
+  const [splitText, setSplitText] = useState<string[]>([]);
 
   useEffect(() => {
-    const text = ref.current?.textContent;
-
     if (text) {
       const words = text.split(' ');
-      const newText = words.map((word, index) => {
-        return <span key={index}>{word} </span>;
+      const newText = words.map((word) => {
+        return word;
       });
-      textRefs.current = newText;
+      setSplitText(newText);
     }
-  }, [ref]);
+  }, [text]);
 
-  return textRefs;
+  return splitText;
 }

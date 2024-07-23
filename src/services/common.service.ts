@@ -13,8 +13,10 @@ export async function commonService({
   token,
   body,
 }: ServiceRequestProps) {
-  const url = urlConfigs.protocol + urlConfigs.host + reqUrl;
-  const config = requestConfigBranch(method, token, body);
+  const url = reqUrl.startsWith('http')
+    ? reqUrl
+    : urlConfigs.protocol + urlConfigs.host + reqUrl;
+  const config = token ? requestConfigBranch(method, token, body) : { method };
   const response = await fetch(url, config);
   const result = await response.json();
 

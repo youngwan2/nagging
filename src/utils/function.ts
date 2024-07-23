@@ -1,3 +1,4 @@
+import { CurrencyPair } from '@src/comments/ui/container/InfomationContainer';
 import { FlattenedData, Row } from '@src/types/anlaytics.types';
 
 /** 보고서 중첩배열 평탄화 */
@@ -12,7 +13,12 @@ export function flattenRows(rows: Row[]): FlattenedData[] {
 }
 
 export interface ArrayToCsvProps {
-  (array: { date: string; value: number }[]): string;
+  (
+    array: {
+      date: string;
+      value: number;
+    }[],
+  ): string;
 }
 
 /** 배얼을 CSV 포맷으로 변경
@@ -41,3 +47,45 @@ export const download = (blob: Blob, fileName: string) => {
 
   URL.revokeObjectURL(url); // 다운로드 후 삭제
 };
+
+/** >>>>>>> 환율 <<<<<<< */
+
+export function formatDate(date: Date) {
+  // 년, 월, 일 값을 추출
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+  let day = date.getDate().toString().padStart(2, '0');
+
+  // 원하는 형식으로 조합
+  return `${year}-${month}-${day}`;
+}
+
+/** data 를 [string, string] 형태로 변환 후 반환하는 함수 */
+export function selectPair(
+  data: { date: string; usd: { [key: string]: string } },
+  target: string[] = ['krw'],
+) {
+  if (!data) return ['조회불가', '조회불가'];
+  return (
+    Object.entries(data?.usd).filter((unit) => target.includes(unit[0])) || [
+      'krw',
+      0,
+    ]
+  );
+}
+
+/** CurrencyPair 인터페이스의 배열 형태로 변환하는 함수
+ * @description {  pair: string;  rate: number;  date: string;}[] 형태로 변환 후 반환
+ */
+export function mappingPair(
+  initialPair: [string, string][],
+  date: string,
+): CurrencyPair[] {
+  return initialPair.map(([key, value]) => {
+    return {
+      pair: `USD/${key.toUpperCase() ?? '조회불가'}`,
+      rate: Number(value) ?? '조회불가',
+      date: date ?? new Date().toLocaleDateString(),
+    };
+  });
+}

@@ -54,8 +54,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // 로그인 시 받은 액세스 토큰 저장
       session.access_token = googleAccount.access_token! as string;
 
-      // 현재 시간 보다 토큰 만료 날짜가 작다면 새 토큰 발급
-      if (googleAccount.expires_at! * 1000 < Date.now()) {
+      // 토큰 발급 시간이 1시간 지나면 재발급
+      if (
+        Number(new Date(googleAccount.expires_at! * 1000 + 60 * 60 * 1000)) <
+        Date.now()
+      ) {
         try {
           const response = await fetch('https://oauth2.googleapis.com/token', {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

@@ -56,7 +56,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // 토큰 발급 시간이 1시간 지나면 재발급
       if (
-        Number(new Date(googleAccount.expires_at! * 1000 + 60 * 60 * 1000)) <
+        Number(new Date(googleAccount.expires_at! * 1000 + 60 * 60)) <
         Date.now()
       ) {
         try {
@@ -81,8 +81,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               expires_at: Math.floor(
                 Date.now() / 1000 + responseTokens.expires_in,
               ),
-              refresh_token:
-                responseTokens.refresh_token ?? googleAccount.refresh_token,
+              refresh_token: responseTokens.refresh_token,
             },
             where: {
               provider_providerAccountId: {

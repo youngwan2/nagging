@@ -43,7 +43,7 @@ export default function InfomationContainer({}: PropsType) {
   const selectDate = data?.date || '';
   const currencyPairs = mappingPair(initialPair, selectDate);
 
-  const [selectedPair, setSelectedPair] = useState(currencyPairs[25].pair);
+  const [selectedPair, setSelectedPair] = useState(currencyPairs[25]?.pair);
 
   const selectedCurrencyPair: CurrencyPair = currencyPairs.find(
     (pair) => pair.pair === selectedPair,
@@ -90,7 +90,7 @@ export default function InfomationContainer({}: PropsType) {
             <Text elementName={'p'} className="p-4">
               {selectedCurrencyPair
                 ? `1 USD = ${selectedCurrencyPair.rate} ${selectedCurrencyPair.pair}`
-                : '환율 정보를 찾을 수 없습니다.'}
+                : '선택한 환율정보가 표시됩니다.'}
             </Text>
           }
         />

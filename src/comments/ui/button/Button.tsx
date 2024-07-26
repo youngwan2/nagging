@@ -1,3 +1,5 @@
+'use client';
+
 import { MouseEventHandler } from 'react';
 
 interface PropsType {
@@ -17,7 +19,7 @@ export default function Button({
 }: PropsType) {
   return (
     <button
-      className={className + ' '}
+      className={className + ' dark:text-white  text-black '}
       title={title}
       type={type}
       onClick={onClick}

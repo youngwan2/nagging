@@ -74,6 +74,7 @@ export interface ReportRequest {
   metrics: string[];
   reportingTimeZone: 'ACCOUNT_TIME_ZONE';
   startDate: CustomDate;
+  currencyCode: string;
 }
 
 /**

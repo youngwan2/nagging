@@ -1,6 +1,5 @@
 'use client';
 
-import { useReducer } from 'react';
 import useQueryReact from '@src/hooks/useQueryReact';
 
 import LineGraph from '@src/comments/pages/anlaytics/LineGraph';
@@ -10,7 +9,7 @@ import Heading from '@src/comments/ui/heading/Heading';
 import Text from '@src/comments/ui/text/Text';
 import CalendarContainer from '@src/comments/ui/container/CalendarContainer';
 
-import type { CustomDate, ReportRequest } from '../../../../lib/adsense';
+import type { ReportRequest } from '../../../../lib/adsense';
 import { Method } from '@src/configs/fetch.config';
 import {
   arrayToCSV,
@@ -22,11 +21,12 @@ import {
 import { PiFileCsvThin } from 'react-icons/pi';
 import Button from '../button/Button';
 import GraphSkeleton from '../skeleton/GraphSkeleton';
+import { useReports } from '@src/hooks/useReports';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {
   dateRange: 'CUSTOM',
-  dimensions: ['MONTH'],
+  dimensions: ['MONTH'], // DATE, WEEK,
   startDate: {
     day: 1,
     month: 1,
@@ -37,8 +37,9 @@ const dateRange: ReportRequest = {
     month: 12,
     year: 2024,
   },
-  metrics: ['ESTIMATED_EARNINGS'],
+  metrics: ['ESTIMATED_EARNINGS', 'CLICKS', 'COST_PER_CLICK'],
   reportingTimeZone: 'ACCOUNT_TIME_ZONE',
+  currencyCode: 'USD',
 };
 
 const reqUrl = '/api/adsense/report';
@@ -53,17 +54,17 @@ const options = {
   retry: 3,
 };
 export default function AnlayticsContainer({ token }: { token?: string }) {
-  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
-    dateRangeReducer,
-    dateRange,
-  );
+  /** 보고서 상태관리 */
+  const { state, dispatch } = useReports(dateRange);
+
+  /** 보고서 요청 */
   const { data, isPending, isRefetching, isError } = useQueryReact(
     { reqUrl, method: Method.POST, token, body: state, options },
     [state],
   );
 
   const flatRows = flattenRows(data?.rows);
-  const totalProfit = flatRows.reduce((acc, row) => acc + row.value, 0);
+  const totalProfit = flatRows.reduce((acc, row) => acc + row.value, 0); // 전체 추정 수익
 
   /** 시계열 수익 CSV 다운로드 */
   function handleDownLoadCsv(
@@ -164,33 +165,4 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
       </ChartContainer>
     </Container>
   );
-}
-
-type Action =
-  | { type: 'SET_DATE_RANGE'; payload: 'CUSTOM' }
-  | { type: 'SET_DIMENSIONS'; payload: string[] }
-  | { type: 'SET_START_DATE'; payload: CustomDate }
-  | { type: 'SET_END_DATE'; payload: CustomDate }
-  | { type: 'SET_METRICS'; payload: string[] }
-  | { type: 'SET_REPORTING_TIME_ZONE'; payload: 'ACCOUNT_TIME_ZONE' };
-
-interface State extends ReportRequest {}
-
-function dateRangeReducer(state: State, action: Action): State {
-  switch (action.type) {
-    case 'SET_DATE_RANGE':
-      return { ...state, dateRange: 'CUSTOM' };
-    case 'SET_DIMENSIONS':
-      return { ...state, dimensions: action.payload };
-    case 'SET_START_DATE':
-      return { ...state, startDate: action.payload };
-    case 'SET_END_DATE':
-      return { ...state, endDate: action.payload };
-    case 'SET_METRICS':
-      return { ...state, metrics: action.payload };
-    case 'SET_REPORTING_TIME_ZONE':
-      return { ...state, reportingTimeZone: 'ACCOUNT_TIME_ZONE' };
-    default:
-      return state;
-  }
 }

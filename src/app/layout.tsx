@@ -70,7 +70,7 @@ export default function RootLayout({
         <div className="flex w-full">
           <ToastContainer />
           <Navigation />
-          <main className="justify-start  flex min-h-screen  w-full flex-col items-center  p-24 dark:bg-black transition-colors">
+          <main className="justify-start  flex min-h-screen  w-full flex-col items-center  p-24 py-14 dark:bg-black transition-colors">
             <ReactQueryProvider>
               {children}
               <ReactQueryDevtools initialIsOpen={false} />

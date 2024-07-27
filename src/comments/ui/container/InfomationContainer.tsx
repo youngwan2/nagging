@@ -9,7 +9,7 @@ import Text from '../text/Text';
 import GraphSkeleton from '../skeleton/GraphSkeleton';
 
 import { Method } from '@src/configs/fetch.config';
-import { currencies } from '@src/data/currencies';
+import { currencies } from '@src/constants/currencies';
 import { formatDate, mappingPair, selectPair } from '@src/utils/function';
 
 export interface CurrencyPair {

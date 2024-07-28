@@ -32,6 +32,8 @@ model User {
   updatedAt DateTime @updatedAt
 
   NotificationCron NotificationCron[]
+
+  NotificationReports NotificationReports[]
 }
 
 model AdsenseAccount {
@@ -53,6 +55,17 @@ model AdsensePayment {
 model NotificationCron {
   userId      String @id
   cronExpression String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model NotificationReports {
+  reportId  Int @id() @default(autoincrement()) 
+  userId    String 
+  report    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -95,7 +108,7 @@ model Session {
 model VerificationToken {
   identifier String
   token      String
-  expires    DateTime
+  expires    DateTime 
 
   @@id([identifier, token])
 }

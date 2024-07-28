@@ -5,7 +5,7 @@ interface ServiceRequestProps {
   reqUrl: string;
   method: Method;
   token?: string;
-  body: any;
+  body?: any;
 }
 export async function commonService({
   reqUrl,

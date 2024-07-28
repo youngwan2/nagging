@@ -18,7 +18,9 @@ export default async function page() {
       <Heading level="2" className="font-light">
         <SplitText
           text={`잔소리에 오신 것을 환영합니다. ${email?.split('@')[0]}님!`}
-        ></SplitText>
+        >
+          {''}
+        </SplitText>
       </Heading>
       <Text elementName={'p'} className="mt-5">
         잔소리는 이용자님의 애드센스 수익을 한화로 변환하여 원하는 시기에

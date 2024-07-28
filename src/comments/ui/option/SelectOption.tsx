@@ -1,12 +1,12 @@
 interface PropsType {
   text: string;
   value: string;
-  defaultCheck?: boolean;
+  selected?: boolean;
 }
 
-export default function SelectOption({ text, value, defaultCheck }: PropsType) {
+export default function SelectOption({ text, value, selected }: PropsType) {
   return (
-    <option value={value} defaultChecked={defaultCheck}>
+    <option value={value} selected={selected}>
       {text}
     </option>
   );

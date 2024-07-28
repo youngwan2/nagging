@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import NotificationSection from '@src/comments/ui/section/NotificationSection';
+import NotificationSection from '@src/comments/ui/section/HomeNotificationSection';
 import ProfitSection from '@src/comments/ui/section/ProfitSection';
 import CardSkeleton from '@src/comments/ui/skeleton/CardSkeleton';
 import Heading from '@src/comments/ui/heading/Heading';

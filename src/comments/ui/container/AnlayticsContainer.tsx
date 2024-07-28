@@ -42,7 +42,7 @@ const dateRange: ReportRequest = {
   currencyCode: 'USD',
 };
 
-const reqUrl = '/api/adsense/report';
+const reqUrl = '/api/adsense/reports';
 const options = {
   refetchOnMount: false,
   refetchOnWindowFocus: false,
@@ -128,7 +128,7 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
 
       {/* 보고서 다운로드 */}
       <Button
-        className="dark:text-white border rounded-md p-1 hover:bg-[rgba(0,0,0,0.1)] flex flex-col justify-center items-center absolute right-[-4rem] top-[-5rem]"
+        className="dark:text-white border rounded-md p-1 hover:bg-[rgba(0,0,0,0.1)] flex flex-col justify-center items-center absolute right-[-4rem] top-[-3rem]"
         onClick={() => handleDownLoadCsv(flatRows, totalProfit)}
         title="시계열 수익 보고서 CSV 형식으로 다운로드 요청하는 버튼"
       >

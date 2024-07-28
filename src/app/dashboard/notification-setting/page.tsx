@@ -1,19 +1,38 @@
 // interface Props { }
 
 import { auth } from '@src/auth';
-import NotificationSelectContainer from '@src/comments/pages/notification-setting/NotificationSelectContainer';
+import NotificationReportOptionForm from '@src/comments/pages/notification-setting/NotificationReportOptionForm';
 import Container from '@src/comments/ui/container/Container';
 import Flex from '@src/comments/ui/container/Container';
 import NotificationForm from '@src/comments/ui/form/NotificationForm';
 import Heading from '@src/comments/ui/heading/Heading';
+import NotificationList from '@src/comments/ui/list/NotificationList';
 import Section from '@src/comments/ui/section/Section';
 import Text from '@src/comments/ui/text/Text';
+import { Method } from '@src/configs/fetch.config';
+import { urlConfigs } from '@src/configs/url.config';
+import { commonService } from '@src/services/common.service';
 
+export interface UserReportOptionList {
+  reportId: number;
+  userId: string;
+  report: string;
+  createdAt: Date;
+  updateddAt: Date;
+}
+
+const options = {
+  reqUrl: urlConfigs.protocol + urlConfigs.host + '/api/adsense/reports/option',
+  method: Method.GET,
+};
 export default async function page() {
   const session = await auth();
 
   const token = session?.access_token;
   const userId = session?.userId;
+
+  const userReportOptionList: UserReportOptionList[] =
+    await commonService(options);
 
   // if(!token) return <Heading className="text-[1rem]" level="2">로그인 후 이용 가능합니다.</Heading>
   return (
@@ -28,12 +47,12 @@ export default async function page() {
             보고서 설정
             <Text
               elementName={'span'}
-              className="text-[0.55em] pl-4 text-gray-500"
+              className="text-[0.55em] pl-4 text-gray-500 opacity-55"
             >
               Report Setting
             </Text>
           </Heading>
-          <NotificationSelectContainer className="" />
+          <NotificationReportOptionForm userId={userId} />
         </Section>
 
         {/* 알림 설정 */}
@@ -42,7 +61,7 @@ export default async function page() {
             알림 설정
             <Text
               elementName={'span'}
-              className="text-[0.55em] pl-4 text-gray-500"
+              className="text-[0.55em] pl-4 text-gray-500 opacity-55"
             >
               Notification Setting
             </Text>
@@ -59,20 +78,21 @@ export default async function page() {
         </Section>
       </Flex>
 
-      {/* 알림 내역 */}
+      {/* 생성한 보고서 옵션 내역 */}
       <Section>
         <Heading
           level="2"
           className="xl:mt-0 xl:ml-5 mt-[4rem] ml-0 pb-[0.75em]"
         >
-          알림 내역
+          보고서 옵션 목록
           <Text
             elementName={'span'}
-            className="text-[0.55em] pl-4 text-gray-500"
+            className="text-[0.55em] pl-4 text-gray-500 opacity-55"
           >
-            Notification List
+            Report Option List
           </Text>
         </Heading>
+        <NotificationList items={userReportOptionList} />
       </Section>
     </Container>
   );

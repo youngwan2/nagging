@@ -1,6 +1,6 @@
-import { HTMLAttributes } from 'react';
+import { FormHTMLAttributes } from 'react';
 
-interface PropsType extends HTMLAttributes<HTMLFormElement> {
+interface PropsType extends FormHTMLAttributes<HTMLFormElement> {
   elName?: React.ElementType;
   children: React.ReactNode;
 }

@@ -44,7 +44,7 @@ export default function NotificationReportOptionForm({ userId }: PropsType) {
         보고서 이름
         <Input
           type="text"
-          className="p-2 border rounded-md bg-transparent"
+          className="p-2 border rounded-md bg-transparent "
           placeholder="보고서명(report name)"
           name="report-name"
         />
@@ -126,6 +126,7 @@ export default function NotificationReportOptionForm({ userId }: PropsType) {
               key={metric.text}
               text={metric.text}
               value={metric.value}
+              selected={metric.text === '추정 수익금'}
             />
           ))}
         </Select>

@@ -6,12 +6,14 @@ import Container from '@src/comments/ui/container/Container';
 import Flex from '@src/comments/ui/container/Container';
 import NotificationForm from '@src/comments/ui/form/NotificationForm';
 import Heading from '@src/comments/ui/heading/Heading';
-import NotificationList from '@src/comments/ui/list/NotificationList';
+import NotificationReportOptionList from '@src/comments/ui/list/NotificationReportOptionList';
 import Section from '@src/comments/ui/section/Section';
+import GraphSkeleton from '@src/comments/ui/skeleton/GraphSkeleton';
 import Text from '@src/comments/ui/text/Text';
 import { Method } from '@src/configs/fetch.config';
 import { urlConfigs } from '@src/configs/url.config';
 import { commonService } from '@src/services/common.service';
+import { Suspense } from 'react';
 
 export interface UserReportOptionList {
   reportId: number;
@@ -49,21 +51,21 @@ export default async function page() {
               elementName={'span'}
               className="text-[0.55em] pl-4 text-gray-500 opacity-55"
             >
-              Report Setting
+              Report Settings
             </Text>
           </Heading>
           <NotificationReportOptionForm userId={userId} />
         </Section>
 
-        {/* 알림 설정 */}
+        {/* 알림 예약*/}
         <Section className="mt-16">
           <Heading level="2" className="pb-[0.75em]">
-            알림 설정
+            알림 예약 목록
             <Text
               elementName={'span'}
               className="text-[0.55em] pl-4 text-gray-500 opacity-55"
             >
-              Notification Setting
+              Notification Schedule List
             </Text>
           </Heading>
           <Text elementName={'p'}>
@@ -92,7 +94,14 @@ export default async function page() {
             Report Option List
           </Text>
         </Heading>
-        <NotificationList items={userReportOptionList} />
+        <Text elementName={'p'} className="opacity-90 text-black text-[0.95em]">
+          - 안정적인 서비스 운영을 위해 현재는 보고서 1개에 대해서만 알림설정이
+          가능합니다. <br />- 보고서를 삭제해도 알림은 제거되지 않습니다. 삭제
+          후 알림을 취소하려면 알림 목록을 이용해주세요.
+        </Text>
+        <Suspense fallback={<GraphSkeleton />}>
+          <NotificationReportOptionList items={userReportOptionList} />
+        </Suspense>
       </Section>
     </Container>
   );

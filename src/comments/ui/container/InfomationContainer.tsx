@@ -11,6 +11,7 @@ import GraphSkeleton from '../skeleton/GraphSkeleton';
 import { Method } from '@src/configs/fetch.config';
 import { currencies } from '@src/constants/currencies';
 import { formatDate, mappingPair, selectPair } from '@src/utils/function';
+import Button from '../button/Button';
 
 export interface CurrencyPair {
   pair: string;
@@ -30,14 +31,17 @@ interface PropsType {
 }
 export default function InfomationContainer({}: PropsType) {
   const today = formatDate(new Date());
-  const [date] = useState<string>(today);
+  const [date, setDate] = useState<string>(today);
 
   const reqUrl = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date.length > 1 ? date : 'latest'}/v1/currencies/usd.json`;
-  const { data, isError, isPending } = useQueryReact({
-    reqUrl,
-    method: Method.GET,
-    options: queryOptions,
-  });
+  const { data, isError, isPending } = useQueryReact(
+    {
+      reqUrl,
+      method: Method.GET,
+      options: queryOptions,
+    },
+    [date],
+  );
 
   const initialPair = selectPair(data, currencyCodes) as [string, string][];
   const selectDate = data?.date || '';
@@ -55,12 +59,19 @@ export default function InfomationContainer({}: PropsType) {
 
   if (isError)
     return (
-      <Heading level="2">
-        현재 환율 정보를 찾을 수 없습니다. {today} 를 기준으로 3개월 전/후로
-        조회가 가능합니다.{' '}
+      <Heading level="2" className="text-[0.95rem] font-light">
+        <Text elementName={'p'}>
+          {today} 기준 환율 정보를 찾을 수 없습니다.{' '}
+        </Text>
+        <Button
+          className="dark:hover:bg-slate-800 hover:bg-slate-100 border rounded-md px-1 mx-1"
+          onClick={() => setDate('latest')}
+        >
+          조회 가능 시간대로
+        </Button>
       </Heading>
     );
-  if (!data)
+  if (!data || isPending)
     return (
       <Heading level="2" className="text-[0.95rem] font-light">
         데이터를 조회중입니다.

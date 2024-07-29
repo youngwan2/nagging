@@ -17,6 +17,7 @@ export async function commonService({
     ? reqUrl
     : urlConfigs.protocol + urlConfigs.host + reqUrl;
   const config = token ? requestConfigBranch(method, token, body) : { method };
+
   const response = await fetch(url, config);
   const result = await response.json();
 

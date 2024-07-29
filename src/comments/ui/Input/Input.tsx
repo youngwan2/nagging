@@ -15,7 +15,7 @@ export default function Input({
 }: PropsType) {
   return (
     <input
-      className={className}
+      className={className + ' dark:border-[rgba(255,255,255,0.1)]'}
       type={type}
       placeholder={placeholder}
       name={name}

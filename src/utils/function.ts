@@ -49,7 +49,6 @@ export const download = (blob: Blob, fileName: string) => {
 };
 
 /** >>>>>>> 환율 <<<<<<< */
-
 export function formatDate(date: Date) {
   // 년, 월, 일 값을 추출
   let year = date.getFullYear();

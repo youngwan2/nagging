@@ -8,7 +8,8 @@ export default function Select({ className, children, ...props }: PropsType) {
     <select
       {...props}
       className={
-        className + ' dark:text-white dark:bg-black border flex flex-col w-full'
+        className +
+        ' dark:text-white dark:bg-black dark:border-[rgba(255,255,255,0.1)] border flex flex-col w-full'
       }
     >
       {children}

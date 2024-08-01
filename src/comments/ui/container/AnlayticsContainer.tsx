@@ -2,7 +2,7 @@
 
 import useQueryReact from '@src/hooks/useQueryReact';
 
-import LineGraph from '@src/comments/pages/anlaytics/LineGraph';
+import LineGraph from '@src/comments/ui/graph/LineGraph';
 import Container from '@src/comments/ui/container/Container';
 import ChartContainer from '@src/comments/ui/container/Container';
 import Heading from '@src/comments/ui/heading/Heading';

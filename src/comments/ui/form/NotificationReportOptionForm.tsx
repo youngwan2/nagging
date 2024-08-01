@@ -5,7 +5,6 @@ import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Flex from '@src/comments/ui/container/Container';
 import Form from '@src/comments/ui/form/Form';
-import Heading from '@src/comments/ui/heading/Heading';
 import Label from '@src/comments/ui/label/Label';
 import SelectOption from '@src/comments/ui/option/SelectOption';
 import NotificationSelect from '@src/comments/ui/select/NotificationSelect';
@@ -20,17 +19,9 @@ interface PropsType {
   userId?: string;
 }
 
-export default function NotificationReportOptionForm({ userId }: PropsType) {
-  if (!userId)
-    return (
-      <Heading level="2" className="text-[1em] font-medium">
-        <Text elementName={'p'}>로그인 후 이용이 가능합니다.</Text>
-        <Text elementName={'span'} className="text-gray-800 opacity-55">
-          Available after logging in.
-        </Text>
-      </Heading>
-    );
-
+export default function NotificationReportOptionForm({
+  userId = '',
+}: PropsType) {
   // formData 외에 다중 인자를 받기 위해 설명
   // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
   const createReportOptionWithUserId = createReportOption.bind(null, userId);

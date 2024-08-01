@@ -115,6 +115,56 @@ export async function generateReport(
   }
 }
 
+export interface ReportOptionType {
+  reportName: string;
+  dateRange: 'CUSTOM';
+  dimensions: ['WEEK'] | ['MONTH'] | ['YEAR'];
+  startDate: { day: number; month: number; year: number };
+  endDate: { day: number; month: number; year: number };
+  metrics:
+    | ['CLICKS']
+    | ['COST_PER_CLICK']
+    | ['ESTIMATED_EARNINGS']
+    | ['CLICKS', 'COST_PER_CLICK']
+    | ['CLICKS', 'ESTIMATED_EARNINGS']
+    | ['COST_PER_CLICK', 'ESTIMATED_EARNINGS']
+    | ['CLICKS', 'COST_PER_CLICK', 'ESTIMATED_EARNINGS'];
+  reportingTimeZone: 'ACCOUNT_TIME_ZONE';
+  currencyCode: string;
+}
+
+/**
+ * 보고서 CSV 생성
+ */
+export async function generateCsvReport(
+  accountName: string | null | undefined,
+  auth: OAuth2Client,
+  dateRange: ReportOptionType,
+) {
+  try {
+    const adsense = google.adsense({ version: 'v2', auth });
+    const response = adsense.accounts.reports.generateCsv({
+      account: accountName?.toString(),
+      dateRange: 'CUSTOM',
+      dimensions: dateRange.dimensions,
+      'endDate.day': dateRange.endDate.day,
+      'endDate.month': dateRange.endDate.month,
+      'endDate.year': dateRange.endDate.year,
+      metrics: dateRange.metrics,
+      reportingTimeZone: 'ACCOUNT_TIME_ZONE',
+      'startDate.day': dateRange.startDate.day,
+      'startDate.month': dateRange.startDate.month,
+      'startDate.year': dateRange.startDate.year,
+    });
+
+    const data = (await response).data;
+    return data;
+  } catch (error) {
+    console.error('보고서 CSV 포맷 생성 실패:', error);
+    throw new Error('보고서 생성에 실패했습니다.');
+  }
+}
+
 /**
  * 애드센스 계정 저장
  * @param accountName

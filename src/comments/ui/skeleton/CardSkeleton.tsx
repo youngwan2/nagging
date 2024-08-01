@@ -6,7 +6,7 @@ interface PropsType {
 export default function CardSkeleton({ orientation }: PropsType) {
   if (orientation === 'horizontal') {
     return (
-      <div className="flex">
+      <div className="flex w-full flex-wrap">
         <div className="max-w-[442px] w-full h-32 bg-gray-200 rounded-lg p-4 flex animate-pulse m-5">
           <div className="w-1/4 h-full bg-gray-300 rounded-md mr-4"></div>
           <div className="w-3/4 flex flex-col justify-between">

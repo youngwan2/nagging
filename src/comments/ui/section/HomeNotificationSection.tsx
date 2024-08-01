@@ -1,6 +1,6 @@
 // interface Props { }
 
-import Card from '../card/Card';
+import Card from '../card/SummaryCard';
 import Container from '../container/Container';
 import Heading from '../heading/Heading';
 import Section from './Section';

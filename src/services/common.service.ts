@@ -16,7 +16,12 @@ export async function commonService({
   const url = reqUrl.startsWith('http')
     ? reqUrl
     : urlConfigs.protocol + urlConfigs.host + reqUrl;
-  const config = token ? requestConfigBranch(method, token, body) : { method };
+  const config =
+    !token && body // 토큰은 없는데, 바디는 있는 경우
+      ? requestConfigBranch(method, token, body)
+      : token // 토큰 있는 경우
+        ? requestConfigBranch(method, token, body)
+        : { method };
 
   const response = await fetch(url, config);
   const result = await response.json();

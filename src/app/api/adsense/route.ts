@@ -18,6 +18,8 @@ export const POST = auth(async function POST(req) {
     const accessToken = authHeader.split(' ')[1].trim();
     const { userId } = (await req.json()) as { userId: string };
 
+    console.log(accessToken, userId);
+
     if (!accessToken) {
       return NextResponse.json({ error: 'Access Token 없음' }, { status: 401 });
     }

@@ -3,26 +3,6 @@
 import { revalidatePath } from 'next/cache';
 import prisma from '../../prisma/client';
 
-// // 보고서 조회 필터
-// const dateRange = {
-//     reportName: ''
-//   dateRange: 'CUSTOM',
-//   dimensions: ['MONTH'], // DATE, WEEK,
-//   startDate: {
-//     day: 1,
-//     month: 1,
-//     year: new Date().getFullYear(),
-//   },
-//   endDate: {
-//     day: 31,
-//     month: 12,
-//     year: new Date().getFullYear(),
-//   },
-//   metrics: ['ESTIMATED_EARNINGS', 'CLICKS', 'COST_PER_CLICK'],
-//   reportingTimeZone: 'ACCOUNT_TIME_ZONE',
-//   currencyCode: 'USD'
-// };
-
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
 export async function createReportOption(userId: string, formData: FormData) {
   const dateRange = {
@@ -30,7 +10,7 @@ export async function createReportOption(userId: string, formData: FormData) {
       formData.get('report-name')?.toString() ||
       `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()} 에 생성된 보고서`,
     dateRange: 'CUSTOM',
-    dimensions: formData.get('dimension')?.toString() || 'MONTH',
+    dimensions: [formData.get('dimension')?.toString()] || ['MONTH'],
     startDate: {
       day: Number(formData.get('start-day')) || 1,
       month: Number(formData.get('start-month')) || 1,

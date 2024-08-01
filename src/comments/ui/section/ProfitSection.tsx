@@ -1,4 +1,4 @@
-import Card from '../card/Card';
+import SummaryCard from '../card/SummaryCard';
 import Container from '../container/Container';
 import Heading from '../heading/Heading';
 import Section from './Section';
@@ -33,6 +33,21 @@ export default async function ProfitSection() {
     body,
   })) || { payments: [] };
 
+  if (!payments)
+    return (
+      <Section className="mb-[5rem] mt-[2.5rem]">
+        <Heading level="2" className="pb-[0.75em]">
+          지급액 통계
+          <span className="text-[0.55em] pl-4 text-gray-500">
+            Payment Statistics
+          </span>
+          <p className="text-[1rem] font-light">
+            첫 방문 이시라면 우측 상단에 AdSense 를 클릭하여 애드센스 계정정보를
+            불러와 주세요.
+          </p>
+        </Heading>
+      </Section>
+    );
   if (payments.length < 1)
     return (
       <Section className="mb-[5rem] mt-[2.5rem]">
@@ -42,7 +57,7 @@ export default async function ProfitSection() {
             Payment Statistics
           </span>
           <p className="text-[1rem] font-light">
-            접근 권한 혹은 네트워크 문제로 조회에 실패하였습니다.
+            현재는 조회된 수익 정보가 없습니다.
           </p>
         </Heading>
       </Section>
@@ -66,13 +81,13 @@ export default async function ProfitSection() {
         elName={'div'}
         className="grid sm:grid-cols-1  2xl:grid-cols-2"
       >
-        <Card
+        <SummaryCard
           koTitle="최근 지급액"
           enTitle="Recently Profits"
           text={payments[1].amount}
           date={date}
         />
-        <Card
+        <SummaryCard
           koTitle="미지급액"
           enTitle={'Unpaid Earnings'}
           text={payments[0].amount}

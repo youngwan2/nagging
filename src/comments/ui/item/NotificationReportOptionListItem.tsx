@@ -1,9 +1,10 @@
 import ListItem from '../item/ListItem';
 import ItemTitle from '../heading/Heading';
 import Text from '../text/Text';
-import Flex from '../container/Container';
 import Container from '../container/Container';
 import { UserReportOptionList } from '@src/app/dashboard/notification-setting/page';
+
+import { MdOutlineNotifications } from 'react-icons/md';
 
 interface DateType {
   day: number;
@@ -26,6 +27,9 @@ interface PropsType {
   item: UserReportOptionList;
   taskManagementButtons: React.ReactNode;
 }
+
+const ItemBody = Container;
+const TextContainer = Container;
 export default function NotificationReportOptionListItem({
   item,
   taskManagementButtons,
@@ -41,84 +45,109 @@ export default function NotificationReportOptionListItem({
     >
       {/* 보고서 이름 */}
       <ItemTitle
-        className="text-[1.05em] flex items-center p-3 px-4 dark:bg-[#212125] bg-[#fbfbfb] border-b border-b-slate-200  "
+        className="text-[1.05em] flex items-center p-3 px-4 dark:bg-[#212125] bg-[#fbfbfb] border-b border-b-slate-200 relative  "
         level="3"
       >
         {report.reportName}
+        {item.task ? <NotificationIcon /> : null}
       </ItemTitle>
 
       {/* 각 보고서 옵션*/}
-      <Container elName={'details'} className="p-2 dark:text-white">
+      <ItemBody elName={'details'} className="p-2 dark:text-white">
+        {/* 식별 */}
+        <TextContainer elName={'div'} className="flex flex-col">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            보고서 식별코드
+          </Text>
+          <Text elementName="span" className="px-1 mx-1 font-bold">
+            {item.reportId}
+          </Text>
+        </TextContainer>
         {/* 조회 기간 */}
-        <Flex elName={'span'} className="flex items-center">
-          <Container elName={'div'} className="flex flex-col">
-            <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
-              생성 날짜
-            </Text>
-            <Text elementName="span" className="px-1 mx-1 font-bold">
-              {createDate}
-            </Text>
-          </Container>
-        </Flex>
+        <TextContainer elName={'div'} className="flex flex-col">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            생성 날짜
+          </Text>
+          <Text elementName="span" className="px-1 mx-1 font-bold">
+            {createDate}
+          </Text>
+        </TextContainer>
         {/* 조회 기간 */}
-        <Flex elName={'span'} className="flex items-center">
-          <Container elName={'div'} className="flex flex-col">
-            <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
-              조회 기간
-            </Text>
-            <Text elementName="span" className="px-1 mx-1 font-bold">
-              {report.startDate.year}.{report.startDate.month}.
-              {report.startDate.day} ~{report.endDate.year}.
-              {report.endDate.month}.{report.endDate.day}
-            </Text>
-          </Container>
-        </Flex>
+        <TextContainer elName={'div'} className="flex flex-col">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            조회 기간
+          </Text>
+          <Text elementName="span" className="px-1 mx-1 font-bold">
+            {report.startDate.year}.{report.startDate.month}.
+            {report.startDate.day} ~{report.endDate.year}.{report.endDate.month}
+            .{report.endDate.day}
+          </Text>
+        </TextContainer>
 
         {/* 조회 항목 */}
-        <Flex elName={'span'} className="flex items-center my-[0.5rem]">
-          <Container elName={'div'} className="flex flex-col">
-            <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
-              조회 항목
-            </Text>
-            <Text elementName="span" className="px-1 font-bold">
-              {report.metrics.length < 1 ? (
-                <span className="mx-1">-</span>
-              ) : (
-                report.metrics.map((metric, index) => (
-                  <span key={index} className="mx-1">
-                    {metric === 'CLICKS'
-                      ? '광고 클릭 횟수 '
-                      : metric === 'COST_PER_CLICK'
-                        ? '클릭 당 수익 '
-                        : metric === 'ESTIMATED_EARNINGS'
-                          ? '추정 수익'
-                          : '조회항목 없음'}
-                  </span>
-                ))
-              )}
-            </Text>
-          </Container>
-        </Flex>
+        <TextContainer elName={'div'} className="flex flex-col  my-[0.5rem]">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            조회 항목
+          </Text>
+          <Text elementName="span" className="px-1 font-bold">
+            {report.metrics.length < 1 ? (
+              <span className="mx-1">-</span>
+            ) : (
+              report.metrics.map((metric, index) => (
+                <span key={index} className="mx-1">
+                  {metric === 'CLICKS'
+                    ? '광고 클릭 횟수 '
+                    : metric === 'COST_PER_CLICK'
+                      ? '클릭 당 수익 '
+                      : metric === 'ESTIMATED_EARNINGS'
+                        ? '추정 수익'
+                        : '조회항목 없음'}
+                </span>
+              ))
+            )}
+          </Text>
+        </TextContainer>
         {/* 조회 기준 */}
-        <Flex elName={'span'} className="flex items-center ">
-          <Container elName={'div'} className="flex flex-col">
-            <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
-              조회 기준
-            </Text>
-            <Text elementName="span" className="px-1 mx-1 font-bold">
-              {dimensions === 'MONTH'
-                ? '월 단위'
-                : dimensions === 'WEEK'
-                  ? '주 단위'
-                  : dimensions === 'DATE'
-                    ? '일 단위'
-                    : '조회항목 없음'}
-            </Text>
-          </Container>
-        </Flex>
+        <TextContainer elName={'div'} className="flex flex-col">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            조회 기준
+          </Text>
+          <Text elementName="span" className="px-1 mx-1 font-bold">
+            {dimensions === 'MONTH'
+              ? '월 단위'
+              : dimensions === 'WEEK'
+                ? '주 단위'
+                : dimensions === 'DATE'
+                  ? '일 단위'
+                  : '조회항목 없음'}
+          </Text>
+        </TextContainer>
+
+        <TextContainer elName={'div'} className="flex flex-col">
+          <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
+            화폐 단위
+          </Text>
+          <Text elementName="span" className="px-1 mx-1 font-bold">
+            {report.currencyCode}
+          </Text>
+        </TextContainer>
+
         {/* 스케줄 관리 */}
         {taskManagementButtons}
-      </Container>
+      </ItemBody>
     </ListItem>
+  );
+}
+
+function NotificationIcon() {
+  return (
+    <div
+      className="absolute right-2"
+      aria-label="알림이 활성화됨"
+      title="알림 활성화 표시 아이콘"
+    >
+      <MdOutlineNotifications className="w-6 h-6 dark:text-[#47b547] text-gray-600" />
+      <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+    </div>
   );
 }

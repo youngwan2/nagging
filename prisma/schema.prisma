@@ -54,12 +54,14 @@ model AdsensePayment {
 
 model NotificationCron {
   userId      String @id
+  reportId Int
+  task String
   cronExpression String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
+  notificationReports NotificationReports @relation(fields: [reportId], references: [reportId], onDelete: NoAction )
+  @@index([userId, reportId])
 }
 
 model NotificationReports {
@@ -68,9 +70,11 @@ model NotificationReports {
   report    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  task Boolean @default(false)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  NotificationCron NotificationCron[]
 }
 
 

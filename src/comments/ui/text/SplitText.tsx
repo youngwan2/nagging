@@ -17,24 +17,35 @@ export default function SplitText({ children, text }: PropsType) {
   useGSAP(() => {
     const span = gsap.utils.toArray('.split-text') as HTMLSpanElement[];
     console.log(span);
-    gsap.to(span, {
-      duration: 1,
-      y: -50,
-      opacity: 1,
+    const tl = gsap.timeline();
+    gsap.set(span, {
+      duration: 3,
       ease: 'power2.inOut',
-      stagger: {
-        amount: 0.1,
-      },
     });
-  }, []);
+    tl.fromTo(
+      span,
+      {
+        opacity: 0,
+        stagger: {
+          amount: 0.5,
+        },
+      },
+      {
+        opacity: 1,
+        stagger: {
+          amount: 0.5,
+        },
+      },
+    );
+  }, [splitText]);
 
   return (
-    <div>
+    <div className="dark:text-white mt-3">
       {children}
       <p ref={targetRef}>
         {splitText.map((text, i) => {
           return (
-            <span className="split-text opacity-0" key={i}>
+            <span className="split-text opacity-1" key={i}>
               {text + ' '}
             </span>
           );

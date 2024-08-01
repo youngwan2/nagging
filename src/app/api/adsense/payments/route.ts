@@ -4,7 +4,6 @@ import { getCredentials, getPayments } from '../../../../../lib/adsense';
 import { adsense_v2 } from 'googleapis';
 
 export async function POST(req: NextRequest) {
-  // const userId = await req.json()
   const userId = JSON.parse(await req.text()).userId;
   const raw = req.headers.get('Authorization')?.split(' ') || '';
   const accessToken = raw[1];
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 기존의 수익금이 존재하는지에 따라서 요청을 분기처리.
-    const dbPayments = await getPaymentsFromDB(userId);
+    const dbPayments = (await getPaymentsFromDB(userId)) || { paid: [] };
 
     if (dbPayments.length < 1) {
       // 자격증명을 발급 받고, 수익금을 조회
@@ -71,19 +70,28 @@ export async function POST(req: NextRequest) {
 }
 
 async function getPaymentsFromDB(userId: string) {
-  return await prisma.adsensePayment.findMany({
-    where: { userId },
-    select: {
-      paid: true,
-    },
-  });
+  try {
+    const paid = await prisma.adsensePayment.findMany({
+      where: { userId },
+      select: {
+        paid: true,
+      },
+    });
+    return paid;
+  } catch (error) {
+    throw new Error('애드센스 지급 데이터 데이터베이스 조회 실패');
+  }
 }
 
 async function setPayment(userId: string, paid: string[]) {
-  await prisma.adsensePayment.create({
-    data: {
-      userId,
-      paid,
-    },
-  });
+  try {
+    await prisma.adsensePayment.create({
+      data: {
+        userId,
+        paid,
+      },
+    });
+  } catch (error) {
+    throw new Error('애드센스 지급 데이터 구글 요청 실패');
+  }
 }

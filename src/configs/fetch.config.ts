@@ -19,7 +19,16 @@ const onlyGetRequestConfig = (method: 'GET', token?: string) => {
 
 /** GET 요청 이 외의 Rest api 요청 시 사용되는 구성 */
 const restRequestConfig = (method: Method, token?: string, body?: any) => {
-  if (!body) {
+  // 토큰은 없고, 바디는 있음
+  if (!token && body) {
+    return {
+      method: method,
+      body: JSON.stringify(body),
+    };
+  }
+
+  // 토큰은 있지만 바디는 없음
+  if (token && !body) {
     return {
       method: method,
       headers: {
@@ -29,6 +38,14 @@ const restRequestConfig = (method: Method, token?: string, body?: any) => {
     };
   }
 
+  // 토큰도 없고, 바디도 없음
+  if (!token && !body) {
+    return {
+      method: method,
+    };
+  }
+
+  // 그 외
   return {
     method: method,
     headers: {

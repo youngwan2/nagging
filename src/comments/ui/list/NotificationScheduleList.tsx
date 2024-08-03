@@ -1,39 +1,10 @@
 import { ReportOptionType } from '../../../../lib/adsense';
 import Container from '../container/Container';
 import NotificationScheduleButtonContainer from '../container/NotificationScheduleButtonContainer';
+import { ScheduleList } from '../container/NotificationScheduleListContainer';
 import ListItem from '../item/ListItem';
 import Text from '../text/Text';
 import List from './List';
-
-interface NotificationReport {
-  reportId: number;
-  userId: string;
-  report: string;
-  createdAt: Date;
-  updatedAt: Date;
-  task: boolean;
-}
-
-interface Schedule {
-  notificationReports: NotificationReport;
-  createdAt: string;
-  cronExpression: string;
-}
-
-interface NextScheduleInfo {
-  nextReminder: string;
-  subsequentReminder: string;
-}
-
-interface UserNextScheduleInfo {
-  reportId: number;
-  nextScheduleInfo: NextScheduleInfo;
-}
-
-interface ScheduleList {
-  scheduleList: Schedule[];
-  nextScheduleInfo: { [key: string]: UserNextScheduleInfo };
-}
 
 interface PropsType {
   items: ScheduleList;

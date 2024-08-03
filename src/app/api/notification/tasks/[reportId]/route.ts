@@ -267,9 +267,9 @@ export async function DELETE(
 // Function | 함수 모음
 
 /** 작업 중지 */
-export async function removeTask(userId: string, cronGroup: Map<any, any>) {
+async function removeTask(userId: string, cronGroup: Map<any, any>) {
   const size = cronGroup.size;
-  if (size === 0) return false;
+  if (size === 0 || !userId) return false;
   else {
     const hasTask = cronGroup.has(userId);
     const task = cronGroup.get(userId);
@@ -277,12 +277,14 @@ export async function removeTask(userId: string, cronGroup: Map<any, any>) {
     if (hasTask) {
       task.stop();
       cronGroup.delete(userId);
+      return true;
     }
+    return false;
   }
 }
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
-export async function syncTask(cronFunction: (...rest: any[]) => void) {
+async function syncTask(cronFunction: (...rest: any[]) => void) {
   const jobs = await prisma.notificationCron.findMany(); // 등록된 작업 리스트
 
   if (jobs.length < 1) return false;
@@ -295,7 +297,7 @@ export async function syncTask(cronFunction: (...rest: any[]) => void) {
 }
 
 /** 작업 등록 */
-export function createTask(
+function createTask(
   expression: string,
   cronFunction: (...rest: any) => void,
   userId: string,
@@ -317,7 +319,7 @@ export function createTask(
  * @param userEmail
  * @returns
  */
-export async function sendNotification(
+async function sendNotification(
   userId: string,
   reportOptionJSON: string,
   accessToken: string,
@@ -345,7 +347,7 @@ export async function sendNotification(
 }
 
 /** DB에 저장된 보고서 옵션 조회  */
-export async function getReportOptionFromDb(_reportId: number, userId: string) {
+async function getReportOptionFromDb(_reportId: number, userId: string) {
   try {
     const result = (
       await prisma.notificationReports.findMany({
@@ -365,7 +367,7 @@ export async function getReportOptionFromDb(_reportId: number, userId: string) {
 }
 
 /** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
-export async function getAbsenseAccountIdWithUserId(userId: string) {
+async function getAbsenseAccountIdWithUserId(userId: string) {
   try {
     return (
       await prisma.adsenseAccount.findMany({

@@ -1,6 +1,5 @@
 'use client';
 
-import { createReportOption } from '@src/actions/notification-actions';
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Flex from '@src/comments/ui/container/Container';
@@ -10,7 +9,10 @@ import SelectOption from '@src/comments/ui/option/SelectOption';
 import NotificationSelect from '@src/comments/ui/select/NotificationSelect';
 import Select from '@src/comments/ui/select/Select';
 import Text from '@src/comments/ui/text/Text';
+
 import { currencies } from '@src/constants/currencies';
+import { createReportOption } from '@src/actions/notification-actions';
+import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years } =
   createInitData();
@@ -22,9 +24,12 @@ interface PropsType {
 export default function NotificationReportOptionForm({
   userId = '',
 }: PropsType) {
+  const { onInvalidateQuery } = useQueryInvalidate('reports');
+
   // formData 외에 다중 인자를 받기 위해 설명
   // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
   const createReportOptionWithUserId = createReportOption.bind(null, userId);
+
   return (
     <Form
       action={createReportOptionWithUserId}
@@ -32,7 +37,7 @@ export default function NotificationReportOptionForm({
     >
       {/* 보고서 이름 */}
       <Label className="dark:text-white mt-3  w-full  max-w-[645px] flex flex-col">
-        보고서 이름
+        보고서 이름(Report Name)
         <Input
           type="text"
           className="p-2 border rounded-md bg-transparent "
@@ -43,7 +48,7 @@ export default function NotificationReportOptionForm({
 
       {/* 주, 월, 일 */}
       <Label className="dark:text-white mt-3 inline-block w-full">
-        차원
+        차원(Dimension)
         <Select className="p-2 rounded-md" name="dimension">
           {timeUnitOptions.map((option) => (
             <SelectOption
@@ -57,7 +62,7 @@ export default function NotificationReportOptionForm({
 
       {/* 보고서 조회 시작일 */}
       <Label className="dark:text-white mt-3 inline-block w-full  max-w-[645px]">
-        보고서 시작일
+        조회 시작일(Start Date)
         <Flex elName={'div'} className="flex w-full justify-between ">
           {/* 연도, 월, 일 */}
           <NotificationSelect
@@ -82,7 +87,7 @@ export default function NotificationReportOptionForm({
 
       {/* 보고서 조회 종료일 */}
       <Label className="dark:text-white mt-3 inline-block w-full max-w-[645px] ">
-        보고서 종료일
+        조회 종료일(End Date)
         <Flex elName={'div'} className="flex w-full justify-between">
           {/* 연도, 월, 일 */}
           <NotificationSelect
@@ -107,9 +112,10 @@ export default function NotificationReportOptionForm({
 
       {/* 보고서 조회 지표 */}
       <Label className="dark:text-white mt-3 inline-block w-full max-w-[645px]">
-        지표
+        지표(metrics)
         <Text elementName={'span'} className="text-[0.85em] ml-3 text-gray-600">
-          ※ 드래그를 통해 중복선택 가능
+          ※ 드래그를 통해 중복선택 가능(
+          {'[Ctrl + Click] 을 통해 부분 선택 가능'})
         </Text>
         <Select className="p-2 rounded-md mt-2 " multiple name="metrics">
           {metrics.map((metric) => (
@@ -125,7 +131,7 @@ export default function NotificationReportOptionForm({
 
       {/* 통화 코드 */}
       <Label className="dark:text-white mt-3 inline-block w-full max-w-[645px]">
-        통화 코드
+        통화 코드(Currency Code)
         <Select className="p-2 rounded-md" name="code">
           {currencyCode.map((code) => {
             return (
@@ -142,6 +148,7 @@ export default function NotificationReportOptionForm({
       <Button
         className="w-full p-3 rounded-md mt-5 bg-gradient-to-br from-slate-500 to-slate-800 text-white hover:from-slate-800 hover:to-slate-500"
         type="submit"
+        onClick={onInvalidateQuery}
       >
         보고서 등록
       </Button>

@@ -24,6 +24,7 @@ export async function commonService({
         : { method };
 
   const response = await fetch(url, config);
+
   const result = await response.json();
 
   return result;

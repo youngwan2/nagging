@@ -23,10 +23,7 @@ export async function GET(req: NextRequest) {
     const scheduleList = await getScheduleList(userId);
 
     if (scheduleList.length < 1) {
-      return NextResponse.json(
-        { error: '예약된 스케줄이 없습니다.' },
-        { status: 404 },
-      );
+      return NextResponse.json({ message: '예약된 스케줄이 없습니다.' });
     } else {
       const nextScheduleInfo = mappingNextScheduleInfo(scheduleList, userId);
 

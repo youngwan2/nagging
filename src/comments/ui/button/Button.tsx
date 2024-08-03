@@ -7,6 +7,7 @@ interface PropsType {
   children: React.ReactNode;
   title?: string;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement> | ((state: any) => void);
 }
 
@@ -15,10 +16,12 @@ export default function Button({
   title,
   type,
   children,
+  disabled,
   onClick,
 }: PropsType) {
   return (
     <button
+      disabled={disabled}
       className={className + ' dark:text-white  text-black '}
       title={title}
       type={type}

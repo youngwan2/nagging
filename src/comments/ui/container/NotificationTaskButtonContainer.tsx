@@ -6,8 +6,8 @@ import Text from '../text/Text';
 import Container from './Container';
 
 import { Method } from '@src/configs/fetch.config';
-import useCustomRouter from '@src/hooks/useCustomRouter';
 import { everyMonth, everyWeek, everyYear } from '@src/constants/cron';
+import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
 
 interface PropsType {
   reportId: number;
@@ -17,7 +17,10 @@ const FlexBox = Container;
 export default function NotificationTaskButtonContainer({
   reportId,
 }: PropsType) {
-  const { currentPageRefresh } = useCustomRouter();
+  const { onInvalidateQuery: onReportInvalidataQuery } =
+    useQueryInvalidate('reports');
+  const { onInvalidateQuery: onScheduleInvalidataQuery } =
+    useQueryInvalidate('schedules');
 
   /** 보고서 삭제 */
   async function handleDeleteReportOption() {
@@ -33,28 +36,14 @@ export default function NotificationTaskButtonContainer({
         method: Method.DELETE,
       });
       alert(result.message ?? result.error);
-      currentPageRefresh();
+
+      onReportInvalidataQuery();
+      onScheduleInvalidataQuery();
     } catch (error) {
       console.error(error);
     }
   }
 
-  /** 작업 취소 */
-  async function handleDeleteTaskNotification() {
-    const url = '/api/notification/tasks/' + reportId;
-
-    try {
-      const result = await commonService({
-        reqUrl: url,
-        method: Method.DELETE,
-      });
-      alert(result.message ?? result.error);
-
-      currentPageRefresh();
-    } catch (error) {
-      console.error(error);
-    }
-  }
   /** 즉시 받기 */
   async function handleImmediateReport() {
     const url = `/api/notification/tasks/${reportId}?immediate=true`;
@@ -65,7 +54,6 @@ export default function NotificationTaskButtonContainer({
         method: Method.POST,
       });
       alert(result.message ?? result.error);
-      currentPageRefresh();
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +70,9 @@ export default function NotificationTaskButtonContainer({
         body: { cron: expression },
       });
       alert(result.message ?? result.error);
-      currentPageRefresh();
+
+      onReportInvalidataQuery();
+      onScheduleInvalidataQuery();
     } catch (error) {
       console.error(error);
     }
@@ -127,14 +117,14 @@ export default function NotificationTaskButtonContainer({
         </FlexBox>
       </SettingsContainer>
 
-      <SettingsContainer title="알림/보고서 삭제">
+      <SettingsContainer title="보고서 삭제">
         <FlexBox elName="div" className="flex items-center">
-          <Button
+          {/* <Button
             onClick={handleDeleteTaskNotification}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
           >
             알림 삭제
-          </Button>
+          </Button> */}
           <Button
             onClick={handleDeleteReportOption}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
@@ -186,3 +176,19 @@ function ButtonGroup({
     </FlexBox>
   );
 }
+
+/** 작업 취소 : 보류 */
+// async function handleDeleteTaskNotification() {
+//   const url = '/api/notification/tasks/' + reportId;
+
+//   try {
+//     const result = await commonService({
+//       reqUrl: url,
+//       method: Method.DELETE,
+//     });
+//     alert(result.message ?? result.error);
+//     onRefresh()
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }

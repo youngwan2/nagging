@@ -24,7 +24,7 @@ export default function NotificationOptionListContainer({
   const maxPage = data?.maxPage || 0;
 
   return (
-    <Container elName={'section'}>
+    <Container elName={'section'} className="w-full pl-3">
       <Heading level="2" className="xl:mt-0 xl:ml-5 mt-[4rem] ml-0 pb-[0.75em]">
         보고서 옵션 목록
         <Text

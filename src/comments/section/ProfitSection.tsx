@@ -1,11 +1,11 @@
-import SummaryCard from '../card/SummaryCard';
-import Container from '../container/Container';
-import Heading from '../heading/Heading';
 import Section from './Section';
 import { auth } from '@src/auth';
 import { Method } from '@src/configs/fetch.config';
 
 import { commonService } from '@src/services/common.service';
+import Heading from '../ui/heading/Heading';
+import Container from '../ui/container/Container';
+import SummaryCard from '../ui/card/SummaryCard';
 
 interface Payment {
   payments: {
@@ -88,6 +88,7 @@ export default async function ProfitSection() {
           date={date}
         />
         <SummaryCard
+          className="ml-5"
           koTitle="미지급액"
           enTitle={'Unpaid Earnings'}
           text={payments[0].amount}

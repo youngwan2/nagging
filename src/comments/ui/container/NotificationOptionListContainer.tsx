@@ -1,10 +1,11 @@
 import Heading from '../heading/Heading';
-import Section from '../section/Section';
 import Text from '../text/Text';
 import NotificationReportOptionList from '../list/NotificationReportOptionList';
 import GraphSkeleton from '../skeleton/GraphSkeleton';
 import PaginationContainer from '../pagination/PaginationContainer';
-import { QueryState } from './NotificationPageContainer';
+import Container from './Container';
+
+import type { QueryState } from './NotificationPageContainer';
 
 interface PropsType {
   queryState: QueryState;
@@ -23,7 +24,7 @@ export default function NotificationOptionListContainer({
   const maxPage = data?.maxPage || 0;
 
   return (
-    <Section>
+    <Container elName={'section'}>
       <Heading level="2" className="xl:mt-0 xl:ml-5 mt-[4rem] ml-0 pb-[0.75em]">
         보고서 옵션 목록
         <Text
@@ -58,6 +59,6 @@ export default function NotificationOptionListContainer({
       ) : (
         <GraphSkeleton />
       )}
-    </Section>
+    </Container>
   );
 }

@@ -3,13 +3,14 @@ import InputContainer from './Container';
 import Label from '../label/Label';
 import Button from '../button/Button';
 import Text from '../text/Text';
+import Form from '../form/Form';
 
 interface PropsType {
   onSearch: (form: FormData) => void;
 }
 export default function CalendarContainer({ onSearch }: PropsType) {
   return (
-    <form
+    <Form
       className="md:flex-row flex flex-col justify-center h-auto items-center"
       action={onSearch}
     >
@@ -54,6 +55,6 @@ export default function CalendarContainer({ onSearch }: PropsType) {
           조회
         </Button>
       </InputContainer>
-    </form>
+    </Form>
   );
 }

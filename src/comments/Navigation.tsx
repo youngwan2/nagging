@@ -21,16 +21,16 @@ export default function Navigation() {
       label: '정보',
     },
     {
-      href: '/dashboard/notification-setting',
-      title: '알림 설정',
+      href: '/dashboard/notification-settings',
+      title: '보고서 알림 설정',
       icon: CiSettings,
-      label: '알림 설정',
+      label: '보고서 설정',
     },
     {
       href: '/dashboard/anlaytics',
-      title: '통계',
+      title: '간편 통계',
       icon: GoGraph,
-      label: '통계',
+      label: '간편 통계',
     },
   ];
 

@@ -1,13 +1,15 @@
 import InfomationContainer from '@src/comments/ui/container/InfomationContainer';
 import Heading from '@src/comments/ui/heading/Heading';
-import Section from '@src/comments/ui/section/Section';
+import Container from '@src/comments/ui/container/Container';
+
 import { auth } from '@src/auth';
+
 export default async function InfomationPage() {
   const session = await auth();
   const token = session?.access_token;
 
   return (
-    <Section className="w-full">
+    <Container elName={'section'} className="w-full">
       <Heading level="2" className="pb-[0.75em]">
         데일리 환율
         <span className="text-[0.55em] pl-4 text-gray-500">
@@ -15,6 +17,6 @@ export default async function InfomationPage() {
         </span>
       </Heading>
       <InfomationContainer token={token} />
-    </Section>
+    </Container>
   );
 }

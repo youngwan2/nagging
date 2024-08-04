@@ -1,9 +1,9 @@
 import Heading from '../heading/Heading';
 import NotificationScheduleList from '../list/NotificationScheduleList';
-import Section from '../section/Section';
 import Text from '../text/Text';
 import CardSkeleton from '../skeleton/CardSkeleton';
 import { QueryState } from './NotificationPageContainer';
+import Container from './Container';
 
 interface NotificationReport {
   reportId: number;
@@ -45,7 +45,7 @@ export default function NotificationScheduleListContainer({
   const { data, isError, isPending, isRefetching } = queryState;
 
   return (
-    <Section className="mt-16">
+    <Container elName={'section'} className="mt-16">
       <Heading level="2" className="pb-[0.75em]">
         알림 스케줄 목록
         <Text
@@ -69,6 +69,6 @@ export default function NotificationScheduleListContainer({
           해주세요.
         </Text>
       )}
-    </Section>
+    </Container>
   );
 }

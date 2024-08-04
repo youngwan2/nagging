@@ -125,6 +125,16 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
       <Text elementName="p" className="mt-8 text-center">
         1달 간격으로 연간 수익을 확인할 수 있습니다.
       </Text>
+      <Text elementName="p" className="mt-2 text-center">
+        자세한 통계 확인을 원하신다면 [보고서 설정] 페이지를 이용해주세요.
+      </Text>
+
+      {/* 총 수익 */}
+      <Text elementName="p" className="mt-[0.5rem] text-center min-h-[30px]">
+        {flatRows?.length > 1
+          ? `조회 기간 동안 $${totalProfit?.toFixed(2)} 수익을 달성하셨습니다.`
+          : null}
+      </Text>
 
       {/* 보고서 다운로드 */}
       <Button
@@ -135,13 +145,6 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
         <PiFileCsvThin className="text-[1.3em]" />
         <span className="text-[0.85rem]">CSV</span>
       </Button>
-
-      {/* 총 수익 */}
-      <Text elementName="p" className="mt-[0.5rem] text-center min-h-[30px]">
-        {flatRows?.length > 1
-          ? `조회 기간 동안 $${totalProfit?.toFixed(2)} 수익을 달성하셨습니다.`
-          : null}
-      </Text>
 
       {/* 검색범위  */}
       <CalendarContainer onSearch={onSearch} />

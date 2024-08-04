@@ -63,7 +63,6 @@ export async function POST(
 
     // 사용자가 보고서 알림을 즉시 받기를 원하는 경우 금일 날짜로 보고서 전송
     if (imediate === true) {
-      console.log(imediate);
       await sendNotification(userId, reportOptionJSON, accessToken, userEmail);
 
       return NextResponse.json({ message: '즉시 보고서 전송 완료' });

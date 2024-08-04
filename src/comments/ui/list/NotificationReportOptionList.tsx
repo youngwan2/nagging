@@ -2,7 +2,7 @@ import List from './List';
 import NotificationReportOptionListItem from '../item/NotificationReportOptionListItem';
 import NotificationTaskButtonContainer from '../container/NotificationTaskButtonContainer';
 import Heading from '../heading/Heading';
-import { UserReportOptionList } from '@src/app/dashboard/notification-setting/page';
+import { UserReportOptionList } from '@src/app/dashboard/notification-settings/page';
 
 interface PropsType {
   items: UserReportOptionList[];

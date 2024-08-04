@@ -2,7 +2,7 @@ import ListItem from '../item/ListItem';
 import ItemTitle from '../heading/Heading';
 import Text from '../text/Text';
 import Container from '../container/Container';
-import { UserReportOptionList } from '@src/app/dashboard/notification-setting/page';
+import { UserReportOptionList } from '@src/app/dashboard/notification-settings/page';
 
 import { MdOutlineNotifications } from 'react-icons/md';
 

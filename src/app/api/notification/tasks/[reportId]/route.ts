@@ -3,31 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 
 import prisma from '../../../../../../prisma/client';
-import {
-  ReportOptionType,
-  generateCsvReport,
-  getCredentials,
-} from '../../../../../../lib/adsense';
 
-import { sendMail } from '@src/nodemailer';
 import { auth } from '@src/auth';
+import {
+  createTask,
+  getReportOptionFromDb,
+  removeTask,
+  sendNotification,
+} from '@src/task';
 
 const cronGroup = cron.getTasks();
-
-/** GET | 기존에 등록된 크론 조회 및 Map 저장 */
-export async function GET() {
-  function functions() {
-    console.log('동기화 함수 실행중');
-  }
-  try {
-    const isSync = await syncTask(functions);
-
-    if (isSync) return NextResponse.json({ message: '동기화 성공' });
-    else return NextResponse.json({ error: '동기화 실패' });
-  } catch (error) {
-    return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
-  }
-}
 
 /** POST | 사용자 예약 알림 크론 추가 처리 */
 export async function POST(
@@ -82,11 +67,11 @@ export async function POST(
 
     // UPDATE |  기존 작업 존재 시, 새 작업으로 대체
     if (isRegistered) {
-      removeTask(userId, cronGroup);
+      removeTask(userId);
       const task = createTask(
         cronExpression,
-        () =>
-          sendNotification(userId, reportOptionJSON, accessToken, userEmail),
+        () => console.log(new Date()),
+        // sendNotification(userId, reportOptionJSON, accessToken, userEmail),
         userId,
       );
 
@@ -135,8 +120,8 @@ export async function POST(
       // 새 작업 생성
       const task = createTask(
         cronExpression,
-        () =>
-          sendNotification(userId, reportOptionJSON, accessToken, userEmail),
+        () => console.log(new Date()),
+        // sendNotification(userId, reportOptionJSON, accessToken, userEmail),
         userId,
       );
 
@@ -225,7 +210,7 @@ export async function DELETE(
 
     // 작업 제거
     if (isStoredTask && hasTask) {
-      removeTask(userId, cronGroup);
+      removeTask(userId);
 
       // 크론 등록에 사용된 보고서 비활성화
       await prisma.notificationReports.updateMany({
@@ -258,127 +243,5 @@ export async function DELETE(
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
-  }
-}
-
-/** >>>>> 크론 <<<<<< https://www.npmjs.com/package/node-cron*/
-
-// Function | 함수 모음
-
-/** 작업 중지 */
-async function removeTask(userId: string, cronGroup: Map<any, any>) {
-  const size = cronGroup.size;
-  if (size === 0 || !userId) return false;
-  else {
-    const hasTask = cronGroup.has(userId);
-    const task = cronGroup.get(userId);
-
-    if (hasTask) {
-      task.stop();
-      cronGroup.delete(userId);
-      return true;
-    }
-    return false;
-  }
-}
-
-/** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
-async function syncTask(cronFunction: (...rest: any[]) => void) {
-  const jobs = await prisma.notificationCron.findMany(); // 등록된 작업 리스트
-
-  if (jobs.length < 1) return false;
-  jobs.forEach((job) => {
-    const task = createTask(job.cronExpression, cronFunction, job.userId);
-    task.start();
-  });
-
-  return true;
-}
-
-/** 작업 등록 */
-function createTask(
-  expression: string,
-  cronFunction: (...rest: any) => void,
-  userId: string,
-) {
-  const task = cron.schedule(expression, cronFunction, {
-    scheduled: false,
-    timezone: 'Asia/Seoul',
-    name: userId, // Map 의 키로 지정 됨.
-  });
-
-  return task;
-}
-
-/**
- * 사용자 지정 이메일 알림
- * @param userId
- * @param reportOptionJSON
- * @param accessToken 애드센스 크리덴셜 검증 활용
- * @param userEmail
- * @returns
- */
-async function sendNotification(
-  userId: string,
-  reportOptionJSON: string,
-  accessToken: string,
-  userEmail: string,
-) {
-  const reportOption = JSON.parse(reportOptionJSON) as ReportOptionType;
-  const accountId = await getAbsenseAccountIdWithUserId(userId); // 유저 account 계정 정보
-  const AdsenseCredential = await getCredentials(accessToken); // 자격증명
-
-  if (!accountId)
-    return NextResponse.json({ message: '애드센스 계정 정보 없음.' });
-
-  const reportCSV = await generateCsvReport(
-    accountId,
-    AdsenseCredential,
-    reportOption,
-  );
-  sendMail({
-    to: userEmail,
-    subject: reportOption.reportName,
-    reportName: reportOption.reportName,
-    csv: reportCSV,
-  });
-  console.log(`${userId}님에게 알림을 전송합니다.`);
-}
-
-/** DB에 저장된 보고서 옵션 조회  */
-async function getReportOptionFromDb(_reportId: number, userId: string) {
-  try {
-    const result = (
-      await prisma.notificationReports.findMany({
-        select: {
-          report: true,
-        },
-        where: {
-          userId,
-        },
-      })
-    )[0];
-
-    return result.report;
-  } catch {
-    return false;
-  }
-}
-
-/** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
-async function getAbsenseAccountIdWithUserId(userId: string) {
-  try {
-    return (
-      await prisma.adsenseAccount.findMany({
-        select: {
-          accountId: true,
-        },
-        where: {
-          userId,
-        },
-      })
-    )[0].accountId;
-  } catch (error) {
-    return false;
   }
 }

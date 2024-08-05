@@ -7,7 +7,6 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import NextAuth from 'next-auth';
-import Nodemailer from 'next-auth/providers/nodemailer';
 import Google from 'next-auth/providers/google';
 
 const prisma = new PrismaClient();
@@ -20,7 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
       authorization: {
         params: {
-          // 이렇게 설정하면 구글에서 리프레쉬 토큰을 제공합니다.
+          // 이렇게 설정하면 구글에서 최초 로그인 시 1회 리프레쉬 토큰을 제공
           access_type: 'offline',
           prompt: 'consent',
           // 주의!) 스코프는 , 아니라 공백으로 구분 됩니다
@@ -28,17 +27,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             'https://www.googleapis.com/auth/adsense.readonly https://www.googleapis.com/auth/userinfo.profile openid profile email',
         },
       },
-    }),
-    Nodemailer({
-      server: {
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      },
-      from: process.env.SMTP_USER,
     }),
   ],
   pages: {

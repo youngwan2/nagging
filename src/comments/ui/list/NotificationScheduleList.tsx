@@ -26,7 +26,7 @@ export default function NotificationScheduleList({ items }: PropsType) {
         return (
           <ListItem
             key={schedule.createdAt}
-            className="dark:bg-[rgba(0,0,0,0.3)] p-4 rounded-md border"
+            className="dark:bg-[rgba(0,0,0,0.3)] p-4 rounded-md border-[rgba(255,255,255,0.1)] border"
           >
             {/* 개요 */}
             <TextContainer elName={'div'} className="flex flex-col">

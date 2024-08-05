@@ -14,7 +14,7 @@ export default function ExchangeRatesTable({
   aside,
 }: PropsType) {
   return (
-    <div className="bg-background text-foreground p-6 rounded-lg shadow-md">
+    <div className="bg-background text-foreground p-6 rounded-lg shadow-md ">
       {/* 선택 환율 정보 */}
       {aside}
       {/* 테이블 */}

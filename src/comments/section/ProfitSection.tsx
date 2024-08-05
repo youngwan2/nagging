@@ -88,7 +88,7 @@ export default async function ProfitSection() {
           date={date}
         />
         <SummaryCard
-          className="ml-5"
+          className="2xl:ml-5"
           koTitle="미지급액"
           enTitle={'Unpaid Earnings'}
           text={payments[0].amount}

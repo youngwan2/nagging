@@ -8,9 +8,12 @@ import { AdsenseButton } from '@src/comments/ui/button/AdsenseButton';
 import Heading from '../heading/Heading';
 import Container from '../container/Container';
 import Text from '../text/Text';
+import { auth } from '@src/auth';
 
 const FlexBox = Container;
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
+
   return (
     <header className="justify-between mx-auto w-full h-[50px] flex items-center border-b-[1px] dark:bg-[#212125] bg-[#fbfbfb] dark:border-gray-700 transition-colors  ">
       <FlexBox
@@ -44,7 +47,7 @@ export default function Header() {
         <MenuIcon />
         <NotificationIcon />
         <SignOutIcon />
-        <AdsenseButton />
+        {session ? <AdsenseButton /> : null}
       </FlexBox>
     </header>
   );

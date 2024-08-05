@@ -80,6 +80,11 @@ export default function NotificationTaskButtonContainer({
 
   const scheduleOptions = [
     {
+      label: '1분 후 받기',
+      expression: `*/1 * * * *`,
+      title: '매주 월요일 오전 06:00 정기 보고',
+    },
+    {
       label: '주 단위',
       expression: everyWeek,
       title: '매주 월요일 오전 06:00 정기 보고',

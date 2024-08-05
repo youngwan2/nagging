@@ -40,7 +40,7 @@ export default function NotificationReportOptionListItem({
 
   return (
     <ListItem
-      className="shadow-[0_2px_3px_0_rgba(0,0,0,0.2)] dark:border dark:border-[rgba(255,255,255,0.1)] rounded-xl overflow-hidden mt-3"
+      className="shadow-[0_2px_3px_0_rgba(0,0,0,0.2)] dark:border dark:border-[rgba(255,255,255,0.1)] rounded-xl overflow-hidden mt-3 animate-appearance-in"
       key={item.reportId}
     >
       {/* 보고서 이름 */}
@@ -146,8 +146,8 @@ function NotificationIcon() {
       aria-label="알림이 활성화됨"
       title="알림 활성화 표시 아이콘"
     >
-      <MdOutlineNotifications className="w-6 h-6 dark:text-[#47b547] text-gray-600" />
-      <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+      <MdOutlineNotifications className="w-5 h-5 text-gray-500 dark:text-orange-300 " />
+      <div className="absolute -top-1 -right-1 w-2 h-2 dark:bg-orange-300 bg-green-500 rounded-full animate-pulse"></div>
     </div>
   );
 }

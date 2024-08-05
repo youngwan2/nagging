@@ -1,13 +1,11 @@
 import { auth } from '@src/auth';
 
-import Heading from '@src/comments/ui/heading/Heading';
-import Text from '@src/comments/ui/text/Text';
-
 import { Method } from '@src/configs/fetch.config';
 import { urlConfigs } from '@src/configs/url.config';
 import { commonService } from '@src/services/common.service';
 import { HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import NotificationPageContainer from '@src/comments/ui/container/NotificationPageContainer';
+import LoginRequiredMessage from '@src/comments/ui/message/LoginRequireMessage';
 
 export interface UserReportOptionList {
   reportId: number;
@@ -56,15 +54,7 @@ export default async function page() {
     queryFn: await commonService(scheduleListReqOptions),
   });
 
-  if (!session)
-    return (
-      <Heading level="2" className="text-[1em] font-medium">
-        <Text elementName={'p'}>로그인 후 이용이 가능합니다.</Text>
-        <Text elementName={'span'} className="text-gray-800 opacity-55">
-          Available after logging in.
-        </Text>
-      </Heading>
-    );
+  if (!session) return <LoginRequiredMessage />;
   return (
     <HydrationBoundary>
       <NotificationPageContainer userId={userId} token={token} />

@@ -14,7 +14,7 @@ import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
 import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
 
-const { currencyCode, days, metrics, month, timeUnitOptions, years } =
+const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } =
   createInitData();
 
 interface PropsType {
@@ -92,7 +92,7 @@ export default function NotificationReportOptionForm({
           {/* 연도, 월, 일 */}
           <NotificationSelect
             name="end-year"
-            options={years}
+            options={endYears}
             condition={new Date().getFullYear()}
           />
           <NotificationSelect
@@ -164,6 +164,7 @@ function createInitData() {
   ];
   const month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const years: number[] = [];
+  const endYears: number[] = [];
 
   for (
     let i = new Date().getFullYear();
@@ -171,6 +172,14 @@ function createInitData() {
     i--
   ) {
     years.push(i);
+  }
+
+  for (
+    let i = new Date().getFullYear() + 14;
+    i >= new Date().getFullYear() - 14;
+    i--
+  ) {
+    endYears.push(i);
   }
 
   const metrics = [
@@ -186,5 +195,13 @@ function createInitData() {
     { text: '일 단위', value: 'DATE' },
   ];
 
-  return { currencyCode, days, month, years, metrics, timeUnitOptions };
+  return {
+    currencyCode,
+    days,
+    month,
+    years,
+    endYears,
+    metrics,
+    timeUnitOptions,
+  };
 }

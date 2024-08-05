@@ -3,16 +3,12 @@ import Heading from '@src/comments/ui/heading/Heading';
 
 import { auth } from '@src/auth';
 import Container from '@src/comments/ui/container/Container';
+import LoginRequiredMessage from '@src/comments/ui/message/LoginRequireMessage';
 
 export default async function Home() {
   const session = await auth();
 
-  if (!session)
-    return (
-      <Heading level="2" className="text-[1em]">
-        로그인 후 이용이 가능합니다
-      </Heading>
-    );
+  if (!session) return <LoginRequiredMessage />;
   return (
     <Container elName={'div'} className="w-full">
       <Heading level="2" className="pb-[0.75em]">

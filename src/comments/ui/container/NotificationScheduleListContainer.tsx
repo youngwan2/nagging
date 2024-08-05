@@ -1,9 +1,9 @@
 import Heading from '../heading/Heading';
 import NotificationScheduleList from '../list/NotificationScheduleList';
 import Text from '../text/Text';
-import CardSkeleton from '../skeleton/CardSkeleton';
 import { QueryState } from './NotificationPageContainer';
 import Container from './Container';
+import ScheduleCardSkeleton from '../skeleton/ScheduleCardSkeleton';
 
 interface NotificationReport {
   reportId: number;
@@ -56,11 +56,11 @@ export default function NotificationScheduleListContainer({
         </Text>
       </Heading>
       <Text elementName={'p'} className="text-sm text-gray-600 mb-4">
-        ※ 원활한 서비스 운영을 위해 중복 등록은 불가능합니다.
+        ※ 원활한 서비스 운영을 위해 현재는 하나의 알림 등록만 가능합니다.
       </Text>
       {/* 목록 */}
       {isPending || isRefetching ? (
-        <CardSkeleton orientation="horizontal" />
+        <ScheduleCardSkeleton />
       ) : !isError ? (
         <NotificationScheduleList items={data} />
       ) : (

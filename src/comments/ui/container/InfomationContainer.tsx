@@ -6,12 +6,12 @@ import ExchangeRatesTable from '../table/ExchangeRatesTable';
 import Container from './Container';
 import Heading from '../heading/Heading';
 import Text from '../text/Text';
-import GraphSkeleton from '../skeleton/GraphSkeleton';
 
 import { Method } from '@src/configs/fetch.config';
 import { currencies } from '@src/constants/currencies';
 import { formatDate, mappingPair, selectPair } from '@src/utils/function';
 import Button from '../button/Button';
+import ExchangeRateTableSkeleton from '../skeleton/ExchangeRateTableSkeleton';
 
 export interface CurrencyPair {
   pair: string;
@@ -73,9 +73,12 @@ export default function InfomationContainer({}: PropsType) {
     );
   if (!data || isPending)
     return (
-      <Heading level="2" className="text-[0.95rem] font-light">
-        데이터를 조회중입니다.
-      </Heading>
+      <Container elName={'section'} className="w-full">
+        <Heading level="2" className="text-[0.95rem] font-light">
+          데이터를 조회중입니다.
+        </Heading>
+        <ExchangeRateTableSkeleton />
+      </Container>
     );
   return (
     <Container elName={'section'} className="w-full">
@@ -91,7 +94,7 @@ export default function InfomationContainer({}: PropsType) {
         {date}
       </Text>
       {isPending ? (
-        <GraphSkeleton />
+        <ExchangeRateTableSkeleton />
       ) : (
         <ExchangeRatesTable
           onClick={handlePairSelect}

@@ -24,7 +24,7 @@ export default function SummaryCard({
     : null;
   return (
     <div
-      className={`hover:bg-[#272729] hover:text-white min-w-[300px] w-full h-[178px] p-[15px] border bg-slate-50 dark:bg-[#18181B] dark:border-[#3D3D43] dark:text-white rounded-xl m-3 relative ${className}`}
+      className={`animate-appearance-in hover:bg-[#272729] hover:text-white min-w-[300px] w-full h-[178px] p-[15px] border bg-slate-50 dark:bg-[#18181B] dark:border-[#3D3D43] dark:text-white rounded-xl m-3 relative ${className}`}
     >
       <h3>
         <span className="text-[1.05em] font-bold">{koTitle}</span>

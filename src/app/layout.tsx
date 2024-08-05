@@ -1,9 +1,15 @@
-import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@src/comments/Header';
-import Footer from '@src/comments/Footer';
+
+import { Inter } from 'next/font/google';
+
+import Header from '@src/comments/ui/layout/Header';
+import Footer from '@src/comments/ui/layout/Footer';
 import Navigation from '@src/comments/Navigation';
+import ReactQueryProvider from '@src/comments/Provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ToastContainer } from 'react-toastify';
+
+import type { Metadata, Viewport } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -62,9 +68,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <div className="flex w-full">
+          <ToastContainer />
           <Navigation />
-          <main className="flex min-h-screen  w-full flex-col items-center justify-between p-24 dark:bg-black transition-colors">
-            {children}
+          <main className="justify-start  flex min-h-screen  w-full flex-col items-center  p-24 py-14 dark:bg-black transition-colors">
+            <ReactQueryProvider>
+              {children}
+              <ReactQueryDevtools initialIsOpen={false} />
+            </ReactQueryProvider>
           </main>
         </div>
         <Footer />

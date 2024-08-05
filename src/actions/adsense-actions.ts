@@ -29,6 +29,8 @@ export const adsenseDataFetch = async () => {
     // 구글 로그인으로 받은 accessToken을 사용해서 애드센스 자격증명을 확인합니다.
     const oauth = await getCredentials(accessToken);
 
+    if (!oauth) throw new Error('인증된 유저가 아님');
+
     // 기존 계정이 있으면 불러오고, 없으면 새로 요청해서 불러옵니다.
     const accountName =
       (dbAccountName.length > 0

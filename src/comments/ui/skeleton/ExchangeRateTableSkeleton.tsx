@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function ExchangeRateTableSkeleton() {
   return (
-    <div className="dark:bg-gray-900 dark:text-white p-4 font-sans w-full">
-      <div className="mb-4 h-6 dark:bg-black bg-white w-64 rounded"></div>
+    <div className="dark:bg-gray-900 dark:text-white p-4 font-sans w-full animate-pulse">
+      <div className="mb-4 h-6 dark:bg-gray-900 bg-white w-64 rounded"></div>
 
       <table className="w-full">
         <thead>

@@ -9,10 +9,14 @@ import Heading from '../heading/Heading';
 import Container from '../container/Container';
 import Text from '../text/Text';
 import { auth } from '@src/auth';
+import { hasAccountId } from '@src/services/adsense.service';
 
 const FlexBox = Container;
 export default async function Header() {
   const session = await auth();
+  const userId = session?.userId || '';
+
+  const hasAccount = await hasAccountId(userId);
 
   return (
     <header className="justify-between mx-auto w-full h-[50px] flex items-center border-b-[1px] dark:bg-[#212125] bg-[#fbfbfb] dark:border-gray-700 transition-colors  ">
@@ -47,7 +51,7 @@ export default async function Header() {
         <MenuIcon />
         <NotificationIcon />
         <SignOutIcon />
-        {session ? <AdsenseButton /> : null}
+        {session && !hasAccount ? <AdsenseButton /> : null}
       </FlexBox>
     </header>
   );

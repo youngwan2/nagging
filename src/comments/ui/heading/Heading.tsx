@@ -9,7 +9,7 @@ export default function Heading({ level, className, children }: PropsType) {
     case '1':
       return (
         <h1
-          className={`${className} text-4xl font-bold tracking-tight text-gray-900 dark:text-white`}
+          className={`${className} text-4xl font-bold tracking-tight text-gray-900 dark:text-white dark:hover:text-white`}
         >
           {children}
         </h1>
@@ -17,7 +17,7 @@ export default function Heading({ level, className, children }: PropsType) {
     case '2':
       return (
         <h2
-          className={`${className} text-3xl font-bold tracking-tight text-gray-900 dark:text-white`}
+          className={`${className} text-3xl font-bold tracking-tight text-gray-900 dark:text-white dark:hover:text-white`}
         >
           {children}
         </h2>
@@ -25,7 +25,7 @@ export default function Heading({ level, className, children }: PropsType) {
     case '3':
       return (
         <h3
-          className={`${className} text-2xl font-bold tracking-tight text-gray-900 dark:text-white`}
+          className={`${className} text-2xl font-bold tracking-tight text-gray-900 dark:text-white dark:hover:text-white`}
         >
           {children}
         </h3>
@@ -33,7 +33,7 @@ export default function Heading({ level, className, children }: PropsType) {
     case '4':
       return (
         <h4
-          className={`${className} text-xl font-bold tracking-tight text-gray-900 dark:text-white`}
+          className={`${className} text-xl font-bold tracking-tight text-gray-900 dark:text-white dark:hover:text-white`}
         >
           {children}
         </h4>
@@ -41,7 +41,7 @@ export default function Heading({ level, className, children }: PropsType) {
     default:
       return (
         <h1
-          className={`${className} text-4xl font-bold tracking-tight text-gray-900 dark:text-white`}
+          className={`${className} text-4xl font-bold tracking-tight text-gray-900 dark:text-white dark:hover:text-white`}
         >
           {children}
         </h1>

@@ -1,27 +1,61 @@
+import prisma from '../../prisma/client';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
 
-export async function tokenRefresh(refreshToken: string) {
+/** 애드센스 계정에 대한 알림을 표시 */
+export async function getAdsenseAlert(userId: string, token: string) {
   try {
-    const response = await fetch('https://oauth2.googleapis.com/token', {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: process.env.AUTH_GOOGLE_ID!,
-        client_secret: process.env.AUTH_GOOGLE_SECRET!,
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken as string,
-      }),
-      method: 'POST',
-    });
+    const accountId = ((await getAdsenseAccountFromDb(userId)) as string) || '';
+    const oauth = await getCredentials(token);
 
-    const responseTokens = await response.json();
-    const newAccessToken = responseTokens.access_token;
-
-    return newAccessToken;
+    if (!oauth) throw new Error('접근 자격 없음');
+    const alerts = google
+      .adsense({ auth: oauth, version: 'v2' })
+      .accounts.alerts.list({
+        parent: accountId,
+      });
+    return (await alerts).data.alerts;
   } catch (error) {
     console.error(error);
+  }
+}
+
+/** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
+async function getAdsenseAccountFromDb(userId: string) {
+  try {
+    const { accountId } = (await prisma.adsenseAccount.findFirst({
+      select: {
+        accountId: true,
+      },
+      where: {
+        userId,
+      },
+    })) || { accountId: null };
+    return accountId;
+  } catch (error) {
+    console.error(error);
+    throw new Error('애드센스 계정 정보 조회 실패');
+  }
+}
+
+/** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
+export async function hasAccountId(userId: string) {
+  if (!userId) return false;
+  try {
+    const { accountId } = (await prisma.adsenseAccount.count({
+      select: {
+        accountId: true,
+      },
+      where: {
+        userId,
+      },
+    })) || { accountId: 0 };
+    if (accountId > 0) return true;
     return false;
+  } catch (error) {
+    console.error(error);
+    throw new Error('애드센스 계정 정보 조회 실패');
   }
 }
 

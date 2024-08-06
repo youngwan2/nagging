@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
-import { generateReport, getAccountInfo } from '@src/../lib/adsense';
+import { generateReport, getAccountInfo } from '@src/services/adsense.service';
 
 export async function POST(req: NextRequest) {
   const dateRange = await req.json();

@@ -6,7 +6,7 @@ import {
   getAccountInfo,
   getCredentials,
   saveAccountName,
-} from '../../lib/adsense';
+} from '@src/services/adsense.service';
 
 export const adsenseDataFetch = async () => {
   try {

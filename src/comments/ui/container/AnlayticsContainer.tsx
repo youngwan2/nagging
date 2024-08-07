@@ -1,6 +1,7 @@
 'use client';
 
 import useQueryReact from '@src/hooks/useQueryReact';
+import { useReports } from '@src/hooks/useReports';
 
 import LineGraph from '@src/comments/ui/graph/LineGraph';
 import Container from '@src/comments/ui/container/Container';
@@ -8,8 +9,9 @@ import ChartContainer from '@src/comments/ui/container/Container';
 import Heading from '@src/comments/ui/heading/Heading';
 import Text from '@src/comments/ui/text/Text';
 import CalendarContainer from '@src/comments/ui/container/CalendarContainer';
+import Button from '../button/Button';
+import GraphSkeleton from '../skeleton/GraphSkeleton';
 
-import type { ReportRequest } from '../../../../lib/adsense';
 import { Method } from '@src/configs/fetch.config';
 import {
   arrayToCSV,
@@ -17,11 +19,9 @@ import {
   download,
   flattenRows,
 } from '@src/utils/function';
+import { ReportRequest } from '@src/services/adsense.service';
 
 import { PiFileCsvThin } from 'react-icons/pi';
-import Button from '../button/Button';
-import GraphSkeleton from '../skeleton/GraphSkeleton';
-import { useReports } from '@src/hooks/useReports';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {

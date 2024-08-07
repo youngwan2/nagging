@@ -1,4 +1,4 @@
-import { ReportOptionType } from '../../../../lib/adsense';
+import { ReportOptionType } from '@src/services/adsense.service';
 import Container from '../container/Container';
 import NotificationScheduleButtonContainer from '../container/NotificationScheduleButtonContainer';
 import { ScheduleList } from '../container/NotificationScheduleListContainer';

@@ -1,5 +1,5 @@
+import { ReportRequest } from '@src/services/adsense.service';
 import { createStore } from 'zustand';
-import { ReportRequest } from '../../lib/adsense';
 import { devtools, persist } from 'zustand/middleware';
 
 // 보고서 조회 필터

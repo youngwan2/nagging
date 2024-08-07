@@ -16,14 +16,34 @@
 ## 🔥 배포
 - 준비중
 
-## 🛠️ 트러블 슈팅
-- 준비중
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
+### 언어/프레임워크/라이브러리
 
-| 사용 스텍 | 선택 이유 |
+| 사용 스텍 | 비고 |
 | :-------: | :-------- |
-|  준비중   | 준비중    |
+|  NextJS(14.2.4)   |  기존 react의 고질적인 문제인 SEO 문제의 개선과 RSC 를 통한 빠른 서버 데이터처리의 이점, 빠른 풀스텍 애플리케이션 개발 이점 등    |
+|  Typescript(^5)   |  타입 추론 및 정적 타입 체크를 통한 코드 안정성 향상   |
+
+
+### 상태관리
+| 사용 스텍 | 비고 |
+| :-------: | :-------- |
+|  Zustand (^4.5.4) |  간단하고 직관적인 클라이언트 전역 상태 관리    |
+|tanstack/react-query (^5.51.1) | 클라이언트와 서버 로직 간 의존성 분리 및 중복 요청 캐싱, 구조화된 데이터 처리   |
+
+
+### 데이터베이스
+| 사용 스텍 | 비고 |
+| :-------: | :-------- |
+|  PostgreSQL + Prisma | -     |
+
+### 그 외
+| 사용 스텍 | 비고 |
+| :-------: | :-------- |
+|next-auth (^5.0.0-beta.19)| 구글 로그인 |
+|node-cron (^3.0.3)| 보고서 알림 자동화를 위한 스케줄 등록|
+
 
 ## ⚙ 주요 기능
 ### 보고서 기능(알림 설정)
@@ -47,4 +67,182 @@
 - 준비중
 
 ## 🗂️ 프로젝트 구조
-- 준비중
+```
+src
+ ┣ 📂actions ------------------> server action
+ ┃ ┣ 📜adsense-actions.ts
+ ┃ ┗ 📜notification-actions.ts
+ ┣ 📂app
+ ┃ ┣ 📂api --------------------> API Routes
+ ┃ ┃ ┣ 📂adsense
+ ┃ ┃ ┃ ┣ 📂payments
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┗ 📂reports
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┣ 📂auth
+ ┃ ┃ ┃ ┗ 📂[...nextauth]
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┗ 📂notification
+ ┃ ┃ ┃ ┣ 📂reports
+ ┃ ┃ ┃ ┃ ┣ 📂[reportId]
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┣ 📂schedules
+ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┗ 📂tasks
+ ┃ ┃ ┃ ┃ ┣ 📂sync-task
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┃ ┃ ┃ ┗ 📂[reportId]
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
+ ┃ ┣ 📂auth
+ ┃ ┃ ┗ 📂signin
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂dashboard
+ ┃ ┃ ┣ 📂anlaytics
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂info
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📂notification-settings
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┣ 📜loading.tsx
+ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📜error.tsx
+ ┃ ┣ 📜favicon.ico
+ ┃ ┣ 📜globals.css
+ ┃ ┣ 📜layout.tsx
+ ┃ ┣ 📜loading.tsx
+ ┃ ┣ 📜manifest.json
+ ┃ ┗ 📜page.tsx
+ ┣ 📂components
+ ┃ ┣ 📂auth
+ ┃ ┃ ┗ 📜SignOutIcon.tsx
+ ┃ ┣ 📂section
+ ┃ ┃ ┣ 📜ProfitSection.tsx
+ ┃ ┃ ┗ 📜Section.tsx
+ ┃ ┣ 📂ui
+ ┃ ┃ ┣ 📂button
+ ┃ ┃ ┃ ┣ 📜AdsenseButton.tsx
+ ┃ ┃ ┃ ┣ 📜Button.tsx
+ ┃ ┃ ┃ ┗ 📜ChartButton.tsx
+ ┃ ┃ ┣ 📂card
+ ┃ ┃ ┃ ┣ 📜Card.tsx
+ ┃ ┃ ┃ ┣ 📜CardBody.tsx
+ ┃ ┃ ┃ ┣ 📜CardFooter.tsx
+ ┃ ┃ ┃ ┣ 📜CardHeader.tsx
+ ┃ ┃ ┃ ┣ 📜HomeCard.tsx
+ ┃ ┃ ┃ ┗ 📜SummaryCard.tsx
+ ┃ ┃ ┣ 📂container
+ ┃ ┃ ┃ ┣ 📜AlertCardContainer.tsx
+ ┃ ┃ ┃ ┣ 📜AnlayticsContainer.tsx
+ ┃ ┃ ┃ ┣ 📜CalendarContainer.tsx
+ ┃ ┃ ┃ ┣ 📜Container.tsx
+ ┃ ┃ ┃ ┣ 📜InfomationContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationOptionFormContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationOptionListContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationPageContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationScheduleButtonContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationScheduleListContainer.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationTaskButtonContainer.tsx
+ ┃ ┃ ┃ ┗ 📜QuickAccessContainer.tsx
+ ┃ ┃ ┣ 📂form
+ ┃ ┃ ┃ ┣ 📜Form.tsx
+ ┃ ┃ ┃ ┣ 📜LoginForm.tsx
+ ┃ ┃ ┃ ┗ 📜NotificationReportOptionForm.tsx
+ ┃ ┃ ┣ 📂graph
+ ┃ ┃ ┃ ┗ 📜LineGraph.tsx
+ ┃ ┃ ┣ 📂heading
+ ┃ ┃ ┃ ┗ 📜Heading.tsx
+ ┃ ┃ ┣ 📂icon
+ ┃ ┃ ┃ ┣ 📜CalendarIcon.tsx
+ ┃ ┃ ┃ ┣ 📜MenuIcon.tsx
+ ┃ ┃ ┃ ┗ 📜NotificationIcon.tsx
+ ┃ ┃ ┣ 📂Input
+ ┃ ┃ ┃ ┣ 📜ChartInput.tsx
+ ┃ ┃ ┃ ┗ 📜Input.tsx
+ ┃ ┃ ┣ 📂item
+ ┃ ┃ ┃ ┣ 📜ListItem.tsx
+ ┃ ┃ ┃ ┗ 📜NotificationReportOptionListItem.tsx
+ ┃ ┃ ┣ 📂label
+ ┃ ┃ ┃ ┗ 📜Label.tsx
+ ┃ ┃ ┣ 📂layout
+ ┃ ┃ ┃ ┣ 📜Footer.tsx
+ ┃ ┃ ┃ ┗ 📜Header.tsx
+ ┃ ┃ ┣ 📂list
+ ┃ ┃ ┃ ┣ 📜List.tsx
+ ┃ ┃ ┃ ┣ 📜NotificationReportOptionList.tsx
+ ┃ ┃ ┃ ┗ 📜NotificationScheduleList.tsx
+ ┃ ┃ ┣ 📂message
+ ┃ ┃ ┃ ┗ 📜LoginRequireMessage.tsx
+ ┃ ┃ ┣ 📂option
+ ┃ ┃ ┃ ┗ 📜SelectOption.tsx
+ ┃ ┃ ┣ 📂pagination
+ ┃ ┃ ┃ ┣ 📜Pagination.module.css
+ ┃ ┃ ┃ ┗ 📜PaginationContainer.tsx
+ ┃ ┃ ┣ 📂select
+ ┃ ┃ ┃ ┣ 📜NotificationSelect.tsx
+ ┃ ┃ ┃ ┗ 📜Select.tsx
+ ┃ ┃ ┣ 📂skeleton
+ ┃ ┃ ┃ ┣ 📜CardSkeleton.tsx
+ ┃ ┃ ┃ ┣ 📜ExchangeRateTableSkeleton.tsx
+ ┃ ┃ ┃ ┣ 📜GraphSkeleton.tsx
+ ┃ ┃ ┃ ┗ 📜ScheduleCardSkeleton.tsx
+ ┃ ┃ ┣ 📂spinner
+ ┃ ┃ ┃ ┣ 📜LoadingSpinner.tsx
+ ┃ ┃ ┃ ┗ 📜ParticleLoading.tsx
+ ┃ ┃ ┣ 📂table
+ ┃ ┃ ┃ ┗ 📜ExchangeRatesTable.tsx
+ ┃ ┃ ┗ 📂text
+ ┃ ┃ ┃ ┣ 📜SplitText.tsx
+ ┃ ┃ ┃ ┗ 📜Text.tsx
+ ┃ ┣ 📂__test__
+ ┃ ┃ ┗ 📜DarkMode.test.tsx
+ ┃ ┣ 📜DarkMode.tsx
+ ┃ ┣ 📜Navigation.tsx
+ ┃ ┗ 📜Provider.tsx
+ ┣ 📂configs
+ ┃ ┣ 📜fetch.config.ts
+ ┃ ┗ 📜url.config.ts
+ ┣ 📂constants
+ ┃ ┣ 📜cron.ts
+ ┃ ┗ 📜currencies.ts
+ ┣ 📂hooks
+ ┃ ┣ 📂__test__
+ ┃ ┣ 📜useCustomRouter.tsx
+ ┃ ┣ 📜useMatchPath.tsx
+ ┃ ┣ 📜useQueryInvalidate.tsx
+ ┃ ┣ 📜useQueryReact.tsx
+ ┃ ┣ 📜useReports.tsx
+ ┃ ┣ 📜useResize.tsx
+ ┃ ┗ 📜useTextSplit.tsx
+ ┣ 📂mocks
+ ┃ ┣ 📜handlers.ts
+ ┃ ┣ 📜localStorage.mock.ts
+ ┃ ┣ 📜matchMedia.mock.ts
+ ┃ ┣ 📜server.ts
+ ┃ ┗ 📜useState.mock.ts
+ ┣ 📂services
+ ┃ ┣ 📜adsense.service.ts
+ ┃ ┣ 📜common.service.ts
+ ┃ ┣ 📜google.service.ts
+ ┃ ┗ 📜notification.service.ts
+ ┣ 📂store
+ ┃ ┣ 📂types
+ ┃ ┃ ┗ 📜store.type.d.ts
+ ┃ ┣ 📜dateRangeStore.ts
+ ┃ ┗ 📜menuStore.ts
+ ┣ 📂types
+ ┃ ┣ 📜anlaytics.types.d.ts
+ ┃ ┗ 📜api-ad.types.d.ts
+ ┣ 📂utils
+ ┃ ┣ 📂__test__
+ ┃ ┃ ┗ 📜function.test.ts
+ ┃ ┣ 📜cron-parser.ts
+ ┃ ┣ 📜function.ts
+ ┃ ┗ 📜setupTests.ts
+ ┣ 📜auth.ts
+ ┣ 📜joi.ts ----------------> 유효성
+ ┣ 📜middlewaree.ts
+ ┣ 📜next-auth.d.ts
+ ┣ 📜nodemailer.ts
+ ┗ 📜task.ts ---------------> cron 작업
+```

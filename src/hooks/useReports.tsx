@@ -1,6 +1,6 @@
 'use client';
+import { CustomDate, ReportRequest } from '@src/services/adsense.service';
 import { useReducer } from 'react';
-import { CustomDate, ReportRequest } from '../../lib/adsense';
 
 // 타입
 export type Action =
@@ -11,7 +11,10 @@ export type Action =
   | { type: 'SET_METRICS'; payload: string[] }
   | { type: 'SET_REPORTING_TIME_ZONE'; payload: 'ACCOUNT_TIME_ZONE' };
 
-interface State extends ReportRequest {}
+interface State extends ReportRequest {
+  startDate: any;
+  endDate: any;
+}
 
 // 훅
 export function useReports(dateRange: ReportRequest) {

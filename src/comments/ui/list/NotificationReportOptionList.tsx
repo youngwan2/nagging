@@ -38,6 +38,7 @@ export default function NotificationReportOptionList({ items }: PropsType) {
           key={item?.reportId}
           item={item}
           taskManagementButtons={
+            // 알림 작업 버튼
             <NotificationTaskButtonContainer reportId={item?.reportId} />
           }
         />

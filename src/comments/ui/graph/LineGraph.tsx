@@ -15,9 +15,11 @@ import {
 
 interface PropsType {
   data: FlattenedData[];
+  message: React.ReactNode;
 }
 
-export default function LineGraph({ data }: PropsType) {
+export default function LineGraph({ data, message }: PropsType) {
+  if (message) return message;
   if (data.length === 0)
     return (
       <Heading level="2" className="text-[1em] text-center font-normal">

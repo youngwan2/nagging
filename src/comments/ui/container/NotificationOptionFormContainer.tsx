@@ -8,7 +8,7 @@ interface PropsType {
 }
 export default function NotificationOptionFormContainer({ userId }: PropsType) {
   return (
-    <Container elName={'section'}>
+    <Container elName={'section'} className="w-full">
       <Heading level="2" className="pb-[0.75em]">
         보고서 설정
         <Text

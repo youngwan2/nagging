@@ -6,6 +6,7 @@ import { commonService } from '@src/services/common.service';
 import Heading from '../ui/heading/Heading';
 import Container from '../ui/container/Container';
 import SummaryCard from '../ui/card/SummaryCard';
+import Text from '../ui/text/Text';
 
 interface Payment {
   payments: {
@@ -41,10 +42,12 @@ export default async function ProfitSection() {
           <span className="text-[0.55em] pl-4 text-gray-500">
             Payment Statistics
           </span>
-          <p className="text-[1rem] font-light">
-            첫 방문 이시라면 우측 상단에 AdSense 를 클릭하여 애드센스 계정정보를
-            불러와 주세요.
-          </p>
+          <Text elementName={'p'} className="text-[1rem] font-light">
+            {session
+              ? `첫 방문 이시라면 우측 상단에 [AdSense] 를 클릭하여 애드센스 계정정보를
+            불러와 주세요.`
+              : `접근 권한이 없습니다. 로그인 후 시도해주세요.`}
+          </Text>
         </Heading>
       </Section>
     );
@@ -56,9 +59,9 @@ export default async function ProfitSection() {
           <span className="text-[0.55em] pl-4 text-gray-500">
             Payment Statistics
           </span>
-          <p className="text-[1rem] font-light">
+          <Text elementName={'p'} className="text-[1rem] font-light">
             현재는 조회된 수익 정보가 없습니다.
-          </p>
+          </Text>
         </Heading>
       </Section>
     );

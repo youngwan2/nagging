@@ -10,6 +10,7 @@ import NotificationOptionListContainer from './NotificationOptionListContainer';
 
 import { Method } from '@src/configs/fetch.config';
 import { urlConfigs } from '@src/configs/url.config';
+import FlexBox from '../wrapper/FlexBox';
 
 // 타입 정의
 export interface QueryState {
@@ -25,7 +26,6 @@ interface PropsType {
 }
 
 const initialPage = 1;
-const FlexCellGroup = Container;
 export default function NotificationPageContainer({
   userId,
   token,
@@ -78,15 +78,16 @@ export default function NotificationPageContainer({
       elName={'div'}
       className="w-full relative flex xl:flex-row flex-col justify-between"
     >
-      <FlexCellGroup elName={'div'} className="w-full">
+      <FlexBox className="w-full flex-col items-start">
         {/* 보고서 설정 */}
         <NotificationOptionFormContainer userId={userId} />
-        {/* 알림 예약*/}
+        {/* 알림 스케줄 목록*/}
         <NotificationScheduleListContainer queryState={scheduleType} />
-      </FlexCellGroup>
+      </FlexBox>
 
-      {/* 생성한 보고서 옵션 내역 */}
+      {/* 보고서 옵션 목록*/}
       <NotificationOptionListContainer
+        userId={userId}
         queryState={reportOptionDataType}
         onPageChange={onPageChange}
         page={initialPage}

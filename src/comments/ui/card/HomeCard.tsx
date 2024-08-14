@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Card from './SummaryCard';
+import SummaryCard from './SummaryCard';
 import Text from '../text/Text';
 
 interface PropsType {
@@ -10,18 +10,16 @@ interface PropsType {
 }
 export default function HomeCard({ koTitle, enTitle, href, text }: PropsType) {
   return (
-    <Card className="p-3" koTitle={koTitle} enTitle={enTitle}>
+    <SummaryCard className="p-3 group" koTitle={koTitle} enTitle={enTitle}>
       {href ? (
-        <Link href={href} className="hover:text-white">
-          <Text elementName={'span'} className="pt-[2em] hover:text-white">
+        <Link href={href}>
+          <Text elementName={'span'} className="pt-[2em]">
             {text}
           </Text>
         </Link>
       ) : (
-        <Text elementName={'span'} className="hover:text-white">
-          {text}
-        </Text>
+        <Text elementName={'span'}>{text}</Text>
       )}
-    </Card>
+    </SummaryCard>
   );
 }

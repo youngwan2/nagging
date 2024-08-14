@@ -1,19 +1,21 @@
 'use client';
 
-import { commonService } from '@src/services/common.service';
+import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
+
 import Button from '../button/Button';
 import Text from '../text/Text';
 import Container from './Container';
+import FlexBox from '../wrapper/FlexBox';
 
 import { Method } from '@src/configs/fetch.config';
+
 import { everyMonth, everyWeek, everyYear } from '@src/constants/cron';
-import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
+import { commonService } from '@src/services/common.service';
 
 interface PropsType {
   reportId: number;
 }
 
-const FlexBox = Container;
 export default function NotificationTaskButtonContainer({
   reportId,
 }: PropsType) {
@@ -80,11 +82,6 @@ export default function NotificationTaskButtonContainer({
 
   const scheduleOptions = [
     {
-      label: '1분 후 받기',
-      expression: `*/1 * * * *`,
-      title: '매주 월요일 오전 06:00 정기 보고',
-    },
-    {
       label: '주 단위',
       expression: everyWeek,
       title: '매주 월요일 오전 06:00 정기 보고',
@@ -111,7 +108,7 @@ export default function NotificationTaskButtonContainer({
       </SettingsContainer>
 
       <SettingsContainer title="일회성 알림 설정">
-        <FlexBox elName="div" className="flex items-center">
+        <FlexBox className="flex items-center">
           <Button
             title="5초 뒤 1회"
             onClick={handleImmediateReport}
@@ -123,13 +120,7 @@ export default function NotificationTaskButtonContainer({
       </SettingsContainer>
 
       <SettingsContainer title="보고서 삭제">
-        <FlexBox elName="div" className="flex items-center">
-          {/* <Button
-            onClick={handleDeleteTaskNotification}
-            className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
-          >
-            알림 삭제
-          </Button> */}
+        <FlexBox className="flex items-center">
           <Button
             onClick={handleDeleteReportOption}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
@@ -167,7 +158,7 @@ function ButtonGroup({
   onClick: (expression: string) => void;
 }) {
   return (
-    <FlexBox elName="div" className="flex items-center">
+    <FlexBox className="flex items-center">
       {options.map((option) => (
         <Button
           key={option.expression}
@@ -181,19 +172,3 @@ function ButtonGroup({
     </FlexBox>
   );
 }
-
-/** 작업 취소 : 보류 */
-// async function handleDeleteTaskNotification() {
-//   const url = '/api/notification/tasks/' + reportId;
-
-//   try {
-//     const result = await commonService({
-//       reqUrl: url,
-//       method: Method.DELETE,
-//     });
-//     alert(result.message ?? result.error);
-//     onRefresh()
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }

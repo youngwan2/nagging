@@ -10,10 +10,7 @@ export async function POST(req: NextRequest) {
 
   // 토큰 형식이 불일치 하면 요청을 거절
   if (raw[0] !== 'Bearer' || userId.length < 2) {
-    return NextResponse.json(
-      { error: '유효한 요청 양식이 아님.' },
-      { status: 401, statusText: '유효한 요청 양식이 아님' },
-    );
+    return NextResponse.json({ message: '유효한 요청 양식이 아님.' });
   }
 
   // 애드센스 계정 정보를 조회
@@ -25,10 +22,9 @@ export async function POST(req: NextRequest) {
 
     // 계정 정보가 없다면 요청을 거절
     if (accountName.length < 1) {
-      return NextResponse.json(
-        { error: '계정 정보 없음. 애드센스 재요청 후 다시 요청 바람' },
-        { status: 404, statusText: '계정 정보 없음' },
-      );
+      return NextResponse.json({
+        message: '계정 정보 없음. 애드센스 재요청 후 다시 요청 바람',
+      });
     }
 
     const dbPayments = await getDbPayment(userId);
@@ -61,10 +57,7 @@ export async function POST(req: NextRequest) {
 
       // 수익금 내역이 없으면 없다는 응답을 보내고, 있다면 조회된 내역을 응답
       if (payments && payments?.length < 1)
-        return NextResponse.json(
-          { error: '결제 내역 없음.' },
-          { status: 404, statusText: '결제 내역 없음' },
-        );
+        return NextResponse.json({ message: '결제 내역 없음.' });
       else {
         return NextResponse.json({ payments: payments });
       }

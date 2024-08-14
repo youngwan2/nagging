@@ -8,12 +8,14 @@ import Container from './Container';
 import type { QueryState } from './NotificationPageContainer';
 
 interface PropsType {
+  userId?: string;
   queryState: QueryState;
   onPageChange: (page: number) => void;
   page: number;
 }
 
 export default function NotificationOptionListContainer({
+  userId,
   queryState,
   onPageChange,
   page,
@@ -24,8 +26,8 @@ export default function NotificationOptionListContainer({
   const maxPage = data?.maxPage || 0;
 
   return (
-    <Container elName={'section'} className="w-full pl-3">
-      <Heading level="2" className="xl:mt-0 xl:ml-5 mt-[4rem] ml-0 pb-[0.75em]">
+    <Container elName={'section'} className="w-full pl-0 xl:pl-3">
+      <Heading level="2" className="mt-[3.5rem] xl:mt-0 ml-0 pb-[0.75em]">
         보고서 옵션 목록
         <Text
           elementName={'span'}
@@ -49,7 +51,15 @@ export default function NotificationOptionListContainer({
       ) : null}
       {!isPending || !isRefetching ? (
         <>
-          <NotificationReportOptionList items={optionList} />
+          {userId ? (
+            <NotificationReportOptionList items={optionList} />
+          ) : (
+            <Text elementName={'p'} className="py-5">
+              접근권한이 없습니다. 로그인 후 이용해주세요.
+            </Text>
+          )}
+
+          {/* 페이지 네이션 */}
           <PaginationContainer
             onChange={onPageChange}
             initialPage={page}

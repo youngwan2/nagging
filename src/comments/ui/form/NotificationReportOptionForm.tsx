@@ -2,7 +2,6 @@
 
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
-import Flex from '@src/comments/ui/container/Container';
 import Form from '@src/comments/ui/form/Form';
 import Label from '@src/comments/ui/label/Label';
 import SelectOption from '@src/comments/ui/option/SelectOption';
@@ -13,6 +12,7 @@ import Text from '@src/comments/ui/text/Text';
 import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
 import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
+import FlexBox from '../wrapper/FlexBox';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } =
   createInitData();
@@ -63,7 +63,7 @@ export default function NotificationReportOptionForm({
       {/* 보고서 조회 시작일 */}
       <Label className="dark:text-white mt-3 inline-block w-full  max-w-[645px]">
         조회 시작일(Start Date)
-        <Flex elName={'div'} className="flex w-full justify-between ">
+        <FlexBox className="w-full justify-between ">
           {/* 연도, 월, 일 */}
           <NotificationSelect
             name="start-year"
@@ -82,13 +82,13 @@ export default function NotificationReportOptionForm({
             options={days}
             condition={1}
           />
-        </Flex>
+        </FlexBox>
       </Label>
 
       {/* 보고서 조회 종료일 */}
       <Label className="dark:text-white mt-3 inline-block w-full max-w-[645px] ">
         조회 종료일(End Date)
-        <Flex elName={'div'} className="flex w-full justify-between">
+        <FlexBox className="w-full justify-between">
           {/* 연도, 월, 일 */}
           <NotificationSelect
             name="end-year"
@@ -107,7 +107,7 @@ export default function NotificationReportOptionForm({
             options={days}
             condition={31}
           />
-        </Flex>
+        </FlexBox>
       </Label>
 
       {/* 보고서 조회 지표 */}
@@ -146,9 +146,12 @@ export default function NotificationReportOptionForm({
       </Label>
       {/* 보고서 등록 버튼 */}
       <Button
-        className="w-full p-3 rounded-md mt-5 bg-gradient-to-br from-slate-500 to-slate-800 text-white hover:from-slate-800 hover:to-slate-500"
+        className={`w-full p-3 rounded-md mt-5 bg-gradient-to-br from-slate-500 to-slate-800 text-white hover:from-slate-800 hover:to-slate-500`}
         type="submit"
-        onClick={onInvalidateQuery}
+        onClick={() => {
+          if (!userId) return alert('해당 서비스는 로그인 후 이용 가능합니다.');
+          onInvalidateQuery();
+        }}
       >
         보고서 등록
       </Button>

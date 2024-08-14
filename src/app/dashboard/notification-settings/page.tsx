@@ -5,7 +5,6 @@ import { urlConfigs } from '@src/configs/url.config';
 import { commonService } from '@src/services/common.service';
 import { HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import NotificationPageContainer from '@src/comments/ui/container/NotificationPageContainer';
-import LoginRequiredMessage from '@src/comments/ui/message/LoginRequireMessage';
 
 export interface UserReportOptionList {
   reportId: number;
@@ -13,7 +12,7 @@ export interface UserReportOptionList {
   task: boolean;
   report: string;
   createdAt: Date;
-  updateddAt: Date;
+  updatedAt: Date;
 }
 
 export interface UserReportOptionInfo {
@@ -54,7 +53,6 @@ export default async function page() {
     queryFn: await commonService(scheduleListReqOptions),
   });
 
-  if (!session) return <LoginRequiredMessage />;
   return (
     <HydrationBoundary>
       <NotificationPageContainer userId={userId} token={token} />

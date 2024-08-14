@@ -53,7 +53,7 @@ const options = {
   staleTime: 1000 * 60 * 5, // 5 minutes
   retry: 3,
 };
-export default function AnlayticsContainer({ token }: { token?: string }) {
+export default function AnalyticsContainer({ token }: { token?: string }) {
   /** 보고서 상태관리 */
   const { state, dispatch } = useReports(dateRange);
 
@@ -163,7 +163,16 @@ export default function AnlayticsContainer({ token }: { token?: string }) {
             )}
           </Heading>
         ) : (
-          <LineGraph data={flatRows} />
+          <LineGraph
+            data={flatRows}
+            message={
+              data.message ? (
+                <Text elementName={'p'} className="text-center pt-[10rem]">
+                  {data.message}
+                </Text>
+              ) : null
+            }
+          />
         )}
       </ChartContainer>
     </Container>

@@ -5,6 +5,8 @@ import prisma from '../../prisma/client';
 
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
 export async function createReportOption(userId: string, formData: FormData) {
+  if (!userId) return null;
+
   const dateRange = {
     reportName:
       formData.get('report-name')?.toString() ||

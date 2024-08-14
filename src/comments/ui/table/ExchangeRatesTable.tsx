@@ -1,5 +1,5 @@
 import React from 'react';
-import { CurrencyPair } from '../container/InfomationContainer';
+import { CurrencyPair } from '../container/InformationContainer';
 
 interface PropsType {
   currencyPairs: CurrencyPair[];

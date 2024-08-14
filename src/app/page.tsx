@@ -1,13 +1,15 @@
-import { auth } from '@src/auth';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import Card from '@src/comments/ui/card/Card';
 import CardBody from '@src/comments/ui/card/CardBody';
 import CardFooter from '@src/comments/ui/card/CardFooter';
 import CardHeader from '@src/comments/ui/card/CardHeader';
 import Container from '@src/comments/ui/container/Container';
-
-import { redirect } from 'next/navigation';
 import LoginForm from '@src/comments/ui/form/LoginForm';
+
+import { auth } from '@src/auth';
+
 export default async function page() {
   const session = await auth();
 
@@ -63,6 +65,12 @@ export default async function page() {
               text="지금 시작하기"
               buttonClassName="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
             />
+            <Link
+              href={'/dashboard'}
+              className="bg-[#36353D] text-white font-bold py-2 px-4 rounded hover:bg-[#424146] transition duration-300"
+            >
+              둘러 보기
+            </Link>
           </CardFooter>
         </Card>
       </Container>

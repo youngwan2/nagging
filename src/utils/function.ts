@@ -1,4 +1,4 @@
-import { CurrencyPair } from '@src/comments/ui/container/InfomationContainer';
+import { CurrencyPair } from '@src/comments/ui/container/InformationContainer';
 import { FlattenedData, Row } from '@src/types/anlaytics.types';
 
 /** 보고서 중첩배열 평탄화 */

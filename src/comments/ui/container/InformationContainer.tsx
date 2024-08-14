@@ -29,7 +29,7 @@ const currencyCodes = Object.keys(currencies);
 interface PropsType {
   token?: string;
 }
-export default function InfomationContainer({}: PropsType) {
+export default function InformationContainer({}: PropsType) {
   const today = formatDate(new Date());
   const [date, setDate] = useState<string>(today);
 

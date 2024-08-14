@@ -45,7 +45,7 @@ export default function NotificationScheduleListContainer({
   const { data, isError, isPending, isRefetching } = queryState;
 
   return (
-    <Container elName={'section'} className="mt-16">
+    <Container elName={'section'} className="mt-16 w-full">
       <Heading level="2" className="pb-[0.75em]">
         알림 스케줄 목록
         <Text

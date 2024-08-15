@@ -2,7 +2,8 @@ import cron, { validate } from 'node-cron';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 
-import prisma from '../../../../../../prisma/client';
+// import prisma from '../../../../../../prisma/client';
+import { connect } from '../../../../../../prisma/client';
 
 import { auth } from '@src/auth';
 import {
@@ -19,14 +20,18 @@ export async function POST(
   req: NextRequest,
   res: { params: { reportId: number } },
 ) {
-  const imediate = req.url.includes('immediate=true'); // 즉시 알림을 받을 것인지 유무 체크
+  const { prisma } = await connect();
+
+  const immediate = req.url.includes('immediate=true'); // 즉시 알림을 받을 것인지 유무 체크
   const reportId = Number(res.params.reportId);
-  const json = imediate === false ? await req.json() : null;
+  const json = immediate === false ? await req.json() : null;
+
   const {
     userId,
     access_token: accessToken = '',
     user,
   } = ((await auth()) as Session) || { userId: '', accessToken: '' };
+
   const cronExpression = json ? json.cron || { cron: null } : null;
   const userEmail = user?.email || '';
   const isCron = cronExpression ? validate(cronExpression) : false;
@@ -47,7 +52,7 @@ export async function POST(
     }
 
     // 사용자가 보고서 알림을 즉시 받기를 원하는 경우 금일 날짜로 보고서 전송
-    if (imediate === true) {
+    if (immediate === true) {
       await sendNotification(userId, reportOptionJSON, accessToken, userEmail);
 
       return NextResponse.json({ message: '즉시 보고서 전송 완료' });
@@ -171,6 +176,8 @@ export async function DELETE(
   }
 
   try {
+    const { prisma } = await connect();
+
     const { userId } = ((await auth()) as Session) || { userId: '' };
     const reportId = Number(res.params.reportId);
 

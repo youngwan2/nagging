@@ -1,4 +1,5 @@
-import prisma from '../../prisma/client';
+// import prisma from '../../prisma/client';
+import { connect } from '../../prisma/client';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
@@ -24,6 +25,7 @@ export async function getAdsenseAlert(userId: string, token: string) {
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 async function getAdsenseAccountFromDb(userId: string) {
   try {
+    const { prisma } = await connect();
     const { accountId } = (await prisma.adsenseAccount.findFirst({
       select: {
         accountId: true,
@@ -43,6 +45,7 @@ async function getAdsenseAccountFromDb(userId: string) {
 export async function hasAccountId(userId: string) {
   if (!userId) return false;
   try {
+    const { prisma } = await connect();
     const { accountId } = (await prisma.adsenseAccount.count({
       select: {
         accountId: true,

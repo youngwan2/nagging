@@ -1,7 +1,8 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import prisma from '../../prisma/client';
+import { connect } from '../../prisma/client';
+// import prisma from '../../prisma/client';
 
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
 export async function createReportOption(userId: string, formData: FormData) {
@@ -29,6 +30,7 @@ export async function createReportOption(userId: string, formData: FormData) {
   };
 
   try {
+    const { prisma } = await connect();
     const stringDateRange = JSON.stringify(dateRange);
 
     await prisma.notificationReports.create({

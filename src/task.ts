@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
-import prisma from '../prisma/client';
+// import prisma from '../prisma/client';
+import { connect } from '../prisma/client';
 import { tokenRefresh } from './services/google.service';
 import {
   ReportOptionType,
@@ -12,6 +13,7 @@ import {
 export async function syncTask() {
   // 예약된 task 가 true 인 경우인 작업만 조회
   try {
+    const { prisma } = await connect();
     const jobs = await prisma.notificationCron.findMany({
       include: {
         user: {
@@ -167,6 +169,7 @@ export async function sendNotification(
 /** DB에 저장된 보고서 옵션 조회  */
 export async function getReportOptionFromDb(_reportId: number, userId: string) {
   try {
+    const { prisma } = await connect();
     const result = (
       await prisma.notificationReports.findMany({
         select: {
@@ -187,6 +190,7 @@ export async function getReportOptionFromDb(_reportId: number, userId: string) {
 /** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
 export async function getAbsenseAccountIdWithUserId(userId: string) {
   try {
+    const { prisma } = await connect();
     return (
       await prisma.adsenseAccount.findMany({
         select: {

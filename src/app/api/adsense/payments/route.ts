@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@src/../prisma/client';
+// import prisma from '@src/../prisma/client';
+import { connect } from '../../../../../prisma/client';
 import { adsense_v2 } from 'googleapis';
 import { getCredentials, getPayments } from '@src/services/adsense.service';
 
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest) {
 
   // 애드센스 계정 정보를 조회
   try {
+    const { prisma } = await connect();
     const accountName = await prisma.adsenseAccount.findMany({
       where: { userId },
       select: { accountId: true },
@@ -74,6 +76,7 @@ export async function POST(req: NextRequest) {
 /** 수익금(지불) 데이터베이스 저장 */
 async function setPayment(userId: string, paid: string[]) {
   try {
+    const { prisma } = await connect();
     await prisma.adsensePayment.create({
       data: {
         userId,
@@ -91,6 +94,7 @@ async function setPayment(userId: string, paid: string[]) {
  */
 async function getDbPayment(userId: string) {
   try {
+    const { prisma } = await connect();
     const paymentInfo = (await prisma.adsensePayment.findFirst({
       select: {
         paid: true,

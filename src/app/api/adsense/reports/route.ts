@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { generateReport } from '@src/services/adsense.service';
-import prisma from '../../../../../prisma/client';
+// import prisma from '../../../../../prisma/client';
+import { connect } from '../../../../../prisma/client';
 import { auth } from '@src/auth';
 
 export async function POST(req: NextRequest) {
@@ -40,6 +41,7 @@ async function getAccountInfoWithDb(userId?: string) {
   if (!userId) return false;
 
   try {
+    const { prisma } = await connect();
     const accountInfo = await prisma.adsenseAccount.findFirst({
       select: { accountId: true },
       where: { userId: userId },

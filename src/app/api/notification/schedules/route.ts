@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../../../prisma/client';
+// import prisma from '../../../../../prisma/client';
+import { connect } from '../../../../../prisma/client';
 import { cronParser } from '@src/utils/cron-parser';
 
 export async function GET(req: NextRequest) {
@@ -11,6 +12,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: '잘못된 토큰 형식' }, { status: 400 });
 
   try {
+    const { prisma } = await connect();
     const userId = (
       await prisma.account.findMany({
         where: {
@@ -100,6 +102,7 @@ function mappingNextScheduleInfo(
 
 async function getScheduleList(userId?: string) {
   try {
+    const { prisma } = await connect();
     return await prisma.notificationCron.findMany({
       select: {
         notificationReports: true,

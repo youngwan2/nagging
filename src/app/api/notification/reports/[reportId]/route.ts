@@ -1,6 +1,7 @@
 import { auth } from '@src/auth';
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../../../../prisma/client';
+// import prisma from '../../../../../../prisma/client';
+import { connect } from '../../../../../../prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function DELETE(
@@ -10,6 +11,7 @@ export async function DELETE(
   const reportId = Number(res.params.reportId);
 
   try {
+    const { prisma } = await connect();
     const userId = (await auth())?.userId;
 
     if (!userId)

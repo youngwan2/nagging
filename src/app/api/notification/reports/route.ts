@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@src/auth';
-import prisma from '../../../../../prisma/client';
+// import prisma from '../../../../../prisma/client';
+import { connect } from '../../../../../prisma/client';
 import { urlConfigs } from '@src/configs/url.config';
 
 const LIMIT = 5;
@@ -14,6 +15,7 @@ export async function GET(req: NextRequest) {
   const SKIP = LIMIT * (page - 1);
 
   try {
+    const { prisma } = await connect();
     const totalCount = await prisma.notificationReports.count();
     const maxPage = Math.ceil(totalCount / 5);
     const results = await prisma.notificationReports.findMany({

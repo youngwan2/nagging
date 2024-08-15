@@ -24,8 +24,9 @@ export async function getAdsenseAlert(userId: string, token: string) {
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 async function getAdsenseAccountFromDb(userId: string) {
+  const { prisma, close } = await connect();
+
   try {
-    const { prisma } = await connect();
     const { accountId } = (await prisma.adsenseAccount.findFirst({
       select: {
         accountId: true,
@@ -38,14 +39,18 @@ async function getAdsenseAccountFromDb(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 계정 정보 조회 실패');
+  } finally {
+    await close();
   }
 }
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 export async function hasAccountId(userId: string) {
   if (!userId) return false;
+
+  const { prisma, close } = await connect();
+
   try {
-    const { prisma } = await connect();
     const { accountId } = (await prisma.adsenseAccount.count({
       select: {
         accountId: true,
@@ -59,6 +64,8 @@ export async function hasAccountId(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 계정 정보 조회 실패');
+  } finally {
+    await close();
   }
 }
 

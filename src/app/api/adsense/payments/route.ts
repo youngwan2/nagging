@@ -5,6 +5,7 @@ import { adsense_v2 } from 'googleapis';
 import { getCredentials, getPayments } from '@src/services/adsense.service';
 
 export async function POST(req: NextRequest) {
+  const { prisma, close } = await connect();
   const userId = JSON.parse(await req.text()).userId;
   const raw = req.headers.get('Authorization')?.split(' ') || '';
   const accessToken = raw[1];
@@ -16,7 +17,6 @@ export async function POST(req: NextRequest) {
 
   // 애드센스 계정 정보를 조회
   try {
-    const { prisma } = await connect();
     const accountName = await prisma.adsenseAccount.findMany({
       where: { userId },
       select: { accountId: true },
@@ -70,13 +70,15 @@ export async function POST(req: NextRequest) {
       { error: '네트워크 에러' },
       { status: 500, statusText: '네트워크 에러' },
     );
+  } finally {
+    await close();
   }
 }
 
 /** 수익금(지불) 데이터베이스 저장 */
 async function setPayment(userId: string, paid: string[]) {
+  const { prisma, close } = await connect();
   try {
-    const { prisma } = await connect();
     await prisma.adsensePayment.create({
       data: {
         userId,
@@ -86,6 +88,8 @@ async function setPayment(userId: string, paid: string[]) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 지급 데이터 구글 요청 실패');
+  } finally {
+    await close();
   }
 }
 /**
@@ -93,8 +97,8 @@ async function setPayment(userId: string, paid: string[]) {
  * @param userId 유저 식별을 위한 ID
  */
 async function getDbPayment(userId: string) {
+  const { prisma, close } = await connect();
   try {
-    const { prisma } = await connect();
     const paymentInfo = (await prisma.adsensePayment.findFirst({
       select: {
         paid: true,
@@ -109,6 +113,8 @@ async function getDbPayment(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('페이먼트 조회실패');
+  } finally {
+    await close();
   }
 }
 

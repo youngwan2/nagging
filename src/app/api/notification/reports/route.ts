@@ -8,14 +8,14 @@ const LIMIT = 5;
 
 /** GET | 유저가 저장한 보고서 옵션목록 조회 */
 export async function GET(req: NextRequest) {
-  const userId = (await auth())?.userId;
+  const { prisma, close } = await connect();
 
+  const userId = (await auth())?.userId;
   const page = Number(req.nextUrl.searchParams.get('page'));
   const nextURL = urlConfigs.protocol + urlConfigs.host + '?page=' + (page + 1);
   const SKIP = LIMIT * (page - 1);
 
   try {
-    const { prisma } = await connect();
     const totalCount = await prisma.notificationReports.count();
     const maxPage = Math.ceil(totalCount / 5);
     const results = await prisma.notificationReports.findMany({
@@ -31,5 +31,7 @@ export async function GET(req: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }

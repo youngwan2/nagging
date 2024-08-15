@@ -8,10 +8,9 @@ export async function DELETE(
   req: NextRequest,
   res: { params: { reportId: number } },
 ) {
+  const { prisma, close } = await connect();
   const reportId = Number(res.params.reportId);
-
   try {
-    const { prisma } = await connect();
     const userId = (await auth())?.userId;
 
     if (!userId)
@@ -28,5 +27,7 @@ export async function DELETE(
     return NextResponse.json({ message: '보고서 삭제 성공' }, { status: 203 });
   } catch (error) {
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }

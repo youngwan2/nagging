@@ -1,12 +1,13 @@
-import Section from './Section';
 import { auth } from '@src/auth';
-import { Method } from '@src/configs/fetch.config';
 
-import { commonService } from '@src/services/common.service';
+import Section from './Section';
 import Heading from '../ui/heading/Heading';
 import Container from '../ui/container/Container';
 import SummaryCard from '../ui/card/SummaryCard';
 import Text from '../ui/text/Text';
+
+import { Method } from '@src/configs/fetch.config';
+import { commonService } from '@src/services/common.service';
 
 interface Payment {
   payments: {

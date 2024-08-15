@@ -7,7 +7,7 @@ import { connect } from '../../prisma/client';
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
 export async function createReportOption(userId: string, formData: FormData) {
   if (!userId) return null;
-
+  const { prisma, close } = await connect();
   const dateRange = {
     reportName:
       formData.get('report-name')?.toString() ||
@@ -30,7 +30,6 @@ export async function createReportOption(userId: string, formData: FormData) {
   };
 
   try {
-    const { prisma } = await connect();
     const stringDateRange = JSON.stringify(dateRange);
 
     await prisma.notificationReports.create({
@@ -43,5 +42,7 @@ export async function createReportOption(userId: string, formData: FormData) {
     revalidatePath('/dashboard/notification-setting');
   } catch (error) {
     console.error('보고서 옵션 저장 실패:', error);
+  } finally {
+    await close();
   }
 }

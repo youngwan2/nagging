@@ -39,9 +39,8 @@ export async function POST(req: NextRequest) {
 
 async function getAccountInfoWithDb(userId?: string) {
   if (!userId) return false;
-
+  const { prisma, close } = await connect();
   try {
-    const { prisma } = await connect();
     const accountInfo = await prisma.adsenseAccount.findFirst({
       select: { accountId: true },
       where: { userId: userId },
@@ -51,5 +50,7 @@ async function getAccountInfoWithDb(userId?: string) {
   } catch (error) {
     console.error('/api/adsense/reports', error);
     return false;
+  } finally {
+    await close();
   }
 }

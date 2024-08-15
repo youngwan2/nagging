@@ -4,6 +4,8 @@ import { connect } from '../../../../../prisma/client';
 import { cronParser } from '@src/utils/cron-parser';
 
 export async function GET(req: NextRequest) {
+  const { prisma, close } = await connect();
+
   const rawToken = req.headers.get('Authorization') || '';
   const prefix = rawToken?.split(' ')[0];
   const token = rawToken?.split(' ')[1];
@@ -12,7 +14,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: '잘못된 토큰 형식' }, { status: 400 });
 
   try {
-    const { prisma } = await connect();
     const userId = (
       await prisma.account.findMany({
         where: {
@@ -33,6 +34,8 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }
 
@@ -100,9 +103,14 @@ function mappingNextScheduleInfo(
   return nextSchedule;
 }
 
+/**
+ * userId 와 일치하는 유저의 스케줄 목록 조회
+ * @param userId
+ */
 async function getScheduleList(userId?: string) {
+  const { prisma, close } = await connect();
+
   try {
-    const { prisma } = await connect();
     return await prisma.notificationCron.findMany({
       select: {
         notificationReports: true,
@@ -118,7 +126,8 @@ async function getScheduleList(userId?: string) {
     });
   } catch (error) {
     console.error(error);
-
     return [];
+  } finally {
+    await close();
   }
 }

@@ -20,7 +20,7 @@ export async function POST(
   req: NextRequest,
   res: { params: { reportId: number } },
 ) {
-  const { prisma } = await connect();
+  const { prisma, close } = await connect();
 
   const immediate = req.url.includes('immediate=true'); // 즉시 알림을 받을 것인지 유무 체크
   const reportId = Number(res.params.reportId);
@@ -163,6 +163,8 @@ export async function POST(
       { error: '네트워크 에러' },
       { status: 500, statusText: '네트워크 에러' },
     );
+  } finally {
+    await close();
   }
 }
 
@@ -175,9 +177,9 @@ export async function DELETE(
     return NextResponse.json({ message: '예약된 알림이 존재하지 않습니다.' });
   }
 
-  try {
-    const { prisma } = await connect();
+  const { prisma, close } = await connect();
 
+  try {
     const { userId } = ((await auth()) as Session) || { userId: '' };
     const reportId = Number(res.params.reportId);
 
@@ -250,5 +252,7 @@ export async function DELETE(
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }

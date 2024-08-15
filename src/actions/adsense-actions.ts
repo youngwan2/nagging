@@ -9,8 +9,8 @@ import {
 import { connect } from '../../prisma/client';
 
 export const adsenseDataFetch = async () => {
+  const { prisma, close } = await connect();
   try {
-    const { prisma } = await connect();
     const session = await auth();
     const userId = session?.userId;
     const accessToken = session?.access_token;
@@ -46,5 +46,7 @@ export const adsenseDataFetch = async () => {
     }
   } catch (error) {
     console.error('요청 불가', error);
+  } finally {
+    await close();
   }
 };

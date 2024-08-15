@@ -1,7 +1,9 @@
 import { auth } from '@src/auth';
-import type { Session, User } from 'next-auth';
 import { revalidatePath } from 'next/cache';
+
 import { signIn, signOut } from '@src/auth';
+
+import type { Session, User } from 'next-auth';
 
 export async function SignOutIcon() {
   const session = ((await auth()) as Session) || {

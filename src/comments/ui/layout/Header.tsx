@@ -5,12 +5,12 @@ import Heading from '../heading/Heading';
 import Text from '../text/Text';
 import DarkMode from '../../DarkMode';
 import MenuIcon from '../icon/MenuIcon';
+import FlexBox from '../wrapper/FlexBox';
 import { SignOutIcon } from '../../auth/SignOutIcon';
 import { AdsenseButton } from '@src/comments/ui/button/AdsenseButton';
 
 import { auth } from '@src/auth';
 import { hasAccountId } from '@src/services/adsense.service';
-import FlexBox from '../wrapper/FlexBox';
 
 export default async function Header() {
   const session = await auth();
@@ -30,14 +30,15 @@ export default async function Header() {
             className="w-[100px] flex items-center  p-[3px] mx-4"
           >
             <Image
-              width={24}
-              height={24}
+              width={26}
+              height={26}
+              className="rounded-full"
               src="/icons/android-launchericon-48-48.png"
               alt="사이트 로고"
             />
 
             <Text elementName={'p'} className="pl-2">
-              Nagging
+              잔소리
             </Text>
           </Link>
         </Heading>

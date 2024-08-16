@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import prisma from '../../../../../prisma/client';
 import { connect } from '../../../../../prisma/client';
 import { cronParser } from '@src/utils/cron-parser';
 

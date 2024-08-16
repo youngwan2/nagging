@@ -38,7 +38,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`${isOpen ? 'w-full' : 'w-[70px]'} whitespace-nowrap relative max-w-[300px] min-h-[100vh] bg-[#fbfbfb] dark:bg-[#212125] dark:text-white dark:border-r-slate-700 border-r transition-all`}
+      className={`${isOpen ? 'w-full' : 'w-[70px]'} whitespace-nowrap relative max-w-[200px] min-h-[100vh] bg-[#fbfbfb] dark:bg-[#212125] dark:text-white dark:border-r-slate-700 border-r transition-all`}
     >
       <ul className="p-[16px]">
         {navItems.map(({ href, title, icon: Icon, label }) => (

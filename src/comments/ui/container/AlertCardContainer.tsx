@@ -2,12 +2,12 @@ import Heading from '../heading/Heading';
 import Container from './Container';
 import HomeCard from '../card/HomeCard';
 import Text from '../text/Text';
+import EmptyMessage from '../message/EmptyMessage';
 
 import { auth } from '@src/auth';
 import { Session } from 'next-auth';
 import { getSchedule } from '@src/services/notification.service';
 import { getAdsenseAlert } from '@src/services/adsense.service';
-import Link from 'next/link';
 
 export default async function AlertCardContainer() {
   const session = (await auth()) as Session;
@@ -31,6 +31,7 @@ export default async function AlertCardContainer() {
           Alerts/Board
         </Text>
       </Heading>
+      <Heading level="3">애드센스 알림</Heading>
       {/* 애드센스 알림*/}
       {alerts ? (
         alerts?.map((alert) => {
@@ -44,29 +45,29 @@ export default async function AlertCardContainer() {
           );
         })
       ) : (
-        <Text elementName={'p'}>
-          - 현재는 애드센스 소식이 존재하지 않습니다.
-        </Text>
+        <EmptyMessage
+          title="애드센스 알림 없음"
+          message="조회된 애드센스 알림이 없습니다. 자세한 사항은 애드센스 사이트를 방문해주세요."
+        />
       )}
 
-      {/* 예약된 알림 */}
+      {/* 보고서 일정 알림 */}
+      <Heading level="3" className="mt-5 pt-3">
+        보고서 일정 알림
+      </Heading>
+
       {scheduleInfos.nextReminder ? (
         <HomeCard
           koTitle={report.reportName}
           href="/dashboard/notification-settings"
-          text={`${scheduleInfos.nextReminder} 및 ${scheduleInfos.subsequentReminder} 으로 설정된 알림이 있습니다. 상기일에 맞춰 설정한 보고서를 메일로 전달해 드립니다.`}
+          text={`${scheduleInfos.nextReminder} ~ ${scheduleInfos.subsequentReminder} 으로 설정된 알림이 있습니다. 자세한 설정은 [보고서 설정] 페이지에서 확인 바랍니다.`}
         />
       ) : (
-        <Text elementName={'p'} className="min-h-[120px]  my-3">
-          - 현재는 예약된 알림이 존재하지 않습니다.{' '}
-          <Link
-            href={'/dashboard/notification-settings'}
-            className="underline hover:text-gray-400 font-bold"
-          >
-            [보고서 알림 설정]
-          </Link>
-          을 통해 일정을 등록해주세요.
-        </Text>
+        <EmptyMessage
+          className="mt-4 border border-[rgba(255,255,255,0.1)] ml-2"
+          title="등록된 보고서 알림 없음"
+          message="현재 등록된 보고서 알림이 없습니다. [보고서 설정] 페이지를 통해 새로운 알림을 등록해주세요."
+        />
       )}
     </Container>
   );

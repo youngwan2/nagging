@@ -6,16 +6,18 @@ import Heading from '../heading/Heading';
 interface PropsType {
   title?: string;
   message?: string;
+  className?: string;
 }
 
 export default function EmptyMessage({
   title = '조회된 데이터가 없습니다.',
   message = '조회된 데이터를 찾을 수 없습니다.',
+  className,
 }: PropsType) {
   return (
     <MessageContainer
       elName={'div'}
-      className="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-sm dark:bg-[#151515] dark:border-none"
+      className={`${className} flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-sm dark:bg-[#151515] dark:border-none`}
     >
       <svg
         className="w-16 h-16 text-gray-500 mb-4"

@@ -123,7 +123,7 @@ export default function NotificationTaskButtonContainer({
         <FlexBox className="flex items-center">
           <Button
             onClick={handleDeleteReportOption}
-            className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
+            className="border mx-1 bg-red-500 text-white hover:bg-red-600 rounded-md p-1"
           >
             보고서 삭제
           </Button>

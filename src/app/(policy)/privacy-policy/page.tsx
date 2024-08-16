@@ -14,6 +14,7 @@ export default function PrivacyPolicyPage() {
           수집합니다.
           <ul className="list-disc list-inside ml-4 mt-2 text-gray-700 dark:text-gray-300">
             <li>필수 수집 정보: 이메일 주소 (Google 소셜 로그인 시)</li>
+            <li>선택 수집 정보: 애드센스 계정 정보 (Adsense 조회 신청 시)</li>
             <li>선택 수집 정보: 이름, 프로필 사진 (Google 소셜 로그인 시)</li>
           </ul>
         </p>

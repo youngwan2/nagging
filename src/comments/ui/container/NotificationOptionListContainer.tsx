@@ -7,6 +7,7 @@ import ReportCardSkeleton from '../skeleton/ReportCardSkeleton';
 import ErrorMessage from '../message/ErrorMessage';
 
 import type { QueryState } from './NotificationPageContainer';
+import CredentialMessage from '../message/CredentialMessage';
 
 interface PropsType {
   userId?: string;
@@ -41,32 +42,27 @@ export default function NotificationOptionListContainer({
       {/* 안내 */}
       <Text elementName={'p'} className="opacity-90 text-black text-[0.95em]">
         - 안정적인 서비스 운영을 위해 현재는 보고서 1개에 대해서만 알림설정이
-        가능합니다. <br />- 보고서를 삭제해도 알림은 제거되지 않습니다. 삭제 후
-        알림을 취소하려면 알림 목록을 이용해주세요.
+        가능합니다. <br />- [보고서 삭제] 시 해당 옵션으로 등록된 알림을
+        해제하거나 다른 보고서로 알림을 설정해주세요.
       </Text>
-      {isError ? (
+      {isError || !Array.isArray(optionList) ? (
         <ErrorMessage className="mt-4" />
       ) : !isPending ? (
-        <>
-          {userId ? (
-            <NotificationReportOptionList items={optionList} />
-          ) : (
-            <Text elementName={'p'} className="py-5">
-              {' '}
-              접근권한이 없습니다. 로그인 후 이용해주세요.{' '}
-            </Text>
-          )}
-
-          {/* 페이지 네이션 */}
-          <PaginationContainer
-            onChange={onPageChange}
-            initialPage={page}
-            total={maxPage}
-          />
-        </>
+        userId ? (
+          <NotificationReportOptionList items={optionList} />
+        ) : (
+          <CredentialMessage className="mt-4" />
+        )
       ) : (
         <ReportCardSkeleton />
       )}
+
+      {/* 페이지 네이션 */}
+      <PaginationContainer
+        onChange={onPageChange}
+        initialPage={page}
+        total={maxPage}
+      />
     </Container>
   );
 }

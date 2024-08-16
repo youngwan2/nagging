@@ -126,7 +126,7 @@ export default function NotificationReportOptionForm({
           className="p-2 rounded-md mt-2 "
           multiple
           name="metrics"
-          defaultValue={'ESTIMATED_EARNINGS'}
+          defaultValue={['ESTIMATED_EARNINGS']}
         >
           {metrics.map((metric) => (
             <SelectOption

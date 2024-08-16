@@ -4,7 +4,8 @@ import Section from './Section';
 import Heading from '../ui/heading/Heading';
 import Container from '../ui/container/Container';
 import SummaryCard from '../ui/card/SummaryCard';
-import Text from '../ui/text/Text';
+import EmptyMessage from '../ui/message/EmptyMessage';
+import CredentialMessage from '../ui/message/CredentialMessage';
 
 import { Method } from '@src/configs/fetch.config';
 import { commonService } from '@src/services/common.service';
@@ -43,13 +44,11 @@ export default async function ProfitSection() {
           <span className="text-[0.55em] pl-4 text-gray-500">
             Payment Statistics
           </span>
-          <Text elementName={'p'} className="text-[1rem] font-light">
-            {session
-              ? `첫 방문 이시라면 우측 상단에 [AdSense] 를 클릭하여 애드센스 계정정보를
-            불러와 주세요.`
-              : `접근 권한이 없습니다. 로그인 후 시도해주세요.`}
-          </Text>
         </Heading>
+        <CredentialMessage
+          className="max-w-[768px] mx-auto"
+          message="접근 권한이 없습니다. 로그인 후에도 동일한 메시지가 표시된다면, 우측 상단의 Adsense 버튼을 클릭하여 애드센스 계정 조회를 요청해주세요."
+        />
       </Section>
     );
   if (payments.length < 1)
@@ -60,9 +59,11 @@ export default async function ProfitSection() {
           <span className="text-[0.55em] pl-4 text-gray-500">
             Payment Statistics
           </span>
-          <Text elementName={'p'} className="text-[1rem] font-light">
-            현재는 조회된 수익 정보가 없습니다.
-          </Text>
+          <EmptyMessage
+            title="조회된 지급액이 없습니다."
+            message="현재 조회된 지급액 정보가 없습니다."
+            className="mt-4"
+          />
         </Heading>
       </Section>
     );

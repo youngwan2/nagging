@@ -6,7 +6,7 @@ import Header from '@src/comments/ui/layout/Header';
 import Footer from '@src/comments/ui/layout/Footer';
 import Navigation from '@src/comments/Navigation';
 import ReactQueryProvider from '@src/comments/Provider';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ToastContainer } from 'react-toastify';
 
 import type { Metadata, Viewport } from 'next';
@@ -73,7 +73,7 @@ export default function RootLayout({
           <main className="justify-start  flex min-h-screen  w-full flex-col items-center  p-24 py-14 dark:bg-black transition-colors">
             <ReactQueryProvider>
               {children}
-              <ReactQueryDevtools initialIsOpen={false} />
+              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </ReactQueryProvider>
           </main>
         </div>

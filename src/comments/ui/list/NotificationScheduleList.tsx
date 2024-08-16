@@ -27,7 +27,7 @@ export default function NotificationScheduleList({ items }: PropsType) {
         return (
           <ListItem
             key={schedule.createdAt}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700"
+            className="bg-white dark:bg-[#212125] p-6 rounded-lg shadow-md border border-gray-200 dark:border-[rgba(255,255,255,0.1)]"
           >
             {/* 보고서 식별코드/보고서명/등록날짜 */}
             <div className="space-y-3">

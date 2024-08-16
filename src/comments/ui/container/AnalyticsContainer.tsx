@@ -22,6 +22,7 @@ import {
 import { ReportRequest } from '@src/services/adsense.service';
 
 import { PiFileCsvThin } from 'react-icons/pi';
+import CredentialMessage from '../message/CredentialMessage';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {
@@ -157,7 +158,7 @@ export default function AnalyticsContainer({ token }: { token?: string }) {
         {isPending || isRefetching ? (
           <Heading level="2" className="text-[1em] font-normal text-center">
             {isError ? (
-              '접근 권한 혹은 네트워크 문제로 조회에 실패하였습니다. 나중에 다시시도 해주세요.'
+              '네트워크 문제로 조회에 실패하였습니다. 나중에 다시시도 해주세요.'
             ) : (
               <GraphSkeleton />
             )}
@@ -167,9 +168,7 @@ export default function AnalyticsContainer({ token }: { token?: string }) {
             data={flatRows}
             message={
               data.message ? (
-                <Text elementName={'p'} className="text-center pt-[10rem]">
-                  {data.message}
-                </Text>
+                <CredentialMessage className="max-w-[768px] mx-auto" />
               ) : null
             }
           />

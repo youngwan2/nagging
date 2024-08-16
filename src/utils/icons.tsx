@@ -1,3 +1,6 @@
+import { PiProhibit, PiUserCircle } from 'react-icons/pi';
+import { IoMdMenu, IoMdClose } from 'react-icons/io';
+
 export default function getIcons() {
   // SVG 아이콘
   function SvgIcon({ d }: { d: string }) {
@@ -32,5 +35,31 @@ export default function getIcons() {
     <SvgIcon d="M15 9l-6 6m0-6l6 6m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
   );
 
-  return { AlertCircleIcon, ClockIcon, CalendarIcon, XCircleIcon };
+  const ProhibitIcon = ({ className }: { className: string }) => (
+    <PiProhibit color="#D13642" className={className} />
+  );
+
+  const LoginIcon = ({ className }: { className: string }) => (
+    <PiUserCircle className={className} />
+  );
+
+  const MenuIcon = ({ className }: { className: string }) => (
+    <IoMdMenu className={className} title="메뉴 열기" aria-label="메뉴 열기" />
+  );
+
+  const MenuCloseIcon = ({ className }: { className: string }) => (
+    <IoMdClose className={className} title="메뉴 닫기" aria-label="메뉴 닫기" />
+  );
+
+  return {
+    AlertCircleIcon,
+    ClockIcon,
+    CalendarIcon,
+    XCircleIcon,
+    ProhibitIcon,
+    LoginIcon,
+    MenuIcon,
+    MenuCloseIcon,
+    MenuCloseIcon,
+  };
 }

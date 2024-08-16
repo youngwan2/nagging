@@ -10,7 +10,7 @@ export async function getAdsenseAlert(userId: string, token: string) {
     const accountId = ((await getAdsenseAccountFromDb(userId)) as string) || '';
     const oauth = await getCredentials(token);
 
-    if (!oauth) throw new Error('접근 자격 없음');
+    if (!oauth) return '접근 자격 없음';
     const alerts = google
       .adsense({ auth: oauth, version: 'v2' })
       .accounts.alerts.list({
@@ -38,7 +38,7 @@ async function getAdsenseAccountFromDb(userId: string) {
     return accountId;
   } catch (error) {
     console.error(error);
-    throw new Error('애드센스 계정 정보 조회 실패');
+    return '애드센스 계정 정보 조회 실패';
   } finally {
     await close();
   }

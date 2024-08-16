@@ -14,14 +14,17 @@ export default function NotificationSelect({
   condition,
 }: PropsType) {
   return (
-    <Select className={`${className} p-2 rounded-md`} name={name}>
+    <Select
+      className={`${className} p-2 rounded-md`}
+      name={name}
+      defaultValue={condition ? condition : undefined}
+    >
       {options.map((option) => {
         return (
           <SelectOption
             text={option.toString()}
             value={option.toString()}
             key={option}
-            selected={condition ? option === condition : false}
           />
         );
       })}

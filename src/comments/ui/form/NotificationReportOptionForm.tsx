@@ -1,5 +1,7 @@
 'use client';
 
+import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
+
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Form from '@src/comments/ui/form/Form';
@@ -8,11 +10,10 @@ import SelectOption from '@src/comments/ui/option/SelectOption';
 import NotificationSelect from '@src/comments/ui/select/NotificationSelect';
 import Select from '@src/comments/ui/select/Select';
 import Text from '@src/comments/ui/text/Text';
+import FlexBox from '../wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
-import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
-import FlexBox from '../wrapper/FlexBox';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } =
   createInitData();
@@ -49,7 +50,11 @@ export default function NotificationReportOptionForm({
       {/* 주, 월, 일 */}
       <Label className="dark:text-white mt-3 inline-block w-full">
         차원(Dimension)
-        <Select className="p-2 rounded-md" name="dimension">
+        <Select
+          className="p-2 rounded-md"
+          name="dimension"
+          defaultValue={'WEEK'}
+        >
           {timeUnitOptions.map((option) => (
             <SelectOption
               key={option.value}
@@ -117,13 +122,17 @@ export default function NotificationReportOptionForm({
           ※ 드래그를 통해 중복선택 가능(
           {'[Ctrl + Click] 을 통해 부분 선택 가능'})
         </Text>
-        <Select className="p-2 rounded-md mt-2 " multiple name="metrics">
+        <Select
+          className="p-2 rounded-md mt-2 "
+          multiple
+          name="metrics"
+          defaultValue={'ESTIMATED_EARNINGS'}
+        >
           {metrics.map((metric) => (
             <SelectOption
               key={metric.text}
               text={metric.text}
               value={metric.value}
-              selected={metric.text === '추정 수익금'}
             />
           ))}
         </Select>
@@ -132,7 +141,7 @@ export default function NotificationReportOptionForm({
       {/* 통화 코드 */}
       <Label className="dark:text-white mt-3 inline-block w-full max-w-[645px]">
         통화 코드(Currency Code)
-        <Select className="p-2 rounded-md" name="code">
+        <Select className="p-2 rounded-md" name="code" defaultValue={'USD'}>
           {currencyCode.map((code) => {
             return (
               <SelectOption

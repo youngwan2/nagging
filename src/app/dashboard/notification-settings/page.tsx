@@ -1,25 +1,11 @@
 import { auth } from '@src/auth';
-
-import { Method } from '@src/configs/fetch.config';
-import { urlConfigs } from '@src/configs/url.config';
-import { commonService } from '@src/services/common.service';
 import { HydrationBoundary, QueryClient } from '@tanstack/react-query';
+
 import NotificationPageContainer from '@src/comments/ui/container/NotificationPageContainer';
 
-export interface UserReportOptionList {
-  reportId: number;
-  userId: string;
-  task: boolean;
-  report: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface UserReportOptionInfo {
-  optionList: UserReportOptionList[];
-  totalCount: number;
-  maxPage: number;
-}
+import { commonService } from '@src/services/common.service';
+import { Method } from '@src/configs/fetch.config';
+import { urlConfigs } from '@src/configs/url.config';
 
 const options = {
   reqUrl:
@@ -43,6 +29,7 @@ export default async function page() {
     token,
   };
 
+  // 보고서 옵션 및 스케줄 목록을 미리 페칭
   await queryClient.prefetchQuery({
     queryKey: ['reports', initialPage],
     queryFn: await commonService(options),
@@ -58,4 +45,19 @@ export default async function page() {
       <NotificationPageContainer userId={userId} token={token} />
     </HydrationBoundary>
   );
+}
+
+export interface UserReportOptionList {
+  reportId: number;
+  userId: string;
+  task: boolean;
+  report: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface UserReportOptionInfo {
+  optionList: UserReportOptionList[];
+  totalCount: number;
+  maxPage: number;
 }

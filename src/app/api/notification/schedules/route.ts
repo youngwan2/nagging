@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const token = rawToken?.split(' ')[1];
 
   if (prefix !== 'Bearer')
-    return NextResponse.json({ error: '잘못된 토큰 형식' }, { status: 400 });
+    return NextResponse.json({ message: '잘못된 토큰 형식' });
 
   try {
     const userId = (

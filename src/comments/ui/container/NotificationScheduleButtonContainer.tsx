@@ -1,13 +1,15 @@
 'use client';
 
-import { commonService } from '@src/services/common.service';
-import Button from '../button/Button';
-import { Method } from '@src/configs/fetch.config';
 import { useState } from 'react';
 import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
 
+import Button from '../button/Button';
+
+import { Method } from '@src/configs/fetch.config';
+import { commonService } from '@src/services/common.service';
+
 interface PropsType {
-  reportId: number;
+  reportId: string;
 }
 export default function NotificationScheduleButtonContainer({
   reportId,
@@ -50,7 +52,7 @@ export default function NotificationScheduleButtonContainer({
       disabled={isLoading}
       onClick={handleDeleteTaskNotification}
       title="현재 등록된 알림 취소"
-      className="mt-3 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+      className="mt-6 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
     >
       {isLoading ? '취소중...' : '알림 취소'}
     </Button>

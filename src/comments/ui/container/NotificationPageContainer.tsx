@@ -7,18 +7,10 @@ import Container from './Container';
 import NotificationOptionFormContainer from './NotificationOptionFormContainer';
 import NotificationScheduleListContainer from './NotificationScheduleListContainer';
 import NotificationOptionListContainer from './NotificationOptionListContainer';
+import FlexBox from '../wrapper/FlexBox';
 
 import { Method } from '@src/configs/fetch.config';
 import { urlConfigs } from '@src/configs/url.config';
-import FlexBox from '../wrapper/FlexBox';
-
-// 타입 정의
-export interface QueryState {
-  data: any;
-  isPending: boolean;
-  isRefetching: boolean;
-  isError: boolean;
-}
 
 interface PropsType {
   userId?: string;
@@ -44,11 +36,14 @@ export default function NotificationPageContainer({
     token,
   };
 
+  // 생성된 보고서 옵션 목록
   const { data, isPending, isError, isRefetching } = useQueryReact(
     options,
     'reports',
     page,
   );
+
+  // 등록된 스케줄(보고서 알림)
   const {
     data: scheduleData,
     isPending: scheduleIsPending,
@@ -56,22 +51,24 @@ export default function NotificationPageContainer({
     isError: scheduleIsError,
   } = useQueryReact(scheduleListReqOptions, 'schedules');
 
-  function onPageChange(page: number) {
-    setPage(page);
-  }
-
   const reportOptionDataType = generateQueryState({
     data,
     isPending,
     isRefetching,
     isError,
   });
+
   const scheduleType = generateQueryState({
     data: scheduleData,
     isPending: scheduleIsPending,
     isRefetching: scheduleIsRefeching,
     isError: scheduleIsError,
   });
+
+  // 페이지 변경
+  function onPageChange(page: number) {
+    setPage(page);
+  }
 
   return (
     <Container
@@ -95,7 +92,9 @@ export default function NotificationPageContainer({
     </Container>
   );
 }
-
+/**
+ * react-query 로 받아온 데이터 및 상태를 묶어서 props으로 전달하는 용도로 사용
+ */
 function generateQueryState({
   data,
   isPending,
@@ -108,4 +107,12 @@ function generateQueryState({
     isRefetching,
     isError,
   };
+}
+
+// 타입 정의
+export interface QueryState {
+  data: any;
+  isPending: boolean;
+  isRefetching: boolean;
+  isError: boolean;
 }

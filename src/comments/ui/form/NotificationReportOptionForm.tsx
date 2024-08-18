@@ -1,7 +1,5 @@
 'use client';
 
-import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
-
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Form from '@src/comments/ui/form/Form';
@@ -14,6 +12,8 @@ import FlexBox from '../wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
+import { useFormStatus } from 'react-dom';
+import { useRefetchTrigger } from '@src/store/triggerStore';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } =
   createInitData();
@@ -22,20 +22,16 @@ interface PropsType {
   userId?: string;
 }
 
-export default function NotificationReportOptionForm({
-  userId = '',
-}: PropsType) {
-  const { onInvalidateQuery } = useQueryInvalidate('reports');
+export default function NotificationReportOptionForm({ userId = '' }: PropsType) {
+  const { setIsRefetch } = useRefetchTrigger();
 
-  // formData 외에 다중 인자를 받기 위해 설명
   // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
   const createReportOptionWithUserId = createReportOption.bind(null, userId);
 
+  const { pending } = useFormStatus(); // 폼 액션 실행 상태
+
   return (
-    <Form
-      action={createReportOptionWithUserId}
-      className={'max-w-[645px] w-full'}
-    >
+    <Form action={createReportOptionWithUserId} className={'max-w-[645px] w-full'}>
       {/* 보고서 이름 */}
       <Label className="dark:text-white mt-3  w-full  max-w-[645px] flex flex-col">
         보고서 이름(Report Name)
@@ -50,17 +46,9 @@ export default function NotificationReportOptionForm({
       {/* 주, 월, 일 */}
       <Label className="dark:text-white mt-3 inline-block w-full">
         차원(Dimension)
-        <Select
-          className="p-2 rounded-md"
-          name="dimension"
-          defaultValue={'WEEK'}
-        >
+        <Select className="p-2 rounded-md" name="dimension" defaultValue={'WEEK'}>
           {timeUnitOptions.map((option) => (
-            <SelectOption
-              key={option.value}
-              value={option.value}
-              text={option.text}
-            />
+            <SelectOption key={option.value} value={option.value} text={option.text} />
           ))}
         </Select>
       </Label>
@@ -129,11 +117,7 @@ export default function NotificationReportOptionForm({
           defaultValue={['ESTIMATED_EARNINGS']}
         >
           {metrics.map((metric) => (
-            <SelectOption
-              key={metric.text}
-              text={metric.text}
-              value={metric.value}
-            />
+            <SelectOption key={metric.text} text={metric.text} value={metric.value} />
           ))}
         </Select>
       </Label>
@@ -159,10 +143,10 @@ export default function NotificationReportOptionForm({
         type="submit"
         onClick={() => {
           if (!userId) return alert('해당 서비스는 로그인 후 이용 가능합니다.');
-          onInvalidateQuery();
+          setIsRefetch(true);
         }}
       >
-        보고서 등록
+        {pending ? '등록중..' : '보고서 등록'}
       </Button>
     </Form>
   );
@@ -171,26 +155,18 @@ export default function NotificationReportOptionForm({
 function createInitData() {
   const currencyCode = Object.entries(currencies);
   const days = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+    25, 26, 27, 28, 29, 30, 31,
   ];
   const month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const years: number[] = [];
   const endYears: number[] = [];
 
-  for (
-    let i = new Date().getFullYear();
-    i >= new Date().getFullYear() - 14;
-    i--
-  ) {
+  for (let i = new Date().getFullYear(); i >= new Date().getFullYear() - 14; i--) {
     years.push(i);
   }
 
-  for (
-    let i = new Date().getFullYear() + 14;
-    i >= new Date().getFullYear() - 14;
-    i--
-  ) {
+  for (let i = new Date().getFullYear() + 14; i >= new Date().getFullYear() - 14; i--) {
     endYears.push(i);
   }
 

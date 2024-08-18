@@ -1,6 +1,7 @@
 'use client';
 
-import useQueryInvalidate from '@src/hooks/useQueryInvalidate';
+import { useState } from 'react';
+import usePromiseToast from '@src/hooks/usePromiseToast';
 
 import Button from '../button/Button';
 import Text from '../text/Text';
@@ -11,18 +12,16 @@ import { Method } from '@src/configs/fetch.config';
 
 import { everyMonth, everyWeek, everyYear } from '@src/constants/cron';
 import { commonService } from '@src/services/common.service';
+import { useRefetchTrigger } from '@src/store/triggerStore';
 
 interface PropsType {
   reportId: number;
 }
 
-export default function NotificationTaskButtonContainer({
-  reportId,
-}: PropsType) {
-  const { onInvalidateQuery: onReportInvalidataQuery } =
-    useQueryInvalidate('reports');
-  const { onInvalidateQuery: onScheduleInvalidataQuery } =
-    useQueryInvalidate('schedules');
+export default function NotificationTaskButtonContainer({ reportId }: PropsType) {
+  const { setToastState } = usePromiseToast();
+  const { setIsRefetch } = useRefetchTrigger();
+  const [isLoading, setIsLoading] = useState(false);
 
   /** 보고서 삭제 */
   async function handleDeleteReportOption() {
@@ -33,14 +32,10 @@ export default function NotificationTaskButtonContainer({
     const url = `/api/notification/reports/${reportId}`;
 
     try {
-      const result = await commonService({
+      commonService({
         reqUrl: url,
         method: Method.DELETE,
-      });
-      alert(result.message ?? result.error);
-
-      onReportInvalidataQuery();
-      onScheduleInvalidataQuery();
+      }).then(() => setIsRefetch(true));
     } catch (error) {
       console.error(error);
     }
@@ -51,11 +46,10 @@ export default function NotificationTaskButtonContainer({
     const url = `/api/notification/tasks/${reportId}?immediate=true`;
 
     try {
-      const result = await commonService({
+      commonService({
         reqUrl: url,
         method: Method.POST,
-      });
-      alert(result.message ?? result.error);
+      }).then(() => setIsRefetch(true));
     } catch (error) {
       console.error(error);
     }
@@ -63,20 +57,19 @@ export default function NotificationTaskButtonContainer({
 
   /** 작업 등록 */
   async function handleCreateTaskNotification(expression: string) {
+    setIsLoading(true);
     const url = `/api/notification/tasks/${reportId}`;
 
     try {
-      const result = await commonService({
+      commonService({
         reqUrl: url,
         method: Method.POST,
         body: { cron: expression },
-      });
-      alert(result.message ?? result.error);
-
-      onReportInvalidataQuery();
-      onScheduleInvalidataQuery();
+      }).then(() => setIsRefetch(true));
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -102,6 +95,7 @@ export default function NotificationTaskButtonContainer({
     <>
       <SettingsContainer title="정기 알림 설정">
         <ButtonGroup
+          isLoading={isLoading}
           options={scheduleOptions}
           onClick={handleCreateTaskNotification}
         />
@@ -111,7 +105,15 @@ export default function NotificationTaskButtonContainer({
         <FlexBox className="flex items-center">
           <Button
             title="5초 뒤 1회"
-            onClick={handleImmediateReport}
+            onClick={() => {
+              setToastState({
+                func: handleImmediateReport,
+                success: '전송 완료',
+                error: '전송 실패',
+                loading: '전송중..',
+                isActive: true,
+              });
+            }}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
           >
             즉시 받기
@@ -122,7 +124,15 @@ export default function NotificationTaskButtonContainer({
       <SettingsContainer title="보고서 삭제">
         <FlexBox className="flex items-center">
           <Button
-            onClick={handleDeleteReportOption}
+            onClick={() => {
+              setToastState({
+                func: handleDeleteReportOption,
+                success: '삭제 완료',
+                error: '삭제 실패',
+                loading: '삭제중..',
+                isActive: true,
+              });
+            }}
             className="border mx-1 bg-red-500 text-white hover:bg-red-600 rounded-md p-1"
           >
             보고서 삭제
@@ -151,9 +161,11 @@ function SettingsContainer({
 }
 
 function ButtonGroup({
+  isLoading,
   options,
   onClick,
 }: {
+  isLoading: boolean;
   options: Array<{ label: string; expression: string; title: string }>;
   onClick: (expression: string) => void;
 }) {
@@ -166,7 +178,7 @@ function ButtonGroup({
           title={option.title}
           className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
         >
-          {option.label}
+          {isLoading ? '처리중..' : option.label}
         </Button>
       ))}
     </FlexBox>

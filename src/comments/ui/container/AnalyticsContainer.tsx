@@ -11,18 +11,13 @@ import Text from '@src/comments/ui/text/Text';
 import CalendarContainer from '@src/comments/ui/container/CalendarContainer';
 import Button from '../button/Button';
 import GraphSkeleton from '../skeleton/GraphSkeleton';
+import CredentialMessage from '../message/CredentialMessage';
 
 import { Method } from '@src/configs/fetch.config';
-import {
-  arrayToCSV,
-  createCsvFile,
-  download,
-  flattenRows,
-} from '@src/utils/function';
-import { ReportRequest } from '@src/services/adsense.service';
+import { arrayToCSV, createCsvFile, download, flattenRows } from '@src/utils/function';
+import type { ReportRequest } from '@src/services/adsense.service';
 
 import { PiFileCsvThin } from 'react-icons/pi';
-import CredentialMessage from '../message/CredentialMessage';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {
@@ -151,10 +146,7 @@ export default function AnalyticsContainer({ token }: { token?: string }) {
       <CalendarContainer onSearch={onSearch} />
 
       {/* 그래프 */}
-      <ChartContainer
-        elName={'div'}
-        className="w-full max-h-[500px] h-[500px] mt-7"
-      >
+      <ChartContainer elName={'div'} className="w-full max-h-[500px] h-[500px] mt-7">
         {isPending || isRefetching ? (
           <Heading level="2" className="text-[1em] font-normal text-center">
             {isError ? (

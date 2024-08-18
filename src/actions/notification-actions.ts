@@ -1,13 +1,13 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { connect } from '../../prisma/client';
-// import prisma from '../../prisma/client';
 
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
 export async function createReportOption(userId: string, formData: FormData) {
   if (!userId) return null;
+
   const { prisma, close } = await connect();
+
   const dateRange = {
     reportName:
       formData.get('report-name')?.toString() ||
@@ -38,8 +38,6 @@ export async function createReportOption(userId: string, formData: FormData) {
         report: stringDateRange,
       },
     });
-    // 특정경로 재유효화 reference: https://nextjs.org/docs/app/api-reference/functions/revalidatePath#revalidating-a-specific-url
-    revalidatePath('/dashboard/notification-setting');
   } catch (error) {
     console.error('보고서 옵션 저장 실패:', error);
   } finally {

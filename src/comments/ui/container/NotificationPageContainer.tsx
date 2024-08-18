@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useQueryReact from '@src/hooks/useQueryReact';
 
 import Container from './Container';
@@ -10,7 +10,7 @@ import NotificationOptionListContainer from './NotificationOptionListContainer';
 import FlexBox from '../wrapper/FlexBox';
 
 import { Method } from '@src/configs/fetch.config';
-import { urlConfigs } from '@src/configs/url.config';
+import { useRefetchTrigger } from '@src/store/triggerStore';
 
 interface PropsType {
   userId?: string;
@@ -18,30 +18,29 @@ interface PropsType {
 }
 
 const initialPage = 1;
-export default function NotificationPageContainer({
-  userId,
-  token,
-}: PropsType) {
+export default function NotificationPageContainer({ userId, token }: PropsType) {
   const [page, setPage] = useState(1);
+  const { isRefetch, setIsRefetch } = useRefetchTrigger();
 
-  const options = {
+  const reportOptionListOptions = {
     reqUrl: '/api/notification/reports?page=' + page,
     method: Method.GET,
   };
 
   const scheduleListReqOptions = {
-    reqUrl:
-      urlConfigs.protocol + urlConfigs.host + '/api/notification/schedules',
+    reqUrl: '/api/notification/schedules',
     method: Method.GET,
     token,
   };
 
   // 생성된 보고서 옵션 목록
-  const { data, isPending, isError, isRefetching } = useQueryReact(
-    options,
-    'reports',
-    page,
-  );
+  const {
+    data,
+    isPending,
+    isError,
+    isRefetching,
+    refetch: reportListRefetch,
+  } = useQueryReact(reportOptionListOptions, 'reports', page);
 
   // 등록된 스케줄(보고서 알림)
   const {
@@ -49,6 +48,7 @@ export default function NotificationPageContainer({
     isPending: scheduleIsPending,
     isRefetching: scheduleIsRefeching,
     isError: scheduleIsError,
+    refetch: scheduleListRefetch,
   } = useQueryReact(scheduleListReqOptions, 'schedules');
 
   const reportOptionDataType = generateQueryState({
@@ -69,6 +69,19 @@ export default function NotificationPageContainer({
   function onPageChange(page: number) {
     setPage(page);
   }
+
+  async function refetchTrigger() {
+    await scheduleListRefetch();
+    await reportListRefetch();
+  }
+
+  useEffect(() => {
+    if (isRefetch) {
+      refetchTrigger().then(() => {
+        setIsRefetch(false);
+      });
+    }
+  }, [isRefetch]);
 
   return (
     <Container

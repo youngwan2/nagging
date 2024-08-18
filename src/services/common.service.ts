@@ -28,6 +28,5 @@ export async function commonService({
   if (!response.ok) return { message: '데이터 조회에 실패하였습니다.' };
 
   const result = await response.json();
-
   return result;
 }

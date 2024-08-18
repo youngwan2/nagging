@@ -60,6 +60,5 @@ export default function getIcons() {
     LoginIcon,
     MenuIcon,
     MenuCloseIcon,
-    MenuCloseIcon,
   };
 }

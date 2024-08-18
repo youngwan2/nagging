@@ -11,27 +11,19 @@ import ScheduleCardSkeleton from '../skeleton/ScheduleCardSkeleton';
 interface PropsType {
   queryState: QueryState;
 }
-export default function NotificationScheduleListContainer({
-  queryState,
-}: PropsType) {
+export default function NotificationScheduleListContainer({ queryState }: PropsType) {
   const { data, isError, isPending } = queryState;
-
-  console.log(data);
 
   return (
     <Container elName={'section'} className="mt-16 w-full">
-      <Heading level="2" className="pb-[0.75em]">
-        알림 스케줄 목록
-        <Text
-          elementName={'span'}
-          className="text-[0.55em] pl-4 text-gray-500 opacity-55"
-        >
-          Notification Schedule List
-        </Text>
-      </Heading>
+      {/* 타이틀 */}
+      <Title />
+
+      {/* 안내 메시지 */}
       <Text elementName={'p'} className="text-sm text-gray-600 mb-4">
         ※ 원활한 서비스 운영을 위해 현재는 하나의 알림 등록만 가능합니다.
       </Text>
+
       {/* 목록 */}
       {!data || (data.message && <EmptyMessage />)}
       {isPending ? (
@@ -42,6 +34,17 @@ export default function NotificationScheduleListContainer({
         <ErrorMessage />
       )}
     </Container>
+  );
+}
+
+function Title() {
+  return (
+    <Heading level="2" className="pb-[0.75em]">
+      알림 스케줄 목록
+      <Text elementName={'span'} className="text-[0.55em] pl-4 text-gray-500 opacity-55">
+        Notification Schedule List
+      </Text>
+    </Heading>
   );
 }
 

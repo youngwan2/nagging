@@ -9,11 +9,14 @@ import { PrismaClient } from '@prisma/client';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 
-const prisma = new PrismaClient();
+const datasourceUrl =
+  process.env.NODE_ENV === 'production'
+    ? `postgresql://${process.env.DB_USER}:${process.env.DB_PASS}@localhost/${process.env.DB_NAME}?host=${process.env.INSTANCE_UNIX_SOCKET}`
+    : undefined;
+const prisma = new PrismaClient({ datasourceUrl });
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  debug: true,
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -44,10 +47,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.access_token = googleAccount.access_token! as string;
 
       // 토큰 발급 시간이 1시간 지나면 재발급
-      if (
-        Number(new Date(googleAccount.expires_at! * 1000 + 60 * 60)) <
-        Date.now()
-      ) {
+      if (Number(new Date(googleAccount.expires_at! * 1000 + 60 * 60)) < Date.now()) {
         try {
           const response = await fetch('https://oauth2.googleapis.com/token', {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -67,9 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           await prisma.account.update({
             data: {
               access_token: responseTokens.access_token,
-              expires_at: Math.floor(
-                Date.now() / 1000 + responseTokens.expires_in,
-              ),
+              expires_at: Math.floor(Date.now() / 1000 + responseTokens.expires_in),
               refresh_token: responseTokens.refresh_token,
             },
             where: {
@@ -84,7 +82,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           session.access_token = googleAccount.access_token! as string;
         } catch (error) {
           console.error('Error refreshing access token', error);
-          // The error property can be used client-side to handle the refresh token error
           session.error = 'RefreshAccessTokenError';
         }
       }

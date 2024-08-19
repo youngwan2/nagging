@@ -1,6 +1,7 @@
-import { signIn } from '@src/auth';
 import Button from '../button/Button';
 import Form from './Form';
+
+import { signIn } from '@src/auth';
 
 interface PropsType {
   text: string;

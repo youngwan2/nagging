@@ -2,7 +2,7 @@ import cron, { validate } from 'node-cron';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 
-import prisma from '../../../../../../prisma/client';
+import { connect } from '../../../../../../prisma/client';
 
 import { auth } from '@src/auth';
 import {
@@ -15,18 +15,19 @@ import {
 const cronGroup = cron.getTasks();
 
 /** POST | 사용자 예약 알림 크론 추가 처리 */
-export async function POST(
-  req: NextRequest,
-  res: { params: { reportId: number } },
-) {
-  const imediate = req.url.includes('immediate=true'); // 즉시 알림을 받을 것인지 유무 체크
+export async function POST(req: NextRequest, res: { params: { reportId: number } }) {
+  const { prisma, close } = await connect();
+
+  const immediate = req.url.includes('immediate=true'); // 즉시 알림을 받을 것인지 유무 체크
   const reportId = Number(res.params.reportId);
-  const json = imediate === false ? await req.json() : null;
+  const json = immediate === false ? await req.json() : null;
+
   const {
     userId,
     access_token: accessToken = '',
     user,
   } = ((await auth()) as Session) || { userId: '', accessToken: '' };
+
   const cronExpression = json ? json.cron || { cron: null } : null;
   const userEmail = user?.email || '';
   const isCron = cronExpression ? validate(cronExpression) : false;
@@ -34,10 +35,7 @@ export async function POST(
   try {
     // 로그인 유저인지 확인
     if (!userId || !user)
-      return NextResponse.json(
-        { error: '접근 권한이 없습니다.' },
-        { status: 401 },
-      );
+      return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
 
     // 예약할 보고서 옵션 가져오기
     const reportOptionJSON = await getReportOptionFromDb(reportId, userId);
@@ -47,7 +45,7 @@ export async function POST(
     }
 
     // 사용자가 보고서 알림을 즉시 받기를 원하는 경우 금일 날짜로 보고서 전송
-    if (imediate === true) {
+    if (immediate === true) {
       await sendNotification(userId, reportOptionJSON, accessToken, userEmail);
 
       return NextResponse.json({ message: '즉시 보고서 전송 완료' });
@@ -147,10 +145,7 @@ export async function POST(
 
       // 작업 실행
       task.start();
-      return NextResponse.json(
-        { message: '보고서 알림 등록 성공.' },
-        { status: 201 },
-      );
+      return NextResponse.json({ message: '보고서 알림 등록 성공.' }, { status: 201 });
     }
   } catch (error) {
     console.error('작업등록 실패:', error);
@@ -158,17 +153,18 @@ export async function POST(
       { error: '네트워크 에러' },
       { status: 500, statusText: '네트워크 에러' },
     );
+  } finally {
+    await close();
   }
 }
 
 /** DELETE | 사용자 예약 알림 크론 삭제 처리 */
-export async function DELETE(
-  _req: NextRequest,
-  res: { params: { reportId: number } },
-) {
+export async function DELETE(_req: NextRequest, res: { params: { reportId: number } }) {
   if (cronGroup.size === 0) {
     return NextResponse.json({ message: '예약된 알림이 존재하지 않습니다.' });
   }
+
+  const { prisma, close } = await connect();
 
   try {
     const { userId } = ((await auth()) as Session) || { userId: '' };
@@ -176,10 +172,7 @@ export async function DELETE(
 
     // 로그인 유저인지 확인
     if (!userId)
-      return NextResponse.json(
-        { error: '접근 권한이 없습니다.' },
-        { status: 401 },
-      );
+      return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
 
     const userCronInfo =
       (await prisma.notificationCron.findMany({
@@ -233,15 +226,14 @@ export async function DELETE(
 
     // 아에 존재하지 않는 경우
     if (!isStoredTask && !hasTask) {
-      return NextResponse.json(
-        { message: '처리할 작업이 없음' },
-        { status: 404 },
-      );
+      return NextResponse.json({ message: '처리할 작업이 없음' }, { status: 404 });
     }
 
     return NextResponse.json({ message: '알림 취소 완료' });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }

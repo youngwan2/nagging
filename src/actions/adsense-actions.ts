@@ -1,14 +1,15 @@
 'use server';
 
 import { auth } from '@src/auth';
-import prisma from '../../prisma/client';
 import {
   getAccountInfo,
   getCredentials,
   saveAccountName,
 } from '@src/services/adsense.service';
+import { connect } from '../../prisma/client';
 
 export const adsenseDataFetch = async () => {
+  const { prisma, close } = await connect();
   try {
     const session = await auth();
     const userId = session?.userId;
@@ -45,5 +46,7 @@ export const adsenseDataFetch = async () => {
     }
   } catch (error) {
     console.error('요청 불가', error);
+  } finally {
+    await close();
   }
 };

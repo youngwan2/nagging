@@ -17,7 +17,8 @@ export default function PaginationContainer({
 }: PropsType) {
   return (
     <Pagination
-      className="mt-4"
+      color="default"
+      className="mt-4 flex justify-center"
       total={total}
       initialPage={initialPage}
       onChange={(page) => {

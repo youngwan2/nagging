@@ -1,11 +1,14 @@
-import Section from './Section';
 import { auth } from '@src/auth';
-import { Method } from '@src/configs/fetch.config';
 
-import { commonService } from '@src/services/common.service';
+import Section from './Section';
 import Heading from '../ui/heading/Heading';
 import Container from '../ui/container/Container';
 import SummaryCard from '../ui/card/SummaryCard';
+import EmptyMessage from '../ui/message/EmptyMessage';
+import CredentialMessage from '../ui/message/CredentialMessage';
+
+import { Method } from '@src/configs/fetch.config';
+import { commonService } from '@src/services/common.service';
 
 interface Payment {
   payments: {
@@ -38,14 +41,12 @@ export default async function ProfitSection() {
       <Section className="mb-[5rem] mt-[2.5rem]">
         <Heading level="2" className="pb-[0.75em]">
           지급액 통계
-          <span className="text-[0.55em] pl-4 text-gray-500">
-            Payment Statistics
-          </span>
-          <p className="text-[1rem] font-light">
-            첫 방문 이시라면 우측 상단에 AdSense 를 클릭하여 애드센스 계정정보를
-            불러와 주세요.
-          </p>
+          <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
         </Heading>
+        <CredentialMessage
+          className="max-w-[768px] mx-auto"
+          message="접근 권한이 없습니다. 로그인 후에도 동일한 메시지가 표시된다면, 우측 상단의 Adsense 버튼을 클릭하여 애드센스 계정 조회를 요청해주세요."
+        />
       </Section>
     );
   if (payments.length < 1)
@@ -53,12 +54,12 @@ export default async function ProfitSection() {
       <Section className="mb-[5rem] mt-[2.5rem]">
         <Heading level="2" className="pb-[0.75em]">
           지급액 통계
-          <span className="text-[0.55em] pl-4 text-gray-500">
-            Payment Statistics
-          </span>
-          <p className="text-[1rem] font-light">
-            현재는 조회된 수익 정보가 없습니다.
-          </p>
+          <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
+          <EmptyMessage
+            title="조회된 지급액이 없습니다."
+            message="현재 조회된 지급액 정보가 없습니다."
+            className="mt-4"
+          />
         </Heading>
       </Section>
     );
@@ -72,27 +73,12 @@ export default async function ProfitSection() {
     <Section className="mb-[5rem] mt-[2.5rem]">
       <Heading level="2" className="pb-[0.75em]">
         지급액 통계
-        <span className="text-[0.55em] pl-4 text-gray-500">
-          Payment Statistics
-        </span>
+        <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
       </Heading>
 
-      <Container
-        elName={'div'}
-        className="grid sm:grid-cols-1  2xl:grid-cols-2"
-      >
-        <SummaryCard
-          koTitle="최근 지급액"
-          enTitle="Recently Profits"
-          text={payments[1].amount}
-          date={date}
-        />
-        <SummaryCard
-          className="2xl:ml-5"
-          koTitle="미지급액"
-          enTitle={'Unpaid Earnings'}
-          text={payments[0].amount}
-        />
+      <Container elName={'div'} className="grid sm:grid-cols-1  2xl:grid-cols-2">
+        <SummaryCard koTitle="최근 지급액" enTitle="Recently Profits" text={payments[1].amount} date={date} />
+        <SummaryCard className="2xl:ml-5" koTitle="미지급액" enTitle={'Unpaid Earnings'} text={payments[0].amount} />
       </Container>
     </Section>
   );

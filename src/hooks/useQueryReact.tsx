@@ -28,7 +28,13 @@ export default function useQueryReact(
 ) {
   const { ...props } = useQuery({
     queryKey: key,
-    queryFn: () => commonService({ reqUrl, method, token, body }),
+    queryFn: () =>
+      commonService({
+        reqUrl,
+        method,
+        token,
+        body,
+      }),
     placeholderData: keepPreviousData,
     ...options,
   });

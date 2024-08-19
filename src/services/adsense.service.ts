@@ -1,4 +1,5 @@
-import prisma from '../../prisma/client';
+// import prisma from '../../prisma/client';
+import { connect } from '../../prisma/client';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
@@ -9,12 +10,10 @@ export async function getAdsenseAlert(userId: string, token: string) {
     const accountId = ((await getAdsenseAccountFromDb(userId)) as string) || '';
     const oauth = await getCredentials(token);
 
-    if (!oauth) throw new Error('접근 자격 없음');
-    const alerts = google
-      .adsense({ auth: oauth, version: 'v2' })
-      .accounts.alerts.list({
-        parent: accountId,
-      });
+    if (!oauth) return [];
+    const alerts = google.adsense({ auth: oauth, version: 'v2' }).accounts.alerts.list({
+      parent: accountId,
+    });
     return (await alerts).data.alerts;
   } catch (error) {
     console.error(error);
@@ -23,6 +22,8 @@ export async function getAdsenseAlert(userId: string, token: string) {
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 async function getAdsenseAccountFromDb(userId: string) {
+  const { prisma, close } = await connect();
+
   try {
     const { accountId } = (await prisma.adsenseAccount.findFirst({
       select: {
@@ -35,13 +36,18 @@ async function getAdsenseAccountFromDb(userId: string) {
     return accountId;
   } catch (error) {
     console.error(error);
-    throw new Error('애드센스 계정 정보 조회 실패');
+    return [];
+  } finally {
+    await close();
   }
 }
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 export async function hasAccountId(userId: string) {
   if (!userId) return false;
+
+  const { prisma, close } = await connect();
+
   try {
     const { accountId } = (await prisma.adsenseAccount.count({
       select: {
@@ -56,6 +62,8 @@ export async function hasAccountId(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 계정 정보 조회 실패');
+  } finally {
+    await close();
   }
 }
 
@@ -103,10 +111,7 @@ export async function getAccountInfo(auth: OAuth2Client) {
  * @param auth AccessToken 자격증명
  * @returns payments
  */
-export async function getPayments(
-  accountName: string | null | undefined,
-  auth: OAuth2Client,
-) {
+export async function getPayments(accountName: string | null | undefined, auth: OAuth2Client) {
   try {
     const adsense = google.adsense({ version: 'v2', auth });
     const response = adsense.accounts.payments;
@@ -228,11 +233,7 @@ export async function generateCsvReport(
  * @param userId
  * @returns
  */
-export async function saveAccountName(
-  accountName: string | null | undefined,
-  userId: string,
-  prisma: PrismaClient,
-) {
+export async function saveAccountName(accountName: string | null | undefined, userId: string, prisma: PrismaClient) {
   if (typeof accountName !== 'string') return;
   try {
     return await prisma.adsenseAccount.create({

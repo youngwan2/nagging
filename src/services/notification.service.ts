@@ -1,8 +1,15 @@
 import { cronParser } from '@src/utils/cron-parser';
-import prisma from '../../prisma/client';
+// import prisma from '../../prisma/client';
+import { connect } from '../../prisma/client';
 
+/**
+ * 디비로 부터 등록된 사용자 스케줄 정보를 조회
+ * @param userId
+ * @returns
+ */
 export async function getSchedule(userId: string) {
   try {
+    const { prisma } = await connect();
     const schedule = await prisma.notificationCron.findFirst({
       select: {
         notificationReports: true,
@@ -16,6 +23,7 @@ export async function getSchedule(userId: string) {
     const cronExpression = schedule?.cronExpression || '';
     const scheduleDate = cronParser(new Date(), cronExpression);
     const scheduleInfos = { ...schedule, ...scheduleDate };
+
     return scheduleInfos;
   } catch (error) {
     console.error(error);

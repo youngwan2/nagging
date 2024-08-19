@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../../../prisma/client';
+import { connect } from '../../../../../prisma/client';
 import { cronParser } from '@src/utils/cron-parser';
 
 export async function GET(req: NextRequest) {
+  const { prisma, close } = await connect();
+
   const rawToken = req.headers.get('Authorization') || '';
   const prefix = rawToken?.split(' ')[0];
   const token = rawToken?.split(' ')[1];
 
-  if (prefix !== 'Bearer')
-    return NextResponse.json({ error: '잘못된 토큰 형식' }, { status: 400 });
+  if (prefix !== 'Bearer') return NextResponse.json({ message: '잘못된 토큰 형식' });
 
   try {
     const userId = (
@@ -31,6 +32,8 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  } finally {
+    await close();
   }
 }
 
@@ -68,10 +71,7 @@ interface NextSchedule {
  * @param scheduleList
  * @returns
  */
-function mappingNextScheduleInfo(
-  scheduleList: NotificationSchedule[],
-  userId: string = '',
-) {
+function mappingNextScheduleInfo(scheduleList: NotificationSchedule[], userId: string = '') {
   const nextSchedule: NextSchedule = {
     [userId]: {
       reportId: 0,
@@ -98,7 +98,13 @@ function mappingNextScheduleInfo(
   return nextSchedule;
 }
 
+/**
+ * userId 와 일치하는 유저의 스케줄 목록 조회
+ * @param userId
+ */
 async function getScheduleList(userId?: string) {
+  const { prisma, close } = await connect();
+
   try {
     return await prisma.notificationCron.findMany({
       select: {
@@ -115,7 +121,8 @@ async function getScheduleList(userId?: string) {
     });
   } catch (error) {
     console.error(error);
-
     return [];
+  } finally {
+    await close();
   }
 }

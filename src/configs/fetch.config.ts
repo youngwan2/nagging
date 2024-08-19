@@ -57,12 +57,6 @@ const restRequestConfig = (method: Method, token?: string, body?: any) => {
 };
 
 /** 요청 구성을 분기처리 */
-export function requestConfigBranch(
-  method: Method,
-  token?: string,
-  body?: any,
-) {
-  return method === 'GET'
-    ? onlyGetRequestConfig('GET', token)
-    : restRequestConfig(method, token, body);
+export function requestConfigBranch(method: Method, token?: string, body?: any) {
+  return method === 'GET' ? onlyGetRequestConfig('GET', token) : restRequestConfig(method, token, body);
 }

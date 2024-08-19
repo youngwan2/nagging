@@ -30,10 +30,7 @@ interface PropsType {
 
 const ItemBody = Container;
 const TextContainer = Container;
-export default function NotificationReportOptionListItem({
-  item,
-  taskManagementButtons,
-}: PropsType) {
+export default function NotificationReportOptionListItem({ item, taskManagementButtons }: PropsType) {
   const report: ReportFilter = JSON.parse(item.report);
   const createDate = new Date(item.createdAt).toLocaleString('ko-KR');
   const dimensions = report.dimensions;
@@ -78,9 +75,8 @@ export default function NotificationReportOptionListItem({
             조회 기간
           </Text>
           <Text elementName="span" className="px-1 mx-1 font-bold">
-            {report.startDate.year}.{report.startDate.month}.
-            {report.startDate.day} ~{report.endDate.year}.{report.endDate.month}
-            .{report.endDate.day}
+            {report.startDate.year}.{report.startDate.month}.{report.startDate.day} ~{report.endDate.year}.
+            {report.endDate.month}.{report.endDate.day}
           </Text>
         </TextContainer>
 
@@ -141,11 +137,7 @@ export default function NotificationReportOptionListItem({
 
 function NotificationIcon() {
   return (
-    <div
-      className="absolute right-2"
-      aria-label="알림이 활성화됨"
-      title="알림 활성화 표시 아이콘"
-    >
+    <div className="absolute right-2" aria-label="알림이 활성화됨" title="알림 활성화 표시 아이콘">
       <MdOutlineNotifications className="w-5 h-5 text-gray-500 dark:text-orange-300 " />
       <div className="absolute -top-1 -right-1 w-2 h-2 dark:bg-orange-300 bg-green-500 rounded-full animate-pulse"></div>
     </div>

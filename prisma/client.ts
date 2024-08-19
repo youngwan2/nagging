@@ -1,17 +1,50 @@
-// refernce: https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/databases-connections
-// 메모리 누스 방지를 위한 전역변수 설정
+import { resolve } from 'node:path';
+import { AuthTypes, Connector, IpAddressTypes } from '@google-cloud/cloud-sql-connector';
 import { PrismaClient } from '@prisma/client';
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+let prisma: PrismaClient | null = null;
+let connector: Connector | null = null;
 
-const prisma = globalForPrisma.prisma || new PrismaClient();
+export async function connect() {
+  if (prisma) {
+    // 이미 연결되어 있는 경우, 기존 클라이언트를 반환
+    return { prisma, close };
+  }
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+  /** 프로덕션 */
+  if (process.env.NODE_ENV === 'production') {
+    const path = resolve(`.s.PGSQL.5432`); // postgres-required socket filename
+    connector = new Connector();
+    await connector.startLocalProxy({
+      instanceConnectionName: 'nagging:asia-northeast1:nagging-sql', // DB 연결용 인스턴스 이름
+      ipType: IpAddressTypes.PUBLIC, // 공개 IP 접근 명시
+      authType: AuthTypes.IAM, // DB 인스턴스 접근 시 사용자 IAM 을 사용하여 접근토록 설정
+      listenOptions: { path }, // postgres 소켓 경로 설정(포트 5432로 연결)
+    });
 
-export default prisma;
+    const datasourceUrl = `postgresql://${process.env.DB_USER}:${process.env.DB_PASS}@localhost/${process.env.DB_NAME}?host=${process.env.INSTANCE_UNIX_SOCKET}`;
 
-/** 중요!) 프리즈마 클라이언트를 전역변수로 설정하는 이유
- *  변경된 파일의 핫 리로딩을 지원하여 다시 시작하지 않고도 애플리케이션의 변경 사항을 볼 수 있습니다.
- * 그러나 프레임워크가 내보내기를 담당하는 모듈을 새로 고치면 개발 환경에서 원치 않는 PrismaClient  인스턴스가
- * 추가 발생 할 수 있습니다.
- */
+    console.log('log:', datasourceUrl);
+
+    prisma = new PrismaClient({ datasourceUrl });
+
+    // 개발 환경
+  } else {
+    const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+    prisma = globalForPrisma.prisma || new PrismaClient();
+
+    globalForPrisma.prisma = prisma;
+  }
+
+  // 데이터베이스 닫기
+  async function close() {
+    if (prisma) {
+      await prisma.$disconnect();
+    }
+    if (connector) {
+      connector.close();
+    }
+  }
+
+  return { prisma, close };
+}

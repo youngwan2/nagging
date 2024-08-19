@@ -14,9 +14,7 @@ describe('DarkMode Component', () => {
   it('다크모드 컴포넌트가 정상 렌더링 된다.', () => {
     render(<DarkMode />);
 
-    const button = screen.getByLabelText(
-      '밝은 테마 및 어두운 테마 바꾸기 버튼',
-    );
+    const button = screen.getByLabelText('밝은 테마 및 어두운 테마 바꾸기 버튼');
 
     expect(button).toBeInTheDocument();
   });
@@ -34,9 +32,7 @@ describe('DarkMode Component', () => {
   it('다크모드 버튼을 클릭하면 어두운 테마로 변경된다.', async () => {
     render(<DarkMode />);
 
-    const button = screen.getByLabelText(
-      '밝은 테마 및 어두운 테마 바꾸기 버튼',
-    );
+    const button = screen.getByLabelText('밝은 테마 및 어두운 테마 바꾸기 버튼');
 
     await userEvent.click(button);
 

@@ -1,15 +1,14 @@
 import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
-import prisma from '../prisma/client';
+// import prisma from '../prisma/client';
+import { connect } from '../prisma/client';
 import { tokenRefresh } from './services/google.service';
-import {
-  ReportOptionType,
-  generateCsvReport,
-  getCredentials,
-} from './services/adsense.service';
+import { ReportOptionType, generateCsvReport, getCredentials } from './services/adsense.service';
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
 export async function syncTask() {
+  const { prisma, close } = await connect();
+
   // 예약된 task 가 true 인 경우인 작업만 조회
   try {
     const jobs = await prisma.notificationCron.findMany({
@@ -50,24 +49,14 @@ export async function syncTask() {
         expires_at: number;
         refresh_token: string;
       };
-      const {
-        refresh_token: refreshToken,
-        access_token: accessToken,
-        expires_at,
-      } = accountInfos;
+      const { refresh_token: refreshToken, access_token: accessToken, expires_at } = accountInfos;
       const currentTimeStamp = Math.floor(Date.now() / 1000);
 
       // 액세스 토큰 만료 전
       if (expires_at > currentTimeStamp) {
         const task = createTask(
           job.cronExpression,
-          () =>
-            sendNotification(
-              job.userId,
-              job.notificationReports.report,
-              accessToken,
-              job.user.email,
-            ),
+          () => sendNotification(job.userId, job.notificationReports.report, accessToken, job.user.email),
           job.userId,
         );
         task.start();
@@ -78,13 +67,7 @@ export async function syncTask() {
         if (!newToken) return false;
         const task = createTask(
           job.cronExpression,
-          () =>
-            sendNotification(
-              job.userId,
-              job.notificationReports.report,
-              newToken,
-              job.user.email,
-            ),
+          () => sendNotification(job.userId, job.notificationReports.report, newToken, job.user.email),
           job.userId,
         );
         task.start();
@@ -94,15 +77,13 @@ export async function syncTask() {
   } catch (error) {
     console.error(error);
     return false;
+  } finally {
+    await close();
   }
 }
 
 /** 작업 등록 */
-export function createTask(
-  expression: string,
-  cronFunction: (...rest: any) => void,
-  userId: string,
-) {
+export function createTask(expression: string, cronFunction: (...rest: any) => void, userId: string) {
   const task = cron.schedule(expression, cronFunction, {
     scheduled: false,
     timezone: 'Asia/Seoul',
@@ -150,11 +131,7 @@ export async function sendNotification(
 
   if (!accountId || !AdsenseCredential) return false;
 
-  const reportCSV = await generateCsvReport(
-    accountId,
-    AdsenseCredential,
-    reportOption,
-  );
+  const reportCSV = await generateCsvReport(accountId, AdsenseCredential, reportOption);
   sendMail({
     to: userEmail,
     subject: reportOption.reportName,
@@ -166,6 +143,8 @@ export async function sendNotification(
 
 /** DB에 저장된 보고서 옵션 조회  */
 export async function getReportOptionFromDb(_reportId: number, userId: string) {
+  const { prisma, close } = await connect();
+
   try {
     const result = (
       await prisma.notificationReports.findMany({
@@ -181,11 +160,15 @@ export async function getReportOptionFromDb(_reportId: number, userId: string) {
     return result.report;
   } catch {
     return false;
+  } finally {
+    await close();
   }
 }
 
 /** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
 export async function getAbsenseAccountIdWithUserId(userId: string) {
+  const { prisma, close } = await connect();
+
   try {
     return (
       await prisma.adsenseAccount.findMany({
@@ -199,5 +182,7 @@ export async function getAbsenseAccountIdWithUserId(userId: string) {
     )[0].accountId;
   } catch (error) {
     return false;
+  } finally {
+    await close();
   }
 }

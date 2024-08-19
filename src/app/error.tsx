@@ -5,13 +5,7 @@ import Button from '@src/comments/ui/button/Button';
 import Container from '@src/comments/ui/container/Container';
 import Heading from '@src/comments/ui/heading/Heading';
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -21,8 +15,8 @@ export default function Error({
       elName={'section'}
       className="w-full flex flex-col justify-center items-center px-4 transition-colors duration-300"
     >
-      <div className="max-w-md w-full bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-8 text-center transform transition-all duration-300 hover:scale-105">
-        <div className="mb-6 relative">
+      <div className="top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] absolute max-w-md w-full bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-8 text-center transform transition-all duration-300 hover:scale-105">
+        <div className="mb-6 relative overflow-hidden">
           <div className="absolute inset-0 bg-red-500 dark:bg-red-600 rounded-full opacity-10 animate-ping"></div>
           <svg
             className="relative z-10 mx-auto text-red-500 dark:text-red-400 w-20 h-20"
@@ -38,10 +32,7 @@ export default function Error({
             />
           </svg>
         </div>
-        <Heading
-          level="2"
-          className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4"
-        >
+        <Heading level="2" className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
           앗! 문제가 발생했어요!
         </Heading>
         <p className="text-gray-600 dark:text-gray-300 mb-8">{error.message}</p>

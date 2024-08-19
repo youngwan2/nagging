@@ -7,12 +7,9 @@ export default function NotFound() {
         <div className="p-8">
           <div className="text-center">
             <h1 className="text-9xl font-bold text-gray-300">404</h1>
-            <p className="text-xl font-semibold text-gray-600 mt-4">
-              이런!.. 현재 페이지를 찾을 수 없습니다
-            </p>
+            <p className="text-xl font-semibold text-gray-600 mt-4">이런!.. 현재 페이지를 찾을 수 없습니다</p>
             <p className="text-gray-500 mt-2">
-              죄송합니다. 요청하신 페이지를 찾을 수 없습니다. 접속 경로를 확인
-              후 다시시도 해주세요.
+              죄송합니다. 요청하신 페이지를 찾을 수 없습니다. 접속 경로를 확인 후 다시시도 해주세요.
             </p>
           </div>
           <div className="mt-8">
@@ -28,11 +25,7 @@ export default function NotFound() {
         <div className="bg-gray-50 py-4 px-8 text-center">
           <p className="text-sm text-gray-500">
             도움이 필요하신가요?{' '}
-            <a
-              target="_blank"
-              href="https://forms.gle/rXfxizaqepvy3Shs9"
-              className="text-blue-600 hover:underline"
-            >
+            <a target="_blank" href="https://forms.gle/rXfxizaqepvy3Shs9" className="text-blue-600 hover:underline">
               고객 지원에 문의하세요
             </a>
           </p>

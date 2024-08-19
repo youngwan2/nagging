@@ -1,6 +1,5 @@
 'use client';
 import { Method } from '@src/configs/fetch.config';
-import { urlConfigs } from '@src/configs/url.config';
 import { commonService } from '@src/services/common.service';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -31,7 +30,7 @@ export default function useQueryReact(
     queryKey: key,
     queryFn: () =>
       commonService({
-        reqUrl: `${urlConfigs.protocol}${urlConfigs.host}${reqUrl}`,
+        reqUrl,
         method,
         token,
         body,

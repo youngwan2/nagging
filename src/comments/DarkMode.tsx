@@ -8,8 +8,7 @@ export default function DarkMode() {
   useEffect(() => {
     if (
       localStorage.theme !== 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       setIsDark(true);
       document.documentElement.classList.add('dark');
@@ -22,8 +21,7 @@ export default function DarkMode() {
   function toggleDarkMode() {
     if (
       localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
     ) {
       localStorage.setItem('theme', 'light');
       setIsDark(true);
@@ -36,11 +34,7 @@ export default function DarkMode() {
   }
 
   return (
-    <button
-      aria-label="밝은 테마 및 어두운 테마 바꾸기 버튼"
-      onClick={toggleDarkMode}
-      className="dark:text-white"
-    >
+    <button aria-label="밝은 테마 및 어두운 테마 바꾸기 버튼" onClick={toggleDarkMode} className="dark:text-white">
       <div
         className={`border border-[#d4d2d2] w-[80px] h-[30px] rounded-full  relative transition-colors dark:bg-black dark:border-slate-700`}
       >
@@ -49,15 +43,9 @@ export default function DarkMode() {
             className={`${!isDark ? 'left-[50px] bg-[#26242f]' : 'left-0 bg-[white]'} relative  w-[28px] h-[28px] rounded-full flex items-center justify-center `}
           >
             {isDark ? (
-              <IoMdMoon
-                title="밝은 테마로 변경"
-                className="text-[1.4em] fill-[gold]"
-              />
+              <IoMdMoon title="밝은 테마로 변경" className="text-[1.4em] fill-[gold]" />
             ) : (
-              <IoSunnySharp
-                title="어두운 테마로 변경"
-                className="text-[1.4em] fill-[gold]"
-              />
+              <IoSunnySharp title="어두운 테마로 변경" className="text-[1.4em] fill-[gold]" />
             )}
           </div>
         </div>

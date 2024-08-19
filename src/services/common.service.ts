@@ -7,15 +7,12 @@ interface ServiceRequestProps {
   token?: string;
   body?: any;
 }
-export async function commonService({
-  reqUrl,
-  method,
-  token,
-  body,
-}: ServiceRequestProps) {
-  const url = reqUrl.startsWith('http')
-    ? reqUrl
-    : urlConfigs.protocol + urlConfigs.host + reqUrl;
+export async function commonService({ reqUrl, method, token, body }: ServiceRequestProps) {
+  const cdn = 'cdn';
+  const defaultUrl = urlConfigs.protocol + urlConfigs.host + reqUrl;
+  const url = reqUrl.includes(cdn) ? reqUrl : defaultUrl;
+
+  console.log('요청받은 주소:', url);
   const config =
     !token && body // 토큰은 없는데, 바디는 있는 경우
       ? requestConfigBranch(method, token, body)

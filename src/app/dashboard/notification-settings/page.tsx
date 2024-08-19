@@ -5,11 +5,9 @@ import NotificationPageContainer from '@src/comments/ui/container/NotificationPa
 
 import { commonService } from '@src/services/common.service';
 import { Method } from '@src/configs/fetch.config';
-import { urlConfigs } from '@src/configs/url.config';
 
 const options = {
-  reqUrl:
-    urlConfigs.protocol + urlConfigs.host + '/api/notification/reports?page=1',
+  reqUrl: '/api/notification/reports?page=1',
   method: Method.GET,
 };
 
@@ -23,8 +21,7 @@ export default async function page() {
   const queryClient = new QueryClient();
 
   const scheduleListReqOptions = {
-    reqUrl:
-      urlConfigs.protocol + urlConfigs.host + '/api/notification/schedules',
+    reqUrl: '/api/notification/schedules',
     method: Method.GET,
     token,
   };

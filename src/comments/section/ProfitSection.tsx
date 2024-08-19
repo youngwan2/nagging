@@ -41,9 +41,7 @@ export default async function ProfitSection() {
       <Section className="mb-[5rem] mt-[2.5rem]">
         <Heading level="2" className="pb-[0.75em]">
           지급액 통계
-          <span className="text-[0.55em] pl-4 text-gray-500">
-            Payment Statistics
-          </span>
+          <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
         </Heading>
         <CredentialMessage
           className="max-w-[768px] mx-auto"
@@ -56,9 +54,7 @@ export default async function ProfitSection() {
       <Section className="mb-[5rem] mt-[2.5rem]">
         <Heading level="2" className="pb-[0.75em]">
           지급액 통계
-          <span className="text-[0.55em] pl-4 text-gray-500">
-            Payment Statistics
-          </span>
+          <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
           <EmptyMessage
             title="조회된 지급액이 없습니다."
             message="현재 조회된 지급액 정보가 없습니다."
@@ -77,27 +73,12 @@ export default async function ProfitSection() {
     <Section className="mb-[5rem] mt-[2.5rem]">
       <Heading level="2" className="pb-[0.75em]">
         지급액 통계
-        <span className="text-[0.55em] pl-4 text-gray-500">
-          Payment Statistics
-        </span>
+        <span className="text-[0.55em] pl-4 text-gray-500">Payment Statistics</span>
       </Heading>
 
-      <Container
-        elName={'div'}
-        className="grid sm:grid-cols-1  2xl:grid-cols-2"
-      >
-        <SummaryCard
-          koTitle="최근 지급액"
-          enTitle="Recently Profits"
-          text={payments[1].amount}
-          date={date}
-        />
-        <SummaryCard
-          className="2xl:ml-5"
-          koTitle="미지급액"
-          enTitle={'Unpaid Earnings'}
-          text={payments[0].amount}
-        />
+      <Container elName={'div'} className="grid sm:grid-cols-1  2xl:grid-cols-2">
+        <SummaryCard koTitle="최근 지급액" enTitle="Recently Profits" text={payments[1].amount} date={date} />
+        <SummaryCard className="2xl:ml-5" koTitle="미지급액" enTitle={'Unpaid Earnings'} text={payments[0].amount} />
       </Container>
     </Section>
   );

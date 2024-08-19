@@ -10,10 +10,7 @@ export function AdsenseButton() {
     hasId: false,
   };
 
-  const [state, formAction, pending] = useFormState(
-    adsenseDataFetch,
-    initialState,
-  );
+  const [state, formAction, pending] = useFormState(adsenseDataFetch, initialState);
 
   if (state?.hasId) return null;
   return (

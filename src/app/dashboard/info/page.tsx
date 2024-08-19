@@ -12,9 +12,7 @@ export default async function InformationPage() {
     <Container elName={'section'} className="w-full">
       <Heading level="2" className="pb-[0.75em]">
         데일리 환율
-        <span className="text-[0.55em] pl-4 text-gray-500">
-          Daily Exchange Rates
-        </span>
+        <span className="text-[0.55em] pl-4 text-gray-500">Daily Exchange Rates</span>
       </Heading>
       <InformationContainer token={token} />
     </Container>

@@ -2,23 +2,26 @@
 import { useMenuToggle } from '@src/store/menuStore';
 // interface Props { }
 
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function useResize() {
   const setToggle = useMenuToggle((state) => state.setToggle);
   const isOpen = useMenuToggle((state) => state.isOpen);
+  const [isMobile, setIsMobile] = useState(false);
 
   const resize = useCallback(() => {
-    if (window.innerWidth <= 936) {
-      setToggle(false);
-    } else {
-      setToggle(true);
-    }
+    const width = window.innerWidth;
+    setToggle(width > 936);
+    setIsMobile(width <= 768);
   }, [setToggle]);
-  useEffect(() => {
-    window.addEventListener('resize', resize);
-    return () => window.removeEventListener('resize', resize);
-  }, [isOpen, resize]);
 
-  return { isOpen };
+  useEffect(() => {
+    resize(); // 초기 로딩 시
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, [resize]);
+
+  return { isOpen, isMobile, setToggle };
 }

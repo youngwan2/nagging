@@ -31,16 +31,8 @@ export default function NotificationScheduleList({ items }: PropsType) {
           >
             {/* 보고서 식별코드/보고서명/등록날짜 */}
             <div className="space-y-3">
-              <InfoRow
-                icon={<AlertCircleIcon />}
-                label="보고서 식별코드"
-                value={reportId}
-              />
-              <InfoRow
-                icon={<ClockIcon />}
-                label="보고서명"
-                value={reportName}
-              />
+              <InfoRow icon={<AlertCircleIcon />} label="보고서 식별코드" value={reportId} />
+              <InfoRow icon={<ClockIcon />} label="보고서명" value={reportName} />
               <InfoRow
                 icon={<CalendarIcon />}
                 label="등록날짜"
@@ -53,16 +45,8 @@ export default function NotificationScheduleList({ items }: PropsType) {
               ([userId, { reportId: scheduleReportId, nextScheduleInfo }]) =>
                 scheduleReportId === reportId && (
                   <div key={userId} className="mt-4 space-y-2">
-                    <InfoRow
-                      icon={<CalendarIcon />}
-                      label="다음 알림"
-                      value={nextScheduleInfo.nextReminder}
-                    />
-                    <InfoRow
-                      icon={<CalendarIcon />}
-                      label="다다음 알림"
-                      value={nextScheduleInfo.subsequentReminder}
-                    />
+                    <InfoRow icon={<CalendarIcon />} label="다음 알림" value={nextScheduleInfo.nextReminder} />
+                    <InfoRow icon={<CalendarIcon />} label="다다음 알림" value={nextScheduleInfo.subsequentReminder} />
                   </div>
                 ),
             )}
@@ -75,15 +59,7 @@ export default function NotificationScheduleList({ items }: PropsType) {
   );
 }
 
-function InfoRow({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
+function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-center text-gray-700 dark:text-gray-300">
       <span className="mr-2">{icon}</span>

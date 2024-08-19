@@ -5,9 +5,9 @@ import PaginationContainer from '../pagination/PaginationContainer';
 import Container from './Container';
 import ReportCardSkeleton from '../skeleton/ReportCardSkeleton';
 import ErrorMessage from '../message/ErrorMessage';
+import CredentialMessage from '../message/CredentialMessage';
 
 import type { QueryState } from './NotificationPageContainer';
-import CredentialMessage from '../message/CredentialMessage';
 
 interface PropsType {
   userId?: string;
@@ -16,12 +16,7 @@ interface PropsType {
   page: number;
 }
 
-export default function NotificationOptionListContainer({
-  userId,
-  queryState,
-  onPageChange,
-  page,
-}: PropsType) {
+export default function NotificationOptionListContainer({ userId, queryState, onPageChange, page }: PropsType) {
   const { data, isError, isPending } = queryState;
 
   const optionList = data?.optionList || [];
@@ -55,9 +50,8 @@ export default function NotificationOptionListContainer({
 function GuideMessage() {
   return (
     <Text elementName={'p'} className="opacity-90 text-black text-[0.95em]">
-      - 안정적인 서비스 운영을 위해 현재는 보고서 1개에 대해서만 알림설정이 가능합니다.{' '}
-      <br />- [보고서 삭제] 시 해당 옵션으로 등록된 알림을 해제하거나 다른 보고서로 알림을
-      설정해주세요.
+      - 안정적인 서비스 운영을 위해 현재는 보고서 1개에 대해서만 알림설정이 가능합니다. <br />- [보고서 삭제] 시 해당
+      옵션으로 등록된 알림을 해제하거나 다른 보고서로 알림을 설정해주세요.
     </Text>
   );
 }

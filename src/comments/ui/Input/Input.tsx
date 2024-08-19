@@ -7,12 +7,7 @@ interface PropsType {
   name?: string;
 }
 
-export default function Input({
-  className,
-  type,
-  placeholder,
-  name,
-}: PropsType) {
+export default function Input({ className, type, placeholder, name }: PropsType) {
   return (
     <input
       className={className + ' dark:border-[rgba(255,255,255,0.1)]'}

@@ -28,12 +28,8 @@ export function cronParser(standardDate: Date, cronExpression: string) {
       const options = genOptions(standardDate);
       const interval = parser.parseExpression(cronExpression, options);
 
-      const nextReminder = new Date(
-        interval.next().toString(),
-      ).toLocaleString();
-      const subsequentReminder = new Date(
-        interval.next().toString(),
-      ).toLocaleString();
+      const nextReminder = new Date(interval.next().toString()).toLocaleString();
+      const subsequentReminder = new Date(interval.next().toString()).toLocaleString();
 
       return {
         nextReminder,

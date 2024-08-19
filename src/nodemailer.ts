@@ -9,13 +9,7 @@ interface Mailer {
   reportName: string;
 }
 
-export const sendMail = async ({
-  to,
-  subject,
-  html,
-  csv,
-  reportName,
-}: Mailer) => {
+export const sendMail = async ({ to, subject, html, csv, reportName }: Mailer) => {
   const defaultHTML = `
   <div>
   <h2>Message Details</h2>

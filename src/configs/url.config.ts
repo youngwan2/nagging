@@ -1,4 +1,4 @@
 export const urlConfigs = {
-  protocol: process.env.PROTOCOL ?? 'http://',
-  host: process.env.HOST ?? 'localhost:3000',
+  protocol: process.env.NODE_ENV === 'production' ? 'https://' : 'http://',
+  host: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_HOST || '' : 'localhost:3000',
 };

@@ -8,8 +8,7 @@ describe('functin.ts', () => {
         { date: '2024.01.01', value: 1000 },
         { date: '2024.12.31', value: 1500 },
       ];
-      const expectedCSV =
-        'date,value(단위: $)\n2024.01.01,1000\n2024.12.31,1500';
+      const expectedCSV = 'date,value(단위: $)\n2024.01.01,1000\n2024.12.31,1500';
 
       // arrayToCSV 함수가 올바르게 동작하는지 확인
       expect(arrayToCSV(data)).toBe(expectedCSV);
@@ -36,25 +35,22 @@ describe('functin.ts', () => {
     const mockRevokeObjectURL = (global.URL.revokeObjectURL = vi.fn());
 
     it('앵커 요소를 생성하고 다운로드를 트리거해야 한다', () => {
-      const blob = new Blob(
-        ['date,value(단위: $)\n2024.01.01,1000\n2024.12.31,1500'],
-        { type: 'text/csv;charset=utf-8' },
-      );
+      const blob = new Blob(['date,value(단위: $)\n2024.01.01,1000\n2024.12.31,1500'], {
+        type: 'text/csv;charset=utf-8',
+      });
       const fileName = 'test.csv';
       const clickMock = vi.fn();
 
       // document.createElement 함수를 모킹
-      const createElementSpy = vi
-        .spyOn(document, 'createElement')
-        .mockImplementation((tagName: string) => {
-          tagName;
-          const anchorElement = {
-            href: '',
-            download: '',
-            click: clickMock,
-          } as unknown as HTMLAnchorElement;
-          return anchorElement;
-        });
+      const createElementSpy = vi.spyOn(document, 'createElement').mockImplementation((tagName: string) => {
+        tagName;
+        const anchorElement = {
+          href: '',
+          download: '',
+          click: clickMock,
+        } as unknown as HTMLAnchorElement;
+        return anchorElement;
+      });
 
       // download 함수 호출
       download(blob, fileName);

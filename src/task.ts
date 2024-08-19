@@ -3,11 +3,7 @@ import { sendMail } from '@src/nodemailer';
 // import prisma from '../prisma/client';
 import { connect } from '../prisma/client';
 import { tokenRefresh } from './services/google.service';
-import {
-  ReportOptionType,
-  generateCsvReport,
-  getCredentials,
-} from './services/adsense.service';
+import { ReportOptionType, generateCsvReport, getCredentials } from './services/adsense.service';
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
 export async function syncTask() {
@@ -53,24 +49,14 @@ export async function syncTask() {
         expires_at: number;
         refresh_token: string;
       };
-      const {
-        refresh_token: refreshToken,
-        access_token: accessToken,
-        expires_at,
-      } = accountInfos;
+      const { refresh_token: refreshToken, access_token: accessToken, expires_at } = accountInfos;
       const currentTimeStamp = Math.floor(Date.now() / 1000);
 
       // 액세스 토큰 만료 전
       if (expires_at > currentTimeStamp) {
         const task = createTask(
           job.cronExpression,
-          () =>
-            sendNotification(
-              job.userId,
-              job.notificationReports.report,
-              accessToken,
-              job.user.email,
-            ),
+          () => sendNotification(job.userId, job.notificationReports.report, accessToken, job.user.email),
           job.userId,
         );
         task.start();
@@ -81,13 +67,7 @@ export async function syncTask() {
         if (!newToken) return false;
         const task = createTask(
           job.cronExpression,
-          () =>
-            sendNotification(
-              job.userId,
-              job.notificationReports.report,
-              newToken,
-              job.user.email,
-            ),
+          () => sendNotification(job.userId, job.notificationReports.report, newToken, job.user.email),
           job.userId,
         );
         task.start();
@@ -103,11 +83,7 @@ export async function syncTask() {
 }
 
 /** 작업 등록 */
-export function createTask(
-  expression: string,
-  cronFunction: (...rest: any) => void,
-  userId: string,
-) {
+export function createTask(expression: string, cronFunction: (...rest: any) => void, userId: string) {
   const task = cron.schedule(expression, cronFunction, {
     scheduled: false,
     timezone: 'Asia/Seoul',
@@ -155,11 +131,7 @@ export async function sendNotification(
 
   if (!accountId || !AdsenseCredential) return false;
 
-  const reportCSV = await generateCsvReport(
-    accountId,
-    AdsenseCredential,
-    reportOption,
-  );
+  const reportCSV = await generateCsvReport(accountId, AdsenseCredential, reportOption);
   sendMail({
     to: userEmail,
     subject: reportOption.reportName,

@@ -6,18 +6,10 @@ interface PropsType extends HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-export default function Text({
-  elementName,
-  className,
-  children,
-  ...rest
-}: PropsType) {
+export default function Text({ elementName, className, children, ...rest }: PropsType) {
   const Element = elementName;
   return (
-    <Element
-      className={'dark:text-gray-200 text-gray-600 ' + className}
-      {...rest}
-    >
+    <Element className={'dark:text-gray-200 text-gray-600 ' + className} {...rest}>
       {children}
     </Element>
   );

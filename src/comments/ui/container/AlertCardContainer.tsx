@@ -19,9 +19,7 @@ export default async function AlertCardContainer() {
   const alerts = await getAdsenseAlert(userId, access_token);
   const scheduleInfos = await getSchedule(userId);
 
-  const report = parseReportJson(
-    scheduleInfos.notificationReports?.report || '',
-  );
+  const report = parseReportJson(scheduleInfos.notificationReports?.report || '');
 
   return (
     <Container elName={'div'} className="w-full">
@@ -46,6 +44,7 @@ export default async function AlertCardContainer() {
         })
       ) : (
         <EmptyMessage
+          className="mt-3"
           title="애드센스 알림 없음"
           message="조회된 애드센스 알림이 없습니다. 자세한 사항은 애드센스 사이트를 방문해주세요."
         />

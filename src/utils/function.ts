@@ -25,9 +25,7 @@ export interface ArrayToCsvProps {
  * @description 첫 행을 객체 배열의 key 인 date, value 으로 구분하고, 두 번째 행부터 date, value 의 각 셀을 한 묶으로 개행하며 배치
  */
 export const arrayToCSV: ArrayToCsvProps = (array) => {
-  const headers = Object.keys(array[0])
-    .join(',')
-    .replace('value', 'value(단위: $)');
+  const headers = Object.keys(array[0]).join(',').replace('value', 'value(단위: $)');
   const rows = array.map((obj) => Object.values(obj).join(',')).join('\n'); // date, value을 하나의 쌍으로 개행하며 배치
   return `${headers}\n${rows}`;
 };
@@ -60,26 +58,15 @@ export function formatDate(date: Date) {
 }
 
 /** data 를 [string, string] 형태로 변환 후 반환하는 함수 */
-export function selectPair(
-  data: { date: string; usd: { [key: string]: string } },
-  target: string[] = ['krw'],
-) {
+export function selectPair(data: { date: string; usd: { [key: string]: string } }, target: string[] = ['krw']) {
   if (!data) return ['조회불가', '조회불가'];
-  return (
-    Object.entries(data?.usd).filter((unit) => target.includes(unit[0])) || [
-      'krw',
-      0,
-    ]
-  );
+  return Object.entries(data?.usd).filter((unit) => target.includes(unit[0])) || ['krw', 0];
 }
 
 /** CurrencyPair 인터페이스의 배열 형태로 변환하는 함수
  * @description {  pair: string;  rate: number;  date: string;}[] 형태로 변환 후 반환
  */
-export function mappingPair(
-  initialPair: [string, string][],
-  date: string,
-): CurrencyPair[] {
+export function mappingPair(initialPair: [string, string][], date: string): CurrencyPair[] {
   return initialPair.map(([key, value]) => {
     return {
       pair: `USD/${key.toUpperCase() ?? '조회불가'}`,

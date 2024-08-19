@@ -1,10 +1,9 @@
 'use client';
-import { useMenuToggle } from '@src/store/menuStore';
+import useResize from '@src/hooks/useResize';
 import getIcons from '@src/utils/icons';
 
 export default function MenuIcon() {
-  const isOpen = useMenuToggle((state) => state.isOpen);
-  const setToggle = useMenuToggle((state) => state.setToggle);
+  const { isMobile, isOpen, setToggle } = useResize();
 
   const { MenuIcon, MenuCloseIcon } = getIcons();
 
@@ -13,16 +12,10 @@ export default function MenuIcon() {
     setToggle(!isOpen);
   }
 
+  if (isMobile) return null;
   return (
-    <button
-      onClick={handleToggle}
-      className="flex justify-center items-center text-center  mr-[0.5rem] text-[1.5em]"
-    >
-      {!isOpen ? (
-        <MenuIcon className="dark:fill-white" />
-      ) : (
-        <MenuCloseIcon className="dark:fill-white" />
-      )}
+    <button onClick={handleToggle} className="flex justify-center items-center text-center  mr-[0.5rem] text-[1.5em]">
+      {!isOpen ? <MenuIcon className="dark:fill-white" /> : <MenuCloseIcon className="dark:fill-white" />}
     </button>
   );
 }

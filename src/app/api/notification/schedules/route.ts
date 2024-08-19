@@ -9,8 +9,7 @@ export async function GET(req: NextRequest) {
   const prefix = rawToken?.split(' ')[0];
   const token = rawToken?.split(' ')[1];
 
-  if (prefix !== 'Bearer')
-    return NextResponse.json({ message: '잘못된 토큰 형식' });
+  if (prefix !== 'Bearer') return NextResponse.json({ message: '잘못된 토큰 형식' });
 
   try {
     const userId = (
@@ -72,10 +71,7 @@ interface NextSchedule {
  * @param scheduleList
  * @returns
  */
-function mappingNextScheduleInfo(
-  scheduleList: NotificationSchedule[],
-  userId: string = '',
-) {
+function mappingNextScheduleInfo(scheduleList: NotificationSchedule[], userId: string = '') {
   const nextSchedule: NextSchedule = {
     [userId]: {
       reportId: 0,

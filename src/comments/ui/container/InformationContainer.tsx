@@ -6,12 +6,12 @@ import ExchangeRatesTable from '../table/ExchangeRatesTable';
 import Container from './Container';
 import Heading from '../heading/Heading';
 import Text from '../text/Text';
+import Button from '../button/Button';
+import ExchangeRateTableSkeleton from '../skeleton/ExchangeRateTableSkeleton';
 
 import { Method } from '@src/configs/fetch.config';
 import { currencies } from '@src/constants/currencies';
 import { formatDate, mappingPair, selectPair } from '@src/utils/function';
-import Button from '../button/Button';
-import ExchangeRateTableSkeleton from '../skeleton/ExchangeRateTableSkeleton';
 
 export interface CurrencyPair {
   pair: string;
@@ -49,9 +49,7 @@ export default function InformationContainer({}: PropsType) {
 
   const [selectedPair, setSelectedPair] = useState(currencyPairs[25]?.pair);
 
-  const selectedCurrencyPair: CurrencyPair = currencyPairs.find(
-    (pair) => pair.pair === selectedPair,
-  ) as CurrencyPair;
+  const selectedCurrencyPair: CurrencyPair = currencyPairs.find((pair) => pair.pair === selectedPair) as CurrencyPair;
 
   const handlePairSelect = (pair: string) => {
     setSelectedPair(pair);
@@ -60,9 +58,7 @@ export default function InformationContainer({}: PropsType) {
   if (isError)
     return (
       <Heading level="2" className="text-[0.95rem] font-light">
-        <Text elementName={'p'}>
-          {today} 기준 환율 정보를 찾을 수 없습니다.{' '}
-        </Text>
+        <Text elementName={'p'}>{today} 기준 환율 정보를 찾을 수 없습니다. </Text>
         <Button
           className="dark:hover:bg-slate-800 hover:bg-slate-100 border rounded-md px-1 mx-1"
           onClick={() => setDate('latest')}
@@ -83,14 +79,10 @@ export default function InformationContainer({}: PropsType) {
   return (
     <Container elName={'section'} className="w-full">
       <Text elementName={'p'}>
-        1일 간격으로 업데이트되는 {initialPair.length}개국의 환율 정보를 확인할
-        수 있습니다. 환율은 제공되는 은행, 기준 시간에 따라서 약간의 차이가
-        발생할 수 있으므로 참고 바랍니다.
+        1일 간격으로 업데이트되는 {initialPair.length}개국의 환율 정보를 확인할 수 있습니다. 환율은 제공되는 은행, 기준
+        시간에 따라서 약간의 차이가 발생할 수 있으므로 참고 바랍니다.
       </Text>
-      <Text
-        elementName={'p'}
-        className=" text-muted-foreground text-[14px] text-end py-3"
-      >
+      <Text elementName={'p'} className=" text-muted-foreground text-[14px] text-end py-3">
         {date}
       </Text>
       {isPending ? (

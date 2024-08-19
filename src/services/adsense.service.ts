@@ -11,11 +11,9 @@ export async function getAdsenseAlert(userId: string, token: string) {
     const oauth = await getCredentials(token);
 
     if (!oauth) return [];
-    const alerts = google
-      .adsense({ auth: oauth, version: 'v2' })
-      .accounts.alerts.list({
-        parent: accountId,
-      });
+    const alerts = google.adsense({ auth: oauth, version: 'v2' }).accounts.alerts.list({
+      parent: accountId,
+    });
     return (await alerts).data.alerts;
   } catch (error) {
     console.error(error);
@@ -113,10 +111,7 @@ export async function getAccountInfo(auth: OAuth2Client) {
  * @param auth AccessToken 자격증명
  * @returns payments
  */
-export async function getPayments(
-  accountName: string | null | undefined,
-  auth: OAuth2Client,
-) {
+export async function getPayments(accountName: string | null | undefined, auth: OAuth2Client) {
   try {
     const adsense = google.adsense({ version: 'v2', auth });
     const response = adsense.accounts.payments;
@@ -238,11 +233,7 @@ export async function generateCsvReport(
  * @param userId
  * @returns
  */
-export async function saveAccountName(
-  accountName: string | null | undefined,
-  userId: string,
-  prisma: PrismaClient,
-) {
+export async function saveAccountName(accountName: string | null | undefined, userId: string, prisma: PrismaClient) {
   if (typeof accountName !== 'string') return;
   try {
     return await prisma.adsenseAccount.create({

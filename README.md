@@ -104,6 +104,40 @@
 - [ ] 콜드 스타트 문제 개선
 - [ ] 인스턴스 활성화 시 보고서 알림 작업 동기화
 
+## 사이트 참고 이미지
+### 보고서 전송 시
+![image](https://github.com/user-attachments/assets/3a506335-920c-4c29-ae03-0a2e25f5316a)
+
+### 홈
+#### 서비스 바로가기
+![image](https://github.com/user-attachments/assets/18177993-f268-41d5-a1cb-3854b1c27be1)
+
+#### 알림/공지
+![image](https://github.com/user-attachments/assets/c292867a-43d9-4789-98a7-ad028757394b)
+
+### 정보 페이지
+#### 데일리 환율
+![image](https://github.com/user-attachments/assets/24cd2d8f-b2cf-44ed-902f-6473200f8822)
+
+### 보고서 설정 페이지
+#### 보고서 설정
+![image](https://github.com/user-attachments/assets/2621072e-a621-4b6d-b54e-71daf93076cf)
+
+#### 보고서 옵션 목록
+![image](https://github.com/user-attachments/assets/c0d535c0-0852-4c10-85e4-fc6e4dff0367)
+
+
+#### 알림 스케줄 목록
+![image](https://github.com/user-attachments/assets/79a1116e-df35-4423-9229-e7946e4fc08e)
+
+### 간편 통계 페이지
+#### 예상 수익 통계
+![image](https://github.com/user-attachments/assets/55f24cb0-eb50-4a12-9e3b-22504e8cc255)
+
+#### 지급액 통계 
+![image](https://github.com/user-attachments/assets/15b254f2-496e-4220-a93e-d13699e49ae1)
+
+
 ## 🗂️ 프로젝트 구조
 
 ```
@@ -300,34 +334,4 @@
  ┗ 📜task.ts --------------------> 크론 작업
 ```
 
-## 사이트 페이지별 참고 이미지
-### 홈
-#### 서비스 바로가기
-![image](https://github.com/user-attachments/assets/18177993-f268-41d5-a1cb-3854b1c27be1)
-
-#### 알림/공지
-![image](https://github.com/user-attachments/assets/c292867a-43d9-4789-98a7-ad028757394b)
-
-### 정보 페이지
-#### 데일리 환율
-![image](https://github.com/user-attachments/assets/24cd2d8f-b2cf-44ed-902f-6473200f8822)
-
-### 보고서 설정 페이지
-#### 보고서 설정
-![image](https://github.com/user-attachments/assets/2621072e-a621-4b6d-b54e-71daf93076cf)
-
-#### 보고서 옵션 목록
-![image](https://github.com/user-attachments/assets/c0d535c0-0852-4c10-85e4-fc6e4dff0367)
-
-
-#### 알림 스케줄 목록
-![image](https://github.com/user-attachments/assets/79a1116e-df35-4423-9229-e7946e4fc08e)
-
-
-### 간편 통계 페이지
-#### 예상 수익 통계
-![image](https://github.com/user-attachments/assets/55f24cb0-eb50-4a12-9e3b-22504e8cc255)
-
-#### 지급액 통계 
-![image](https://github.com/user-attachments/assets/15b254f2-496e-4220-a93e-d13699e49ae1)
 

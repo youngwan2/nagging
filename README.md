@@ -31,8 +31,8 @@
 
 |   사용 스텍    | 비고                                                                                                                          |
 | :------------: | :---------------------------------------------------------------------------------------------------------------------------- |
-| NextJS(14.2.4) | 기존 react의 고질적인 문제인 SEO 문제의 개선과 RSC 를 통한 빠른 서버 데이터처리의 이점, 빠른 풀스텍 애플리케이션 개발 이점 등 |
-| Typescript(^5) | 타입 추론 및 정적 타입 체크를 통한 코드 안정성 향상                                                                           |
+| NextJS(14.2.4) | 기존 react의 고질적인 문제인 SEO 문제의 개선과 RSC 를 통한 빠른 서버 데이터처리 |
+| Typescript(^5) | 타입 추론 및 정적 타입 체크                                                                          |
 
 ### 상태관리
 
@@ -45,14 +45,20 @@
 
 |      사용 스텍      | 비고 |
 | :-----------------: | :--- |
-| PostgreSQL + Prisma | -    |
+| PostgreSQL + Prisma + GCP Cloud SQL | -    |
 
 ### 그 외
 
 |         사용 스텍          | 비고                                  |
 | :------------------------: | :------------------------------------ |
 | next-auth (^5.0.0-beta.19) | 구글 소셜 로그인                      |
-|     node-cron (^3.0.3)     | 보고서 알림 자동화를 위한 스케줄 등록 |
+|     node-cron (^3.0.3)     | 로컬 보고서 알림 자동화를 위한 스케줄 등록 |
+
+### 배포
+|         사용 스텍          | 비고                                  |
+| :------------------------: | :------------------------------------ |
+| GCP Cloud Run |도커 컨테이너 배포( 유연한 인스턴스 자동확장 및 축소, 로컬 환경과 사실상 거의 동일한 환경에서 코드를 실행할 수 있는 이점이 돋보임)            |
+
 
 ## ⚙ 주요 기능
 
@@ -78,7 +84,7 @@
   - '즉시 받기' 버튼을 클릭하면 설정한 옵션에 따른 맞춤형 보고서가 사용자의 계정 이메일로 전송됩니다.
 
 ## 🤔 트러블 슈팅
-
+※ 배포는 완료되었으나 안정성 문제로 보류
 - 준비중
 
 ## 📋 Backlog
@@ -92,7 +98,7 @@
 
 ### 버그 수정
 - [ ] 보고서 등록 시 아무런 알림 표시가 뜨지 않는 문제
-- [ ] 모바일 접속 시 레이아웃 깨짐
+- [x] 모바일 접속 시 레이아웃 깨짐
 
 ### 시스템
 - [ ] 콜드 스타트 문제 개선
@@ -101,12 +107,17 @@
 ## 🗂️ 프로젝트 구조
 
 ```
-src
- ┣ 📂actions ------------------> server action
+📦src
+ ┣ 📂actions -------------------------------------------> 서버 액션
  ┃ ┣ 📜adsense-actions.ts
  ┃ ┗ 📜notification-actions.ts
- ┣ 📂app
- ┃ ┣ 📂api --------------------> API Routes
+ ┣ 📂app -----------------------------------------------> 페이지
+ ┃ ┣ 📂(policy) -------------> 이용약관, 개인정보처리방침
+ ┃ ┃ ┣ 📂privacy-policy
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┃ ┗ 📂terms-of-service
+ ┃ ┃ ┃ ┗ 📜page.tsx
+ ┃ ┣ 📂api  ----------------> API Route
  ┃ ┃ ┣ 📂adsense
  ┃ ┃ ┃ ┣ 📂payments
  ┃ ┃ ┃ ┃ ┗ 📜route.ts
@@ -145,8 +156,9 @@ src
  ┃ ┣ 📜layout.tsx
  ┃ ┣ 📜loading.tsx
  ┃ ┣ 📜manifest.json
+ ┃ ┣ 📜not-found.tsx
  ┃ ┗ 📜page.tsx
- ┣ 📂components
+ ┣ 📂components --------------------------------------> 컴포넌트
  ┃ ┣ 📂auth
  ┃ ┃ ┗ 📜SignOutIcon.tsx
  ┃ ┣ 📂section
@@ -166,10 +178,10 @@ src
  ┃ ┃ ┃ ┗ 📜SummaryCard.tsx
  ┃ ┃ ┣ 📂container
  ┃ ┃ ┃ ┣ 📜AlertCardContainer.tsx
- ┃ ┃ ┃ ┣ 📜AnlayticsContainer.tsx
+ ┃ ┃ ┃ ┣ 📜AnalyticsContainer.tsx
  ┃ ┃ ┃ ┣ 📜CalendarContainer.tsx
  ┃ ┃ ┃ ┣ 📜Container.tsx
- ┃ ┃ ┃ ┣ 📜InfomationContainer.tsx
+ ┃ ┃ ┃ ┣ 📜InformationContainer.tsx
  ┃ ┃ ┃ ┣ 📜NotificationOptionFormContainer.tsx
  ┃ ┃ ┃ ┣ 📜NotificationOptionListContainer.tsx
  ┃ ┃ ┃ ┣ 📜NotificationPageContainer.tsx
@@ -205,11 +217,13 @@ src
  ┃ ┃ ┃ ┣ 📜NotificationReportOptionList.tsx
  ┃ ┃ ┃ ┗ 📜NotificationScheduleList.tsx
  ┃ ┃ ┣ 📂message
+ ┃ ┃ ┃ ┣ 📜CredentialMessage.tsx
+ ┃ ┃ ┃ ┣ 📜EmptyMessage.tsx
+ ┃ ┃ ┃ ┣ 📜ErrorMessage.tsx
  ┃ ┃ ┃ ┗ 📜LoginRequireMessage.tsx
  ┃ ┃ ┣ 📂option
  ┃ ┃ ┃ ┗ 📜SelectOption.tsx
  ┃ ┃ ┣ 📂pagination
- ┃ ┃ ┃ ┣ 📜Pagination.module.css
  ┃ ┃ ┃ ┗ 📜PaginationContainer.tsx
  ┃ ┃ ┣ 📂select
  ┃ ┃ ┃ ┣ 📜NotificationSelect.tsx
@@ -218,66 +232,72 @@ src
  ┃ ┃ ┃ ┣ 📜CardSkeleton.tsx
  ┃ ┃ ┃ ┣ 📜ExchangeRateTableSkeleton.tsx
  ┃ ┃ ┃ ┣ 📜GraphSkeleton.tsx
+ ┃ ┃ ┃ ┣ 📜ReportCardSkeleton.tsx
  ┃ ┃ ┃ ┗ 📜ScheduleCardSkeleton.tsx
  ┃ ┃ ┣ 📂spinner
  ┃ ┃ ┃ ┣ 📜LoadingSpinner.tsx
  ┃ ┃ ┃ ┗ 📜ParticleLoading.tsx
  ┃ ┃ ┣ 📂table
  ┃ ┃ ┃ ┗ 📜ExchangeRatesTable.tsx
- ┃ ┃ ┗ 📂text
+ ┃ ┃ ┣ 📂text
  ┃ ┃ ┃ ┣ 📜SplitText.tsx
  ┃ ┃ ┃ ┗ 📜Text.tsx
+ ┃ ┃ ┗ 📂wrapper
+ ┃ ┃ ┃ ┗ 📜FlexBox.tsx
  ┃ ┣ 📂__test__
  ┃ ┃ ┗ 📜DarkMode.test.tsx
  ┃ ┣ 📜DarkMode.tsx
+ ┃ ┣ 📜memo.txt
  ┃ ┣ 📜Navigation.tsx
  ┃ ┗ 📜Provider.tsx
- ┣ 📂configs
+ ┣ 📂configs ---------------------> 구성파일
  ┃ ┣ 📜fetch.config.ts
  ┃ ┗ 📜url.config.ts
- ┣ 📂constants
+ ┣ 📂constants -------------------> 상수
  ┃ ┣ 📜cron.ts
  ┃ ┗ 📜currencies.ts
- ┣ 📂hooks
+ ┣ 📂hooks -----------------------> 커스텀 훅
  ┃ ┣ 📂__test__
  ┃ ┣ 📜useCustomRouter.tsx
  ┃ ┣ 📜useMatchPath.tsx
- ┃ ┣ 📜useQueryInvalidate.tsx
+ ┃ ┣ 📜usePromiseToast.tsx
  ┃ ┣ 📜useQueryReact.tsx
  ┃ ┣ 📜useReports.tsx
  ┃ ┣ 📜useResize.tsx
  ┃ ┗ 📜useTextSplit.tsx
- ┣ 📂mocks
+ ┣ 📂mocks -------------------------> 테스트 전용 목 데이터, 목 서버 등 설정 파일
  ┃ ┣ 📜handlers.ts
  ┃ ┣ 📜localStorage.mock.ts
  ┃ ┣ 📜matchMedia.mock.ts
  ┃ ┣ 📜server.ts
  ┃ ┗ 📜useState.mock.ts
- ┣ 📂services
+ ┣ 📂services ---------------------> API
  ┃ ┣ 📜adsense.service.ts
  ┃ ┣ 📜common.service.ts
  ┃ ┣ 📜google.service.ts
  ┃ ┗ 📜notification.service.ts
- ┣ 📂store
+ ┣ 📂store ------------------------> Zustand
  ┃ ┣ 📂types
  ┃ ┃ ┗ 📜store.type.d.ts
  ┃ ┣ 📜dateRangeStore.ts
- ┃ ┗ 📜menuStore.ts
+ ┃ ┣ 📜menuStore.ts
+ ┃ ┗ 📜triggerStore.ts
  ┣ 📂types
  ┃ ┣ 📜anlaytics.types.d.ts
  ┃ ┗ 📜api-ad.types.d.ts
- ┣ 📂utils
+ ┣ 📂utils ------------------------> 유틸
  ┃ ┣ 📂__test__
  ┃ ┃ ┗ 📜function.test.ts
  ┃ ┣ 📜cron-parser.ts
  ┃ ┣ 📜function.ts
+ ┃ ┣ 📜icons.tsx
  ┃ ┗ 📜setupTests.ts
- ┣ 📜auth.ts
- ┣ 📜joi.ts ----------------> 유효성
+ ┣ 📜auth.ts ---------------------> next-auth 인증 설정 파일
+ ┣ 📜joi.ts
  ┣ 📜middlewaree.ts
  ┣ 📜next-auth.d.ts
- ┣ 📜nodemailer.ts
- ┗ 📜task.ts ---------------> cron 작업
+ ┣ 📜nodemailer.ts --------------> 메일
+ ┗ 📜task.ts --------------------> 크론 작업
 ```
 
 ## 사이트 페이지별 참고 이미지

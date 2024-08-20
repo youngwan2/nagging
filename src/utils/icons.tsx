@@ -31,17 +31,11 @@ export default function getIcons() {
   const CalendarIcon = () => (
     <SvgIcon d="M8 2v4m8-4v4M3 10h18M3 6a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6z" />
   );
-  const XCircleIcon = () => (
-    <SvgIcon d="M15 9l-6 6m0-6l6 6m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  );
+  const XCircleIcon = () => <SvgIcon d="M15 9l-6 6m0-6l6 6m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />;
 
-  const ProhibitIcon = ({ className }: { className: string }) => (
-    <PiProhibit color="#D13642" className={className} />
-  );
+  const ProhibitIcon = ({ className }: { className: string }) => <PiProhibit color="#D13642" className={className} />;
 
-  const LoginIcon = ({ className }: { className: string }) => (
-    <PiUserCircle className={className} />
-  );
+  const LoginIcon = ({ className }: { className: string }) => <PiUserCircle className={className} />;
 
   const MenuIcon = ({ className }: { className: string }) => (
     <IoMdMenu className={className} title="메뉴 열기" aria-label="메뉴 열기" />

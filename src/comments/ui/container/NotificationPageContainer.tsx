@@ -84,10 +84,7 @@ export default function NotificationPageContainer({ userId, token }: PropsType) 
   }, [isRefetch]);
 
   return (
-    <Container
-      elName={'div'}
-      className="w-full relative flex xl:flex-row flex-col justify-between"
-    >
+    <Container elName={'div'} className="w-full relative flex xl:flex-row flex-col justify-between">
       <FlexBox className="w-full flex-col items-start">
         {/* 보고서 설정 */}
         <NotificationOptionFormContainer userId={userId} />
@@ -108,12 +105,7 @@ export default function NotificationPageContainer({ userId, token }: PropsType) 
 /**
  * react-query 로 받아온 데이터 및 상태를 묶어서 props으로 전달하는 용도로 사용
  */
-function generateQueryState({
-  data,
-  isPending,
-  isRefetching,
-  isError,
-}: QueryState): QueryState {
+function generateQueryState({ data, isPending, isRefetching, isError }: QueryState): QueryState {
   return {
     data,
     isPending,

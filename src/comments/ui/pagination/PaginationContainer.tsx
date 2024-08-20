@@ -10,11 +10,7 @@ interface PropsType {
   onChange: (page: number) => void;
 }
 
-export default function PaginationContainer({
-  total = 10,
-  initialPage = 1,
-  onChange,
-}: PropsType) {
+export default function PaginationContainer({ total = 10, initialPage = 1, onChange }: PropsType) {
   return (
     <Pagination
       color="default"

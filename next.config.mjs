@@ -26,8 +26,7 @@ const nextConfig = {
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value:
-              'https://ssl.gstatic.com/accessibility/javascript/ext/loader.js?1709880302058', // t
+            value: 'https://ssl.gstatic.com/accessibility/javascript/ext/loader.js?1709880302058', // t
           },
           {
             key: 'Access-Control-Allow-Methods',

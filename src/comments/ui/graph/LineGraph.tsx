@@ -2,16 +2,7 @@
 
 import Heading from '@src/comments/ui/heading/Heading';
 import { FlattenedData } from '@src/types/anlaytics.types';
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from 'recharts';
+import { LineChart, XAxis, YAxis, CartesianGrid, Line, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface PropsType {
   data: FlattenedData[];
@@ -44,12 +35,7 @@ export default function LineGraph({ data, message }: PropsType) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-          activeDot={{ r: data.length }}
-        />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: data.length }} />
       </LineChart>
     </ResponsiveContainer>
   );

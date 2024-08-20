@@ -1,11 +1,7 @@
 'use server';
 
 import { auth } from '@src/auth';
-import {
-  getAccountInfo,
-  getCredentials,
-  saveAccountName,
-} from '@src/services/adsense.service';
+import { getAccountInfo, getCredentials, saveAccountName } from '@src/services/adsense.service';
 import { connect } from '../../prisma/client';
 
 export const adsenseDataFetch = async () => {
@@ -34,10 +30,7 @@ export const adsenseDataFetch = async () => {
 
     // 기존 계정이 있으면 불러오고, 없으면 새로 요청해서 불러옵니다.
     const accountName =
-      (dbAccountName.length > 0
-        ? dbAccountName[0].accountId
-        : await getAccountInfo(oauth)
-      )?.toString() ?? '';
+      (dbAccountName.length > 0 ? dbAccountName[0].accountId : await getAccountInfo(oauth))?.toString() ?? '';
 
     // 새로 불러온 계정의 경우 데이터베이스에 저장합니다.
     if (dbAccountName.length < 1) {

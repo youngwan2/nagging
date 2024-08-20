@@ -58,18 +58,14 @@ export async function POST(req: NextRequest) {
       setPayment(userId, [JSON.stringify(payments) as string]);
 
       // 수익금 내역이 없으면 없다는 응답을 보내고, 있다면 조회된 내역을 응답
-      if (payments && payments?.length < 1)
-        return NextResponse.json({ message: '결제 내역 없음.' });
+      if (payments && payments?.length < 1) return NextResponse.json({ message: '결제 내역 없음.' });
       else {
         return NextResponse.json({ payments: payments });
       }
     }
   } catch (error) {
     console.error('/api/adsense/payments', error);
-    return NextResponse.json(
-      { error: '네트워크 에러' },
-      { status: 500, statusText: '네트워크 에러' },
-    );
+    return NextResponse.json({ error: '네트워크 에러' }, { status: 500, statusText: '네트워크 에러' });
   } finally {
     await close();
   }
@@ -123,19 +119,12 @@ async function getDbPayment(userId: string) {
  * @param accessToken 구글 로그인 자격증명을 위한 검증용 토큰
  * @param accountName 사용자 애드센스 계정 아이디
  */
-async function getNewPayment(
-  accessToken: string,
-  accountName: { accountId: string | null }[],
-) {
+async function getNewPayment(accessToken: string, accountName: { accountId: string | null }[]) {
   // 자격증명을 발급 받고, 수익금을 조회
   const oauth = await getCredentials(accessToken);
   if (!oauth) throw new Error('인증된 유저가 아님');
 
-  const payments =
-    ((await getPayments(
-      accountName[0].accountId,
-      oauth,
-    )) as adsense_v2.Schema$Payment[]) || [];
+  const payments = ((await getPayments(accountName[0].accountId, oauth)) as adsense_v2.Schema$Payment[]) || [];
 
   return payments;
 }

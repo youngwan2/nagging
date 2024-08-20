@@ -22,18 +22,14 @@ export async function POST(req: NextRequest) {
     const accountName = await getAccountInfoWithDb(userId);
     if (!accountName)
       return NextResponse.json({
-        message:
-          '접근 권한이 없습니다. 우측 상단에 보이는 [Adsense] 계정 요청 후 다시시도 해주세요.',
+        message: '접근 권한이 없습니다. 우측 상단에 보이는 [Adsense] 계정 요청 후 다시시도 해주세요.',
       });
     const reports = await generateReport(accountName, auth, dateRange);
 
     return NextResponse.json(reports, { status: 201 });
   } catch (error) {
     console.error('/api/adsense', error);
-    return NextResponse.json(
-      { error: '네트워크 에러' },
-      { status: 500, statusText: '네트워크 에러' },
-    );
+    return NextResponse.json({ error: '네트워크 에러' }, { status: 500, statusText: '네트워크 에러' });
   }
 }
 

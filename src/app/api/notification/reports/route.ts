@@ -25,10 +25,7 @@ export async function GET(req: NextRequest) {
       where: { userId: userId },
     });
 
-    return NextResponse.json(
-      { optionList: results, nextURL, totalCount, maxPage },
-      { status: 200 },
-    );
+    return NextResponse.json({ optionList: results, nextURL, totalCount, maxPage }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
   } finally {

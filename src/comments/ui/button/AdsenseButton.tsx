@@ -23,7 +23,7 @@ export function AdsenseButton() {
         title="애드센스 계정 정보를 불러옵니다. 보안을 위해 요청 시에만 모든 서비스 이용이 가능합니다."
         type="submit"
       >
-        {pending ? '조회중' : 'Adsense'}
+        {pending ? '조회중' : '계정ID 조회'}
       </Button>
     </Form>
   );

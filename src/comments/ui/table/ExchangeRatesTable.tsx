@@ -7,12 +7,7 @@ interface PropsType {
   onClick: (pair: string) => void;
   aside: React.ReactNode;
 }
-export default function ExchangeRatesTable({
-  currencyPairs,
-  selectedPair,
-  onClick,
-  aside,
-}: PropsType) {
+export default function ExchangeRatesTable({ currencyPairs, selectedPair, onClick, aside }: PropsType) {
   return (
     <div className="bg-background text-foreground p-6 rounded-lg shadow-md ">
       {/* 선택 환율 정보 */}

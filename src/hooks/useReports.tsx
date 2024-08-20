@@ -18,10 +18,7 @@ interface State extends ReportRequest {
 
 // 훅
 export function useReports(dateRange: ReportRequest) {
-  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
-    dateRangeReducer,
-    dateRange,
-  );
+  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(dateRangeReducer, dateRange);
 
   return { state, dispatch };
 }

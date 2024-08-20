@@ -1,8 +1,9 @@
-※ 현재 테스트 배포 완료 후 알림 서비스의 안정성 테스트  중입니다(24.08.19 ~ 24.08.26 )
+※ 현재 테스트 배포 완료 후 알림 서비스의 안정성 테스트 중입니다(24.08.19 ~ 24.08.26 )
 
 ## 📓 프로젝트 명
-- **nagging (잔소리)**: 
-잔소리 작명 이유는  수익 통계 알림을 자동화하는 것이라 돈소리가 나는 것 같다는 생각 + 매번 정해진 일정 마다 같은 동작을 반복하는 것이 꼭 잔소리를 듣는 것 같다는 중의적 의미을 담아 잔소리(Nagging)라 이름 지었습니다.
+
+- **nagging (잔소리)**:
+  잔소리 작명 이유는 수익 통계 알림을 자동화하는 것이라 돈소리가 나는 것 같다는 생각 + 매번 정해진 일정 마다 같은 동작을 반복하는 것이 꼭 잔소리를 듣는 것 같다는 중의적 의미을 담아 잔소리(Nagging)라 이름 지었습니다.
 
 ## 👁‍🗨 프로젝트 개요
 
@@ -84,15 +85,18 @@
 아래는 이 프로젝트에서 진행 예정 혹은 고려 작업들입니다. 참고용도 이며, 완료된 작업은 체크 처리 됩니다.
 
 ### 기능 개선
+
 - [ ] 공지 기능
 - [ ] 회원 프로필 관련 기능
 - [ ] 통계 항목 추가(현재는 간편 통계 페이지의 경우 수익금 및 최근 지급액 관련 통계 확인으로 제한되어 있으므로, 광고 수익 관리에 필요한 최소한의 통계 서비스 별도 추가 예정)
 
 ### 버그 수정
+
 - [ ] 보고서 등록 시 아무런 알림 표시가 뜨지 않는 문제
 - [ ] 모바일 접속 시 레이아웃 깨짐
 
 ### 시스템
+
 - [ ] 콜드 스타트 문제 개선
 - [ ] 인스턴스 활성화 시 보고서 알림 작업 동기화
 
@@ -279,33 +283,43 @@ src
 ```
 
 ## 사이트 페이지별 참고 이미지
+
 ### 홈
+
 #### 서비스 바로가기
+
 ![image](https://github.com/user-attachments/assets/18177993-f268-41d5-a1cb-3854b1c27be1)
 
 #### 알림/공지
+
 ![image](https://github.com/user-attachments/assets/c292867a-43d9-4789-98a7-ad028757394b)
 
 ### 정보 페이지
+
 #### 데일리 환율
+
 ![image](https://github.com/user-attachments/assets/24cd2d8f-b2cf-44ed-902f-6473200f8822)
 
 ### 보고서 설정 페이지
+
 #### 보고서 설정
+
 ![image](https://github.com/user-attachments/assets/2621072e-a621-4b6d-b54e-71daf93076cf)
 
 #### 보고서 옵션 목록
+
 ![image](https://github.com/user-attachments/assets/c0d535c0-0852-4c10-85e4-fc6e4dff0367)
 
-
 #### 알림 스케줄 목록
+
 ![image](https://github.com/user-attachments/assets/79a1116e-df35-4423-9229-e7946e4fc08e)
 
-
 ### 간편 통계 페이지
+
 #### 예상 수익 통계
+
 ![image](https://github.com/user-attachments/assets/55f24cb0-eb50-4a12-9e3b-22504e8cc255)
 
-#### 지급액 통계 
-![image](https://github.com/user-attachments/assets/15b254f2-496e-4220-a93e-d13699e49ae1)
+#### 지급액 통계
 
+![image](https://github.com/user-attachments/assets/15b254f2-496e-4220-a93e-d13699e49ae1)

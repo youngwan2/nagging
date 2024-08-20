@@ -26,13 +26,7 @@ export default function NotificationScheduleListContainer({ queryState }: PropsT
 
       {/* 목록 */}
       {!data || (data.message && <EmptyMessage />)}
-      {isPending ? (
-        <ScheduleCardSkeleton />
-      ) : !isError ? (
-        <NotificationScheduleList items={data} />
-      ) : (
-        <ErrorMessage />
-      )}
+      {isPending ? <ScheduleCardSkeleton /> : !isError ? <NotificationScheduleList items={data} /> : <ErrorMessage />}
     </Container>
   );
 }

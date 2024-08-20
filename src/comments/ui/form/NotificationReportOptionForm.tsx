@@ -15,8 +15,7 @@ import { createReportOption } from '@src/actions/notification-actions';
 import { useFormStatus } from 'react-dom';
 import { useRefetchTrigger } from '@src/store/triggerStore';
 
-const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } =
-  createInitData();
+const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } = createInitData();
 
 interface PropsType {
   userId?: string;
@@ -58,23 +57,9 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
         조회 시작일(Start Date)
         <FlexBox className="w-full justify-between ">
           {/* 연도, 월, 일 */}
-          <NotificationSelect
-            name="start-year"
-            options={years}
-            condition={new Date().getFullYear()}
-          />
-          <NotificationSelect
-            className="ml-2"
-            name="start-month"
-            options={month}
-            condition={1}
-          />
-          <NotificationSelect
-            className="ml-2"
-            name="start-day"
-            options={days}
-            condition={1}
-          />
+          <NotificationSelect name="start-year" options={years} condition={new Date().getFullYear()} />
+          <NotificationSelect className="ml-2" name="start-month" options={month} condition={1} />
+          <NotificationSelect className="ml-2" name="start-day" options={days} condition={1} />
         </FlexBox>
       </Label>
 
@@ -83,23 +68,9 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
         조회 종료일(End Date)
         <FlexBox className="w-full justify-between">
           {/* 연도, 월, 일 */}
-          <NotificationSelect
-            name="end-year"
-            options={endYears}
-            condition={new Date().getFullYear()}
-          />
-          <NotificationSelect
-            className="ml-2"
-            name="end-month"
-            options={month}
-            condition={12}
-          />
-          <NotificationSelect
-            className="ml-2"
-            name="end-day"
-            options={days}
-            condition={31}
-          />
+          <NotificationSelect name="end-year" options={endYears} condition={new Date().getFullYear()} />
+          <NotificationSelect className="ml-2" name="end-month" options={month} condition={12} />
+          <NotificationSelect className="ml-2" name="end-day" options={days} condition={31} />
         </FlexBox>
       </Label>
 
@@ -110,12 +81,7 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
           ※ 드래그를 통해 중복선택 가능(
           {'[Ctrl + Click] 을 통해 부분 선택 가능'})
         </Text>
-        <Select
-          className="p-2 rounded-md mt-2 "
-          multiple
-          name="metrics"
-          defaultValue={['ESTIMATED_EARNINGS']}
-        >
+        <Select className="p-2 rounded-md mt-2 " multiple name="metrics" defaultValue={['ESTIMATED_EARNINGS']}>
           {metrics.map((metric) => (
             <SelectOption key={metric.text} text={metric.text} value={metric.value} />
           ))}
@@ -155,8 +121,7 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
 function createInitData() {
   const currencyCode = Object.entries(currencies);
   const days = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-    25, 26, 27, 28, 29, 30, 31,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
   ];
   const month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const years: number[] = [];

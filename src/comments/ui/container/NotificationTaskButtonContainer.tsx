@@ -94,11 +94,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
   return (
     <>
       <SettingsContainer title="정기 알림 설정">
-        <ButtonGroup
-          isLoading={isLoading}
-          options={scheduleOptions}
-          onClick={handleCreateTaskNotification}
-        />
+        <ButtonGroup isLoading={isLoading} options={scheduleOptions} onClick={handleCreateTaskNotification} />
       </SettingsContainer>
 
       <SettingsContainer title="일회성 알림 설정">
@@ -143,13 +139,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
   );
 }
 
-function SettingsContainer({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function SettingsContainer({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <Container elName="div" className="flex flex-col mt-[0.5rem]">
       <Text elementName="span" className="p-1 font-light text-[0.85em]">

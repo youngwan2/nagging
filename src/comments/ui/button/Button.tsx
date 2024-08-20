@@ -11,18 +11,11 @@ interface PropsType {
   onClick?: MouseEventHandler<HTMLButtonElement> | ((state: any) => void);
 }
 
-export default function Button({
-  className,
-  title,
-  type,
-  children,
-  disabled,
-  onClick,
-}: PropsType) {
+export default function Button({ className, title, type, children, disabled, onClick }: PropsType) {
   return (
     <button
       disabled={disabled}
-      className={className + ' dark:text-white  text-black '}
+      className={'dark:text-white  text-black ' + className}
       title={title}
       type={type}
       onClick={onClick}

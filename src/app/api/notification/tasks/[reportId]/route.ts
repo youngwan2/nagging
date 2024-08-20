@@ -5,12 +5,7 @@ import { Session } from 'next-auth';
 import { connect } from '../../../../../../prisma/client';
 
 import { auth } from '@src/auth';
-import {
-  createTask,
-  getReportOptionFromDb,
-  removeTask,
-  sendNotification,
-} from '@src/task';
+import { createTask, getReportOptionFromDb, removeTask, sendNotification } from '@src/task';
 
 const cronGroup = cron.getTasks();
 
@@ -34,8 +29,7 @@ export async function POST(req: NextRequest, res: { params: { reportId: number }
 
   try {
     // 로그인 유저인지 확인
-    if (!userId || !user)
-      return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
+    if (!userId || !user) return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
 
     // 예약할 보고서 옵션 가져오기
     const reportOptionJSON = await getReportOptionFromDb(reportId, userId);
@@ -108,10 +102,7 @@ export async function POST(req: NextRequest, res: { params: { reportId: number }
       // 작업 시작
       task.start();
 
-      return NextResponse.json(
-        { message: '선택하신 옵션으로 알림이 재설정 되었습니다.' },
-        { status: 201 },
-      );
+      return NextResponse.json({ message: '선택하신 옵션으로 알림이 재설정 되었습니다.' }, { status: 201 });
 
       // CREATE | 새 작업 등록
     } else {
@@ -149,10 +140,7 @@ export async function POST(req: NextRequest, res: { params: { reportId: number }
     }
   } catch (error) {
     console.error('작업등록 실패:', error);
-    return NextResponse.json(
-      { error: '네트워크 에러' },
-      { status: 500, statusText: '네트워크 에러' },
-    );
+    return NextResponse.json({ error: '네트워크 에러' }, { status: 500, statusText: '네트워크 에러' });
   } finally {
     await close();
   }
@@ -171,8 +159,7 @@ export async function DELETE(_req: NextRequest, res: { params: { reportId: numbe
     const reportId = Number(res.params.reportId);
 
     // 로그인 유저인지 확인
-    if (!userId)
-      return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
+    if (!userId) return NextResponse.json({ error: '접근 권한이 없습니다.' }, { status: 401 });
 
     const userCronInfo =
       (await prisma.notificationCron.findMany({

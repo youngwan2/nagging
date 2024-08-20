@@ -1,4 +1,3 @@
-// import prisma from '../../prisma/client';
 import { connect } from '../../prisma/client';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
@@ -8,6 +7,9 @@ import { PrismaClient } from '@prisma/client';
 export async function getAdsenseAlert(userId: string, token: string) {
   try {
     const accountId = ((await getAdsenseAccountFromDb(userId)) as string) || '';
+
+    if (!accountId) return false;
+
     const oauth = await getCredentials(token);
 
     if (!oauth) return [];
@@ -36,7 +38,7 @@ async function getAdsenseAccountFromDb(userId: string) {
     return accountId;
   } catch (error) {
     console.error(error);
-    return [];
+    return false;
   } finally {
     await close();
   }

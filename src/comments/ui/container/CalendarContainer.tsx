@@ -10,10 +10,7 @@ interface PropsType {
 }
 export default function CalendarContainer({ onSearch }: PropsType) {
   return (
-    <Form
-      className="md:flex-row flex flex-col justify-center h-auto items-center"
-      action={onSearch}
-    >
+    <Form className="md:flex-row flex flex-col justify-center h-auto items-center" action={onSearch}>
       <InputContainer
         className={`md:flex-row flex flex-col items-center justify-center mt-5 transition-all duration-1000`}
         elName={'div'}

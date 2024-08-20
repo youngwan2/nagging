@@ -1,6 +1,6 @@
 import './globals.css';
 
-import { Inter } from 'next/font/google';
+import localFront from 'next/font/local';
 
 import Header from '@src/comments/ui/layout/Header';
 import Footer from '@src/comments/ui/layout/Footer';
@@ -12,7 +12,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { Metadata, Viewport } from 'next';
 
-const inter = Inter({ subsets: ['latin'] });
+const pretendard = localFront({
+  src: '../static/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '45 920',
+  variable: '--font-pretendard',
+});
 
 const APP_NAME = '잔소리';
 const APP_DEFAULT_TITLE = '잔소리';
@@ -64,8 +69,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" className="dark">
-      <body className={inter.className}>
+    <html lang="kr" className={`dark ${pretendard.variable}`}>
+      <body className={pretendard.className}>
         <Header />
         <div className="flex justify-between">
           <Navigation />

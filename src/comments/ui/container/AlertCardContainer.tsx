@@ -25,7 +25,7 @@ export default async function AlertCardContainer() {
     <Container elName={'div'} className="w-full">
       <Heading level="2" className="pb-[0.75em]">
         알림/공지
-        <Text elementName={'span'} className="text-[0.55em] pl-4 text-gray-500">
+        <Text elementName={'span'} className="text-[0.55em] dark:text-[#777f8e] pl-4 opacity-80 ">
           Alerts/Board
         </Text>
       </Heading>

@@ -8,12 +8,14 @@ interface PropsType {
   title?: string;
   message?: string;
   className?: string;
+  onClick?: () => void;
   onRetry?: () => void;
 }
 export default function ErrorMessage({
   title = '네트워크 문제로 데이터를 불러오지 못했습니다.',
   message = '네트워크 문제로 인해 데이터 조회에 실패하였습니다.',
   className,
+  onClick,
   onRetry,
 }: PropsType) {
   return (
@@ -41,6 +43,14 @@ export default function ErrorMessage({
       <Text elementName={'p'} className="text-red-600 mb-4 text-center">
         {message}
       </Text>
+      {onClick && (
+        <Button
+          onClick={onClick}
+          className="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+        >
+          이전 날짜로
+        </Button>
+      )}
       {onRetry && (
         <Button
           onClick={onRetry}

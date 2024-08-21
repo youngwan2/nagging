@@ -6,8 +6,8 @@ import ExchangeRatesTable from '../table/ExchangeRatesTable';
 import Container from './Container';
 import Heading from '../heading/Heading';
 import Text from '../text/Text';
-import Button from '../button/Button';
 import ExchangeRateTableSkeleton from '../skeleton/ExchangeRateTableSkeleton';
+import ErrorMessage from '../message/ErrorMessage';
 
 import { Method } from '@src/configs/fetch.config';
 import { currencies } from '@src/constants/currencies';
@@ -57,15 +57,11 @@ export default function InformationContainer({}: PropsType) {
 
   if (isError)
     return (
-      <Heading level="2" className="text-[0.95rem] font-light">
-        <Text elementName={'p'}>{today} 기준 환율 정보를 찾을 수 없습니다. </Text>
-        <Button
-          className="dark:hover:bg-slate-800 hover:bg-slate-100 border rounded-md px-1 mx-1"
-          onClick={() => setDate('latest')}
-        >
-          조회 가능 시간대로
-        </Button>
-      </Heading>
+      <ErrorMessage
+        message="현재 일자로 환율 데이터를 가져오지 못했습니다."
+        title="존재하지 않는 날짜 조회"
+        onClick={() => setDate('latest')}
+      />
     );
   if (!data || isPending)
     return (
@@ -85,6 +81,7 @@ export default function InformationContainer({}: PropsType) {
       <Text elementName={'p'} className=" text-muted-foreground text-[14px] text-end py-3">
         {date}
       </Text>
+
       {isPending ? (
         <ExchangeRateTableSkeleton />
       ) : (
@@ -99,6 +96,14 @@ export default function InformationContainer({}: PropsType) {
                 : '선택한 환율정보가 표시됩니다.'}
             </Text>
           }
+        />
+      )}
+      {!currencyPairs && (
+        <ErrorMessage
+          className="mt-3"
+          message="현재 일자로 환율 데이터를 가져오지 못했습니다."
+          title="존재하지 않는 날짜 조회"
+          onClick={() => setDate('latest')}
         />
       )}
     </Container>

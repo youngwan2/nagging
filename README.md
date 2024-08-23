@@ -22,8 +22,33 @@
 - **히스토리**: [작업 이슈 히스토리](https://github.com/youngwan2/nagging/issues/2)
 
 ## 🔥 배포
+- ※ 사용하지 않는 경우에는 컨테이너 인스턴스가 0 이 되므로, 0인 상태에서 접속 시 콜드 스타트 문제로 사이트 접속이 지연될 수 있습니다.
+- ※ 현재 사이트는 GCP의 Cloud 스케줄러 등이 적용 전인 상태이므로, 보고서 설정 후 사용이 제한되는 문제가 있습니다.
+- https://nagging.site
 
-- 준비중
+## 배포 아키텍처
+- 다크모드에서는 흐릿하게 보일 수 있습니다.
+```  mermaid
+graph TD
+    A[개발자 로컬 환경] -->|gcloud run deploy| B[Cloud Run]
+    B -->|SQL Auth Proxy| C[Cloud SQL]
+    B -->|서비스| D[사용자]
+    
+    subgraph "Google Cloud Platform"
+    B
+    C
+    end
+    
+    subgraph "로컬 개발 환경"
+    A -->|개발| E[Next.js 애플리케이션]
+    end
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bfb,stroke:#333,stroke-width:2px
+    style D fill:#ff9,stroke:#333,stroke-width:2px
+    style E fill:#f96,stroke:#333,stroke-width:2px
+```
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구
 
@@ -59,6 +84,8 @@
 | :------------------------: | :------------------------------------ |
 | GCP Cloud Run |도커 컨테이너 배포( 유연한 인스턴스 자동확장 및 축소, 로컬 환경과 사실상 거의 동일한 환경에서 코드를 실행할 수 있는 이점이 돋보임)            |
 
+## 🤔 트러블 슈팅
+- [트러블 슈팅](https://duklook.tistory.com/595)
 
 ## ⚙ 주요 기능
 
@@ -83,9 +110,7 @@
 - **보고서 즉시 요청**:
   - '즉시 받기' 버튼을 클릭하면 설정한 옵션에 따른 맞춤형 보고서가 사용자의 계정 이메일로 전송됩니다.
 
-## 🤔 트러블 슈팅
-※ 배포는 완료되었으나 안정성 문제로 보류
-- 준비중
+
 
 
 ## 🗂️ 프로젝트 구조

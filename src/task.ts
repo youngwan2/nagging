@@ -51,7 +51,7 @@ export async function syncTask() {
       const { refresh_token: refreshToken, access_token: accessToken, expires_at } = accountInfos;
       const currentTimeStamp = Math.floor(Date.now() / 1000);
 
-      // 액세스 토큰 만료 전
+      // 액세스 토큰 만료 전 작업 동기화 진행
       if (expires_at > currentTimeStamp) {
         const task = createTask(
           job.cronExpression,
@@ -60,7 +60,7 @@ export async function syncTask() {
         );
         task.start();
         return true;
-        // 액세스 토큰 만료 후 재발급
+        // 액세스 토큰 만료 후 재발급 후 작업 동기화 진행
       } else {
         const newToken = await tokenRefresh(refreshToken);
         if (!newToken) return false;

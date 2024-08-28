@@ -1,5 +1,4 @@
 import { cronParser } from '@src/utils/cron-parser';
-// import prisma from '../../prisma/client';
 import { connect } from '../../prisma/client';
 
 /**
@@ -8,8 +7,9 @@ import { connect } from '../../prisma/client';
  * @returns
  */
 export async function getSchedule(userId: string) {
+  const { prisma, close } = await connect();
+
   try {
-    const { prisma } = await connect();
     const schedule = await prisma.notificationCron.findFirst({
       select: {
         notificationReports: true,
@@ -29,5 +29,7 @@ export async function getSchedule(userId: string) {
     console.error(error);
 
     throw new Error('스케줄 알림 목록 조회 실패');
+  } finally {
+    close();
   }
 }

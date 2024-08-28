@@ -1,10 +1,19 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { connect } from '../../prisma/client';
 
+type InitialState = {
+  message: string;
+  success: boolean;
+  loading: boolean;
+};
+
 //  additional form arguments example: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
-export async function createReportOption(userId: string, formData: FormData) {
-  if (!userId) return null;
+export async function createReportOption(initialState: InitialState, formData: FormData) {
+  const userId = formData.get('user-id')?.toString();
+
+  if (!userId) return { ...initialState, message: '로그인 후 시도해주세요', loading: true };
 
   const { prisma, close } = await connect();
 
@@ -38,9 +47,13 @@ export async function createReportOption(userId: string, formData: FormData) {
         report: stringDateRange,
       },
     });
+    revalidatePath('/dashboard/notification-settings');
+    return { ...initialState, message: '성공적으로 추가되었습니다.', success: true, loading: true };
   } catch (error) {
     console.error('보고서 옵션 저장 실패:', error);
+    return { ...initialState, message: '저장에 실패하였습니다.', loading: true };
   } finally {
     await close();
+    return { ...initialState, message: '작업 완료' };
   }
 }

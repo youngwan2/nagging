@@ -1,9 +1,13 @@
 'use client';
 
+import { useFormState } from 'react-dom';
+import { useEffect } from 'react';
+
 import Button from './Button';
 import Form from '../form/Form';
 import { adsenseDataFetch } from '@src/actions/adsense-actions';
-import { useFormState } from 'react-dom';
+
+import toast from 'react-hot-toast';
 
 export function AdsenseButton() {
   const initialState = {
@@ -12,7 +16,14 @@ export function AdsenseButton() {
 
   const [state, formAction, pending] = useFormState(adsenseDataFetch, initialState);
 
+  useEffect(() => {
+    if (state?.hasId === true) {
+      toast('성공적으로 애드센스 계정ID 를 조회하였습니다.');
+    }
+  }, [pending]);
+
   if (state?.hasId) return null;
+
   return (
     <Form className="flex items-center mr-[0.5rem] " action={formAction}>
       <Button

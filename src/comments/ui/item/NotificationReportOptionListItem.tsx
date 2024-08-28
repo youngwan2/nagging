@@ -2,9 +2,9 @@ import ListItem from '../item/ListItem';
 import ItemTitle from '../heading/Heading';
 import Text from '../text/Text';
 import Container from '../container/Container';
-import { UserReportOptionList } from '@src/app/dashboard/notification-settings/page';
 
 import { MdOutlineNotifications } from 'react-icons/md';
+import { type UserReportOptionList } from '@src/app/dashboard/notification-settings/_types/types';
 
 interface DateType {
   day: number;
@@ -51,7 +51,6 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
 
       {/* 각 보고서 옵션*/}
       <ItemBody elName={'details'} className="p-2 dark:text-white">
-        {/* 식별 */}
         <TextContainer elName={'div'} className="flex flex-col">
           <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
             보고서 식별코드
@@ -60,7 +59,7 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
             {item.reportId}
           </Text>
         </TextContainer>
-        {/* 조회 기간 */}
+
         <TextContainer elName={'div'} className="flex flex-col">
           <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
             생성 날짜
@@ -69,7 +68,7 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
             {createDate}
           </Text>
         </TextContainer>
-        {/* 조회 기간 */}
+
         <TextContainer elName={'div'} className="flex flex-col">
           <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
             조회 기간
@@ -80,7 +79,6 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
           </Text>
         </TextContainer>
 
-        {/* 조회 항목 */}
         <TextContainer elName={'div'} className="flex flex-col  my-[0.5rem]">
           <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
             조회 항목
@@ -103,17 +101,17 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
             )}
           </Text>
         </TextContainer>
-        {/* 조회 기준 */}
+
         <TextContainer elName={'div'} className="flex flex-col">
           <Text elementName={'span'} className="p-1 font-light text-[0.85em]">
-            조회 기준
+            조회 단위(차원)
           </Text>
           <Text elementName="span" className="px-1 mx-1 font-bold">
-            {dimensions === 'MONTH'
+            {dimensions[0] === 'MONTH'
               ? '월 단위'
-              : dimensions === 'WEEK'
+              : dimensions[0] === 'WEEK'
                 ? '주 단위'
-                : dimensions === 'DATE'
+                : dimensions[0] === 'DATE'
                   ? '일 단위'
                   : '조회항목 없음'}
           </Text>

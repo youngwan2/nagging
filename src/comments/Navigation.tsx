@@ -54,8 +54,8 @@ export default function Navigation() {
               } my-4 py-[8px] rounded-md hover:font-semibold hover:shadow-[0_0_0_1px_rgba(0,0,0,0.3)] min-w-[45px] overflow-hidden`}
             >
               <Link href={href} className="flex items-center flex-col justify-center mx-3">
-                <Icon className="min-w-[43px] mb-2" />
-                <span className="ml-[0.05em] px-[3px]">{label}</span>
+                <Icon className="min-w-[43px] w-[75px] mb-2" />
+                <span className="ml-[0.05em] px-[3px] text-[0.85rem]">{label}</span>
               </Link>
             </li>
           ))}

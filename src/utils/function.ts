@@ -66,7 +66,7 @@ export function selectPair(data: { date: string; usd: { [key: string]: string } 
 /** CurrencyPair 인터페이스의 배열 형태로 변환하는 함수
  * @description {  pair: string;  rate: number;  date: string;}[] 형태로 변환 후 반환
  */
-export function mappingPair(initialPair: [string, string][], date: string): CurrencyPair[] {
+export function mappingPair(initialPair: [string, string][] = [], date: string = ''): CurrencyPair[] {
   return initialPair.map(([key, value]) => {
     return {
       pair: `USD/${key.toUpperCase() ?? '조회불가'}`,

@@ -1,5 +1,8 @@
 'use client';
 
+import { useFormState } from 'react-dom';
+import { useRefetchTrigger } from '@src/store/triggerStore';
+
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Form from '@src/comments/ui/form/Form';
@@ -12,8 +15,7 @@ import FlexBox from '../wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
-import { useFormStatus } from 'react-dom';
-import { useRefetchTrigger } from '@src/store/triggerStore';
+import { useRouter } from 'next/navigation';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } = createInitData();
 
@@ -23,14 +25,13 @@ interface PropsType {
 
 export default function NotificationReportOptionForm({ userId = '' }: PropsType) {
   const { setIsRefetch } = useRefetchTrigger();
+  const { refresh } = useRouter();
 
   // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
-  const createReportOptionWithUserId = createReportOption.bind(null, userId);
-
-  const { pending } = useFormStatus(); // 폼 액션 실행 상태
+  const [state, formAction] = useFormState(createReportOption, { message: '', success: false, loading: false });
 
   return (
-    <Form action={createReportOptionWithUserId} className={'max-w-[645px] w-full'}>
+    <Form action={formAction} className={'max-w-[645px] w-full'}>
       {/* 보고서 이름 */}
       <Label className="dark:text-white mt-3  w-full  max-w-[645px] flex flex-col">
         보고서 이름(Report Name)
@@ -106,14 +107,15 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
       {/* 보고서 등록 버튼 */}
       <Button
         className={`w-full p-3 rounded-md mt-5 bg-gradient-to-br from-slate-500 to-slate-800 text-white hover:from-slate-800 hover:to-slate-500`}
-        type="submit"
         onClick={() => {
           if (!userId) return alert('해당 서비스는 로그인 후 이용 가능합니다.');
           setIsRefetch(true);
+          refresh();
         }}
       >
-        {pending ? '등록중..' : '보고서 등록'}
+        {!state.loading ? '보고서 등록' : '등록중..'}
       </Button>
+      <input type="text" name="user-id" defaultValue={userId} className="hidden" />
     </Form>
   );
 }

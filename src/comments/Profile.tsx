@@ -1,8 +1,9 @@
 'use client';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
+import { useEffect, useState } from 'react';
+
+import Link from 'next/link';
+import Image from 'next/image';
 import Text from './ui/text/Text';
 import Button from './ui/button/Button';
 import Container from './ui/container/Container';
@@ -41,7 +42,7 @@ export default function Profile({ image, name, email }: PropsType) {
           onError={(e) => {
             e.currentTarget.src = '/icons/profile.png';
           }}
-          src={image || ''}
+          src={image || '/icons/profile.png'}
           alt="유저 프로필 이미지"
         />
       </Button>

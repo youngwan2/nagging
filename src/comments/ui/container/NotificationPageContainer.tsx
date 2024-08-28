@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import useQueryReact from '@src/hooks/useQueryReact';
+import { useRefetchTrigger } from '@src/store/triggerStore';
 
 import Container from './Container';
 import NotificationOptionFormContainer from './NotificationOptionFormContainer';
@@ -10,7 +11,6 @@ import NotificationOptionListContainer from './NotificationOptionListContainer';
 import FlexBox from '../wrapper/FlexBox';
 
 import { Method } from '@src/configs/fetch.config';
-import { useRefetchTrigger } from '@src/store/triggerStore';
 
 interface PropsType {
   userId?: string;

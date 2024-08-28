@@ -37,6 +37,7 @@ export default function useQueryReact(
       }),
     placeholderData: keepPreviousData,
     ...options,
+    refetchOnMount: true,
   });
 
   return { ...props };

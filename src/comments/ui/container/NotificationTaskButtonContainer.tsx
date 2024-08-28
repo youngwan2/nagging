@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import usePromiseToast from '@src/hooks/usePromiseToast';
+import { useRefetchTrigger } from '@src/store/triggerStore';
 
 import Button from '../button/Button';
 import Text from '../text/Text';
@@ -12,16 +12,15 @@ import { Method } from '@src/configs/fetch.config';
 
 import { everyMonth, everyWeek, everyYear } from '@src/constants/cron';
 import { commonService } from '@src/services/common.service';
-import { useRefetchTrigger } from '@src/store/triggerStore';
+import toast from 'react-hot-toast';
 
 interface PropsType {
   reportId: number;
 }
 
 export default function NotificationTaskButtonContainer({ reportId }: PropsType) {
-  const { setToastState } = usePromiseToast();
+  const { setToastState, toastState } = usePromiseToast();
   const { setIsRefetch } = useRefetchTrigger();
-  const [isLoading, setIsLoading] = useState(false);
 
   /** 보고서 삭제 */
   async function handleDeleteReportOption() {
@@ -57,19 +56,22 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
 
   /** 작업 등록 */
   async function handleCreateTaskNotification(expression: string) {
-    setIsLoading(true);
+    toast.loading('등록중');
     const url = `/api/notification/tasks/${reportId}`;
-
     try {
       commonService({
         reqUrl: url,
         method: Method.POST,
         body: { cron: expression },
-      }).then(() => setIsRefetch(true));
+      }).then(() => {
+        setIsRefetch(true);
+        toast.success('등록완료');
+      });
     } catch (error) {
       console.error(error);
+      toast.error('등록 실패');
     } finally {
-      setIsLoading(false);
+      toast.remove();
     }
   }
 
@@ -94,7 +96,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
   return (
     <>
       <SettingsContainer title="정기 알림 설정">
-        <ButtonGroup isLoading={isLoading} options={scheduleOptions} onClick={handleCreateTaskNotification} />
+        <ButtonGroup options={scheduleOptions} onClick={handleCreateTaskNotification} />
       </SettingsContainer>
 
       <SettingsContainer title="일회성 알림 설정">
@@ -112,7 +114,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
             }}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
           >
-            즉시 받기
+            {toastState.isActive ? '처리중' : '즉시 받기'}
           </Button>
         </FlexBox>
       </SettingsContainer>
@@ -131,7 +133,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
             }}
             className="border mx-1 bg-red-500 text-white hover:bg-red-600 rounded-md p-1"
           >
-            보고서 삭제
+            {toastState.isActive ? '처리중' : '보고서 삭제'}
           </Button>
         </FlexBox>
       </SettingsContainer>
@@ -151,11 +153,9 @@ function SettingsContainer({ title, children }: { title: string; children: React
 }
 
 function ButtonGroup({
-  isLoading,
   options,
   onClick,
 }: {
-  isLoading: boolean;
   options: Array<{ label: string; expression: string; title: string }>;
   onClick: (expression: string) => void;
 }) {
@@ -168,7 +168,7 @@ function ButtonGroup({
           title={option.title}
           className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
         >
-          {isLoading ? '처리중..' : option.label}
+          {option.label}
         </Button>
       ))}
     </FlexBox>

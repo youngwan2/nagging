@@ -28,7 +28,6 @@ export default function NotificationOptionListContainer({ userId, queryState, on
       <Title />
       {/* 안내 */}
       <GuideMessage />
-
       {
         isError || !Array.isArray(optionList) ? (
           <ErrorMessage className="mt-4" />

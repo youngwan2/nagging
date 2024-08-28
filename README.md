@@ -36,6 +36,8 @@ graph TD
     A[개발자 로컬 환경] -->|gcloud run deploy| B[Cloud Run]
     B -->|SQL Auth Proxy| C[Cloud SQL]
     B -->|서비스| D[사용자]
+    B -->|서비스 워커| F[PWA]
+    F -->|오프라인 기능| D
     
     subgraph "Google Cloud Platform"
     B
@@ -44,6 +46,14 @@ graph TD
     
     subgraph "로컬 개발 환경"
     A -->|개발| E[Next.js 애플리케이션]
+    E -->|PWA 구성| G[manifest.json]
+    E -->|PWA 구성| H[service-worker.js]
+    end
+    
+    subgraph "사용자 디바이스"
+    F
+    I[브라우저 캐시]
+    F --> I
     end
     
     style A fill:#f9f,stroke:#333,stroke-width:2px
@@ -51,6 +61,10 @@ graph TD
     style C fill:#bfb,stroke:#333,stroke-width:2px
     style D fill:#ff9,stroke:#333,stroke-width:2px
     style E fill:#f96,stroke:#333,stroke-width:2px
+    style F fill:#fcc,stroke:#333,stroke-width:2px
+    style G fill:#cfc,stroke:#333,stroke-width:2px
+    style H fill:#cfc,stroke:#333,stroke-width:2px
+    style I fill:#ccf,stroke:#333,stroke-width:2px
 ```
 
 ## 🧰 프레임워크 / 라이브러리 / 그 외 도구

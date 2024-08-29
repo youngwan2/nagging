@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { connect } from '../../prisma/client';
+import { getAbsenseAccountIdWithUserId } from '@src/services/adsense.service';
 
 type InitialState = {
   message: string;
@@ -14,6 +15,9 @@ export async function createReportOption(initialState: InitialState, formData: F
   const userId = formData.get('user-id')?.toString();
 
   if (!userId) return { ...initialState, message: '로그인 후 시도해주세요', loading: true };
+
+  const accountId = await getAbsenseAccountIdWithUserId(userId);
+  if (!accountId) return { ...initialState, success: false, message: '애드센스 계정 없음', loading: true };
 
   const { prisma, close } = await connect();
 
@@ -51,9 +55,9 @@ export async function createReportOption(initialState: InitialState, formData: F
     return { ...initialState, message: '성공적으로 추가되었습니다.', success: true, loading: true };
   } catch (error) {
     console.error('보고서 옵션 저장 실패:', error);
-    return { ...initialState, message: '저장에 실패하였습니다.', loading: true };
+    return { ...initialState, message: '저장에 실패하였습니다.', success: false, loading: true };
   } finally {
     await close();
-    return { ...initialState, message: '작업 완료' };
+    return { ...initialState, loading: false, message: '작업 완료' };
   }
 }

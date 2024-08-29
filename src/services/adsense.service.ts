@@ -248,3 +248,25 @@ export async function saveAccountName(accountName: string | null | undefined, us
     throw new Error('애드센스 계정 아이디 저장 실패');
   }
 }
+
+/** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
+export async function getAbsenseAccountIdWithUserId(userId: string) {
+  const { prisma, close } = await connect();
+
+  try {
+    return (
+      await prisma.adsenseAccount.findMany({
+        select: {
+          accountId: true,
+        },
+        where: {
+          userId,
+        },
+      })
+    )[0].accountId;
+  } catch (error) {
+    return false;
+  } finally {
+    await close();
+  }
+}

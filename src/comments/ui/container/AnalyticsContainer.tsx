@@ -121,12 +121,11 @@ export default function AnalyticsContainer({ token }: { token?: string }) {
 
       {/* 보고서 다운로드 */}
       <Button
-        className="dark:text-white border rounded-md p-1 hover:bg-[rgba(0,0,0,0.1)] flex flex-col justify-center items-center absolute md:right-[-4rem] right-0 md:top-[-2rem] top-[40%]"
+        className="dark:text-white border dark:border-none rounded-md p-1 hover:bg-[rgba(0,0,0,0.1)] flex flex-col justify-center items-center absolute  right-0 top-[-2.5rem] "
         onClick={() => handleDownLoadCsv(flatRows, totalProfit)}
         title="시계열 수익 보고서 CSV 형식으로 다운로드 요청하는 버튼"
       >
-        <PiFileCsvThin className="text-[1.3em]" />
-        <span className="text-[0.85rem]">CSV</span>
+        <PiFileCsvThin className="text-[1.5em] h-[35px] dark:bg-white dark:text-black  " />
       </Button>
 
       {/* 검색범위  */}

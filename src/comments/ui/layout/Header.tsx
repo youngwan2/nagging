@@ -6,11 +6,11 @@ import Text from '../text/Text';
 import DarkMode from '../../DarkMode';
 import MenuIcon from '../icon/MenuIcon';
 import FlexBox from '../wrapper/FlexBox';
-import { SignOutIcon } from '../../auth/SignOutIcon';
 import { AdsenseButton } from '@src/comments/ui/button/AdsenseButton';
 
 import { auth } from '@src/auth';
 import { hasAccountId } from '@src/services/adsense.service';
+import { AuthIcon } from '@src/comments/auth/AuthIcon';
 
 export default async function Header() {
   const session = await auth();
@@ -42,7 +42,7 @@ export default async function Header() {
       <FlexBox className="items-center justify-center ">
         <MenuIcon />
         {/* <NotificationIcon /> 추가예정 */}
-        <SignOutIcon />
+        <AuthIcon />
         {session && !hasAccount ? <AdsenseButton /> : null}
       </FlexBox>
     </header>

@@ -1,7 +1,6 @@
 import Heading from '../heading/Heading';
 import Container from './Container';
 import HomeCard from '../card/HomeCard';
-import Text from '../text/Text';
 import EmptyMessage from '../message/EmptyMessage';
 
 import { auth } from '@src/auth';
@@ -23,12 +22,6 @@ export default async function AlertCardContainer() {
 
   return (
     <Container elName={'div'} className="w-full">
-      <Heading level="2" className="pb-[0.75em]">
-        알림/공지
-        <Text elementName={'span'} className="text-[0.55em] dark:text-[#777f8e] pl-4 opacity-80 ">
-          Alerts/Board
-        </Text>
-      </Heading>
       <Heading level="3">애드센스 알림</Heading>
       {/* 애드센스 알림*/}
       {alerts ? (

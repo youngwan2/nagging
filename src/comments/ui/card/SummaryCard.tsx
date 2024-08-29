@@ -3,19 +3,19 @@ import Text from '../text/Text';
 import FlexBox from '../wrapper/FlexBox';
 
 interface PropsType {
-  koTitle?: string;
-  enTitle?: string;
-  text?: string;
-  children?: React.ReactNode;
-  className?: string;
-  date?: {
-    year?: number;
-    month?: number;
-    day?: number;
+  koTitle: string;
+  enTitle: string;
+  text: string;
+  children: React.ReactNode;
+  className: string;
+  date: {
+    year: number;
+    month: number;
+    day: number;
   };
 }
 
-export default function SummaryCard({ koTitle, enTitle, text, children, date, className }: PropsType) {
+export default function SummaryCard({ koTitle, enTitle, text, children, date, className }: Partial<PropsType>) {
   const bindingDate = date ? '지급: ' + date.year + '.' + date.month + '.' + date.day : null;
   return (
     <div

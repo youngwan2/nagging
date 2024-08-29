@@ -2,7 +2,12 @@ import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
 import { connect } from '../prisma/client';
 import { tokenRefresh } from './services/google.service';
-import { ReportOptionType, generateCsvReport, getCredentials } from './services/adsense.service';
+import {
+  ReportOptionType,
+  generateCsvReport,
+  getAbsenseAccountIdWithUserId,
+  getCredentials,
+} from './services/adsense.service';
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
 export async function syncTask() {
@@ -158,28 +163,6 @@ export async function getReportOptionFromDb(_reportId: number, userId: string) {
 
     return result.report;
   } catch {
-    return false;
-  } finally {
-    await close();
-  }
-}
-
-/** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
-export async function getAbsenseAccountIdWithUserId(userId: string) {
-  const { prisma, close } = await connect();
-
-  try {
-    return (
-      await prisma.adsenseAccount.findMany({
-        select: {
-          accountId: true,
-        },
-        where: {
-          userId,
-        },
-      })
-    )[0].accountId;
-  } catch (error) {
     return false;
   } finally {
     await close();

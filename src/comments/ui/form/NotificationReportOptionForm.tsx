@@ -2,6 +2,7 @@
 
 import { useFormState } from 'react-dom';
 import { useRefetchTrigger } from '@src/store/triggerStore';
+import { useRouter } from 'next/navigation';
 
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
@@ -15,7 +16,8 @@ import FlexBox from '../wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
 import { createReportOption } from '@src/actions/notification-actions';
-import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } = createInitData();
 
@@ -28,8 +30,18 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
   const { refresh } = useRouter();
 
   // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
-  const [state, formAction] = useFormState(createReportOption, { message: '', success: false, loading: false });
+  const [state, formAction, pending] = useFormState(createReportOption, {
+    message: '',
+    success: false,
+    loading: false,
+  });
 
+  useEffect(() => {
+    if (state?.message === '애드센스 계정 없음')
+      toast.error(
+        '애드센스 계정 정보가 없으므로 서비스 이용이 제한 됩니다. 애드센스 가입 및 AD 조회 후 다시시도 해주세요.',
+      );
+  }, [state]);
   return (
     <Form action={formAction} className={'max-w-[645px] w-full'}>
       {/* 보고서 이름 */}
@@ -113,7 +125,7 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
           refresh();
         }}
       >
-        {!state.loading ? '보고서 등록' : '등록중..'}
+        {!pending ? '보고서 등록' : '등록중..'}
       </Button>
       <input type="text" name="user-id" defaultValue={userId} className="hidden" />
     </Form>

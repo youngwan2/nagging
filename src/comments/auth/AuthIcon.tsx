@@ -6,7 +6,7 @@ import type { Session, User } from 'next-auth';
 import getIcons from '@src/utils/icons';
 import Profile from '../Profile';
 
-export async function SignOutIcon() {
+export async function AuthIcon() {
   const session = ((await auth()) as Session) || {
     expires: 0,
     user: { email: '', image: '', name: '' },

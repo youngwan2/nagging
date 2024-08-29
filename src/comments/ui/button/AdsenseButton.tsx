@@ -20,7 +20,11 @@ export function AdsenseButton() {
     if (state?.hasId === true) {
       toast('성공적으로 애드센스 계정ID 를 조회하였습니다.');
     }
-  }, [pending]);
+
+    if (state?.hasId === null) {
+      toast.error('구글 애드센스 계정ID가 존재하지 않습니다. 애드센스 계정 등록 후 다시시도해 주세요.');
+    }
+  }, [state]);
 
   if (state?.hasId) return null;
 
@@ -34,7 +38,7 @@ export function AdsenseButton() {
         title="애드센스 계정 정보를 불러옵니다. 보안을 위해 요청 시에만 모든 서비스 이용이 가능합니다."
         type="submit"
       >
-        {pending ? '조회중' : '계정ID 조회'}
+        {pending ? '조회중' : 'AD 조회'}
       </Button>
     </Form>
   );

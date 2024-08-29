@@ -39,6 +39,7 @@ export const adsenseDataFetch = async () => {
     }
   } catch (error) {
     console.error('요청 불가', error);
+    return { hasId: null };
   } finally {
     await close();
   }

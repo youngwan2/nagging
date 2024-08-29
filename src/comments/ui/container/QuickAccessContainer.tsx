@@ -5,10 +5,7 @@ import Container from './Container';
 export default function QuickAccessContainer() {
   return (
     <Container elName={'div'} className="w-full mt-10 2xl:mt-0 2xl:ml-8">
-      <Heading level="2" className="pb-[0.75em]">
-        서비스 바로가기
-        <span className="text-[0.55em] pl-4 text-gray-500">Quick Access to Services</span>
-      </Heading>
+      <Heading level="3">서비스 바로가기</Heading>
       <HomeCard
         koTitle="환율 정보"
         enTitle="Exchange Rate Information"

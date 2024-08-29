@@ -10,7 +10,7 @@ interface PropsType {
 }
 export default function HomeCard({ koTitle, enTitle, href, text }: PropsType) {
   return (
-    <SummaryCard className="p-3 group" koTitle={koTitle} enTitle={enTitle}>
+    <SummaryCard className="md:min-h-[150px] h-auto p-3 group" koTitle={koTitle} enTitle={enTitle}>
       {href ? (
         <Link href={href}>
           <Text elementName={'span'} className="pt-[2em]">

@@ -37,8 +37,9 @@ export default function Profile({ image, name, email }: PropsType) {
     <>
       <Button className="mr-2" onClick={() => setIsToggle(true)}>
         <Image
-          width={40}
-          height={40}
+          className="rounded-full"
+          width={35}
+          height={35}
           onError={(e) => {
             e.currentTarget.src = '/icons/profile.png';
           }}
@@ -60,7 +61,7 @@ export default function Profile({ image, name, email }: PropsType) {
         <FlexBox className="justify-center pb-3">
           {/* 프로필 이미지 */}
           <Image
-            className="w-[45px] h-[45px]"
+            className="w-[45px] h-[45px] rounded-full"
             width={45}
             height={45}
             onError={(e) => {

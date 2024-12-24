@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from '../form/Form';
-import { signIn } from '@src/auth';
+import { signIn } from '../../../../lib/auth';
 import Heading from '../heading/Heading';
 import Text from '../text/Text';
 import Button from '../button/Button';

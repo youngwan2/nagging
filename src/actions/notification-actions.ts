@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { connect } from '../../prisma/client';
+import { connect } from '../../lib/prisma/client';
 import { getAbsenseAccountIdWithUserId } from '@src/services/adsense.service';
 
 type InitialState = {

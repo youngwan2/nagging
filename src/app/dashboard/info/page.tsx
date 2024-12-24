@@ -2,7 +2,7 @@ import InformationContainer from '@src/comments/ui/container/InformationContaine
 import Heading from '@src/comments/ui/heading/Heading';
 import Container from '@src/comments/ui/container/Container';
 
-import { auth } from '@src/auth';
+import { auth } from '../../../../lib/auth';
 
 export default async function InformationPage() {
   const session = await auth();

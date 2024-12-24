@@ -2,9 +2,9 @@ import cron, { validate } from 'node-cron';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 
-import { connect } from '../../../../../../prisma/client';
+import { connect } from '../../../../../../lib/prisma/client';
 
-import { auth } from '@src/auth';
+import { auth } from '../../../../../../lib/auth';
 import { createTask, getReportOptionFromDb, removeTask, sendNotification } from '@src/task';
 
 const cronGroup = cron.getTasks();

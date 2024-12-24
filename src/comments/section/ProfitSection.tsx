@@ -1,4 +1,4 @@
-import { auth } from '@src/auth';
+import { auth } from '../../../lib/auth';
 
 import Section from './Section';
 import Heading from '../ui/heading/Heading';

@@ -5,15 +5,9 @@
 // Auth.js google : https://authjs.dev/getting-started/providers/google
 // rotation token: https://authjs.dev/guides/refresh-token-rotation
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-
-const datasourceUrl =
-  process.env.NODE_ENV === 'production'
-    ? `postgresql://${process.env.DB_USER}:${process.env.DB_PASS}@localhost/${process.env.DB_NAME}?host=${process.env.INSTANCE_UNIX_SOCKET}`
-    : undefined;
-const prisma = new PrismaClient({ datasourceUrl });
+import { prisma } from './prisma/client';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),

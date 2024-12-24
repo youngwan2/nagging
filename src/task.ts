@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
-import { connect } from '../prisma/client';
+import { connect } from '../lib/prisma/client';
 import { tokenRefresh } from './services/google.service';
 import {
   ReportOptionType,

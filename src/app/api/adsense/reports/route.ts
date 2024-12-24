@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { generateReport } from '@src/services/adsense.service';
 // import prisma from '../../../../../prisma/client';
-import { connect } from '../../../../../prisma/client';
-import { auth } from '@src/auth';
+import { connect } from '../../../../../lib/prisma/client';
+import { auth } from '../../../../../lib/auth';
 
 export async function POST(req: NextRequest) {
   const dateRange = await req.json();

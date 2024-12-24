@@ -1,6 +1,6 @@
 // interface Props { }
 import { MdOutlineLock } from 'react-icons/md';
-import { signIn } from '@src/auth';
+import { signIn } from '../../../../lib/auth';
 
 export default function page() {
   return (

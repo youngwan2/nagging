@@ -1,5 +1,5 @@
 import { cronParser } from '@src/utils/cron-parser';
-import { connect } from '../../prisma/client';
+import { connect } from '../../lib/prisma/client';
 
 /**
  * 디비로 부터 등록된 사용자 스케줄 정보를 조회

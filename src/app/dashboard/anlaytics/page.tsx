@@ -1,4 +1,4 @@
-import { auth } from '@src/auth';
+import { auth } from '../../../../lib/auth';
 import ProfitSection from '@src/comments/section/ProfitSection';
 import AnalyticsContainer from '@src/comments/ui/container/AnalyticsContainer';
 export default async function page() {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 // import prisma from '@src/../prisma/client';
-import { connect } from '../../../../../prisma/client';
+import { connect } from '../../../../../lib/prisma/client';
 import { adsense_v2 } from 'googleapis';
 import { getCredentials, getPayments } from '@src/services/adsense.service';
 

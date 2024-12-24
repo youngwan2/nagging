@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connect } from '../../../../../prisma/client';
 import { cronParser } from '@src/utils/cron-parser';
+import { prisma } from '../../../../../lib/prisma/client';
 
 export async function GET(req: NextRequest) {
-  const { prisma, close } = await connect();
-
   const rawToken = req.headers.get('Authorization') || '';
   const prefix = rawToken?.split(' ')[0];
   const token = rawToken?.split(' ')[1];
@@ -31,9 +29,8 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ scheduleList, nextScheduleInfo });
     }
   } catch (error) {
+    console.error('notification/schedules/route.ts', error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
-  } finally {
-    await close();
   }
 }
 
@@ -103,8 +100,6 @@ function mappingNextScheduleInfo(scheduleList: NotificationSchedule[], userId: s
  * @param userId
  */
 async function getScheduleList(userId?: string) {
-  const { prisma, close } = await connect();
-
   try {
     return await prisma.notificationCron.findMany({
       select: {
@@ -122,7 +117,5 @@ async function getScheduleList(userId?: string) {
   } catch (error) {
     console.error(error);
     return [];
-  } finally {
-    await close();
   }
 }

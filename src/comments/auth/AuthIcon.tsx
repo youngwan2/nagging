@@ -1,6 +1,6 @@
-import { auth } from '@src/auth';
+import { auth } from '../../../lib/auth';
 
-import { signIn } from '@src/auth';
+import { signIn } from '../../../lib/auth';
 
 import type { Session, User } from 'next-auth';
 import getIcons from '@src/utils/icons';

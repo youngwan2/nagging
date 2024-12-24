@@ -8,7 +8,7 @@ import MenuIcon from '../icon/MenuIcon';
 import FlexBox from '../wrapper/FlexBox';
 import { AdsenseButton } from '@src/comments/ui/button/AdsenseButton';
 
-import { auth } from '@src/auth';
+import { auth } from '../../../../lib/auth';
 import { hasAccountId } from '@src/services/adsense.service';
 import { AuthIcon } from '@src/comments/auth/AuthIcon';
 

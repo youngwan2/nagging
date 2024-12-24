@@ -3,7 +3,7 @@ import Container from './Container';
 import HomeCard from '../card/HomeCard';
 import EmptyMessage from '../message/EmptyMessage';
 
-import { auth } from '@src/auth';
+import { auth } from '../../../../lib/auth';
 import { Session } from 'next-auth';
 import { getSchedule } from '@src/services/notification.service';
 import { getAdsenseAlert } from '@src/services/adsense.service';

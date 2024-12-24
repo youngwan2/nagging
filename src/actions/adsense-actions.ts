@@ -1,8 +1,8 @@
 'use server';
 
-import { auth } from '@src/auth';
+import { auth } from '../../lib/auth';
 import { getAccountInfo, getCredentials, saveAccountName } from '@src/services/adsense.service';
-import { connect } from '../../prisma/client';
+import { connect } from '../../lib/prisma/client';
 
 export const adsenseDataFetch = async () => {
   const { prisma, close } = await connect();

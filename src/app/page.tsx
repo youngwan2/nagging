@@ -8,7 +8,7 @@ import CardHeader from '@src/comments/ui/card/CardHeader';
 import Container from '@src/comments/ui/container/Container';
 import LoginForm from '@src/comments/ui/form/LoginForm';
 
-import { auth } from '@src/auth';
+import { auth } from '../../lib/auth';
 
 export default async function page() {
   const session = await auth();

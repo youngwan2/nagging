@@ -1,8 +1,8 @@
 'use server';
 
-import { auth, signOut } from '@src/auth';
+import { auth, signOut } from '../../lib/auth';
 import { revalidatePath } from 'next/cache';
-import { connect } from '../../prisma/client';
+import { connect } from '../../lib/prisma/client';
 
 export async function logout() {
   await signOut();

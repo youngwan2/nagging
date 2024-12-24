@@ -1,6 +1,6 @@
-import { auth } from '@src/auth';
+import { auth } from '../../../../../../lib/auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { connect } from '../../../../../../prisma/client';
+import { connect } from '../../../../../../lib/prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function DELETE(req: NextRequest, res: { params: { reportId: number } }) {

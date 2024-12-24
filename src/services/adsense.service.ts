@@ -1,7 +1,7 @@
-import { connect } from '../../prisma/client';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../lib/prisma/client';
 
 /** 애드센스 계정에 대한 알림을 표시 */
 export async function getAdsenseAlert(userId: string, token: string) {
@@ -24,8 +24,6 @@ export async function getAdsenseAlert(userId: string, token: string) {
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
 async function getAdsenseAccountFromDb(userId: string) {
-  const { prisma, close } = await connect();
-
   try {
     const { accountId } = (await prisma.adsenseAccount.findFirst({
       select: {
@@ -48,8 +46,6 @@ async function getAdsenseAccountFromDb(userId: string) {
 export async function hasAccountId(userId: string) {
   if (!userId) return false;
 
-  const { prisma, close } = await connect();
-
   try {
     const { accountId } = (await prisma.adsenseAccount.count({
       select: {
@@ -64,8 +60,6 @@ export async function hasAccountId(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 계정 정보 조회 실패');
-  } finally {
-    await close();
   }
 }
 
@@ -245,14 +239,13 @@ export async function saveAccountName(accountName: string | null | undefined, us
       },
     });
   } catch (error) {
+    console.error('/services/adsense.service.ts', error);
     throw new Error('애드센스 계정 아이디 저장 실패');
   }
 }
 
 /** DB에 저장된 유저의 애드센스 계정 아이디 조회 */
 export async function getAbsenseAccountIdWithUserId(userId: string) {
-  const { prisma, close } = await connect();
-
   try {
     return (
       await prisma.adsenseAccount.findMany({
@@ -265,8 +258,7 @@ export async function getAbsenseAccountIdWithUserId(userId: string) {
       })
     )[0].accountId;
   } catch (error) {
+    console.error('/services/adsense.service.ts', error);
     return false;
-  } finally {
-    await close();
   }
 }

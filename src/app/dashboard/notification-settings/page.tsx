@@ -1,4 +1,4 @@
-import { auth } from '@src/auth';
+import { auth } from '../../../../lib/auth';
 import { HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import NotificationPageContainer from '@src/comments/ui/container/NotificationPageContainer';

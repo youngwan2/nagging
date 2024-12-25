@@ -2,7 +2,7 @@ import React from 'react';
 import Text from '../text/Text';
 import MessageContainer from '../container/Container';
 import Heading from '../heading/Heading';
-import getIcons from '@src/utils/icons';
+import getIcons from '@src/utils/iconUtils';
 
 interface PropsType {
   title?: string;

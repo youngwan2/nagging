@@ -16,28 +16,20 @@ import toast from 'react-hot-toast';
 
 interface PropsType {
   reportId: number;
+  onDeleteReportSubmit: (postId: number) => void;
 }
 
-export default function NotificationTaskButtonContainer({ reportId }: PropsType) {
+export default function NotificationTaskButtonContainer({ reportId, onDeleteReportSubmit }: PropsType) {
   const { setToastState, toastState } = usePromiseToast();
   const { setIsRefetch } = useRefetchTrigger();
 
   /** 보고서 삭제 */
-  async function handleDeleteReportOption() {
+  async function handleDeleteReportOption(reportId: number) {
     const isDelete = confirm(
       '보고서를 삭제하시겠습니까? 삭제 시 알림은 [알림 예약 목록]에서 별도로 취소하셔야 합니다.',
     );
     if (!isDelete) return alert('삭제 요청을 취소하였습니다.');
-    const url = `/api/notification/reports/${reportId}`;
-
-    try {
-      commonService({
-        reqUrl: url,
-        method: Method.DELETE,
-      }).then(() => setIsRefetch(true));
-    } catch (error) {
-      console.error(error);
-    }
+    onDeleteReportSubmit(reportId);
   }
 
   /** 즉시 받기 */
@@ -122,15 +114,7 @@ export default function NotificationTaskButtonContainer({ reportId }: PropsType)
       <SettingsContainer title="보고서 삭제">
         <FlexBox className="flex items-center">
           <Button
-            onClick={() => {
-              setToastState({
-                func: handleDeleteReportOption,
-                success: '삭제 완료',
-                error: '삭제 실패',
-                loading: '삭제중..',
-                isActive: true,
-              });
-            }}
+            onClick={() => handleDeleteReportOption(reportId)}
             className="border mx-1 bg-red-500 text-white hover:bg-red-600 rounded-md p-1"
           >
             {toastState.isActive ? '처리중' : '보고서 삭제'}

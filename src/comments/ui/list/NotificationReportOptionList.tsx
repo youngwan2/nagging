@@ -6,9 +6,10 @@ import { type UserReportOptionList } from '@src/app/dashboard/notification-setti
 
 interface PropsType {
   items: UserReportOptionList[];
+  onDeleteReportSubmit: (postId: number) => void;
 }
 
-export default function NotificationReportOptionList({ items }: PropsType) {
+export default function NotificationReportOptionList({ items, onDeleteReportSubmit }: PropsType) {
   if (items.length < 1)
     return (
       <EmptyMessage
@@ -21,11 +22,11 @@ export default function NotificationReportOptionList({ items }: PropsType) {
     <List>
       {items.map((item) => (
         <NotificationReportOptionListItem
-          key={item?.reportId}
+          key={item.reportId}
           item={item}
           taskManagementButtons={
             // 알림 작업 버튼
-            <NotificationTaskButtonContainer reportId={item?.reportId} />
+            <NotificationTaskButtonContainer reportId={item.reportId} onDeleteReportSubmit={onDeleteReportSubmit} />
           }
         />
       ))}

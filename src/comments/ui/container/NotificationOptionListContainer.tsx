@@ -7,17 +7,30 @@ import ReportCardSkeleton from '../skeleton/ReportCardSkeleton';
 import ErrorMessage from '../message/ErrorMessage';
 import CredentialMessage from '../message/CredentialMessage';
 
-import type { QueryState } from './NotificationPageContainer';
+import { Method } from '@src/configs/fetch.config';
+import useFetchQuery from '@src/hooks/queries/useFetchQuery';
+import { useDeleteReportMutation } from '@src/hooks/mutations/useReportMutation';
 
 interface PropsType {
   userId?: string;
-  queryState: QueryState;
   onPageChange: (page: number) => void;
   page: number;
 }
 
-export default function NotificationOptionListContainer({ userId, queryState, onPageChange, page }: PropsType) {
-  const { data, isError, isPending } = queryState;
+export default function NotificationOptionListContainer({ userId, onPageChange, page }: PropsType) {
+  const { mutate } = useDeleteReportMutation();
+
+  const reportOptionListOptions = {
+    reqUrl: '/api/notification/reports?page=' + page,
+    method: Method.GET,
+  };
+
+  // 생성된 보고서 옵션 목록
+  const { data, isPending, isError } = useFetchQuery(reportOptionListOptions, 'reports', page);
+
+  function onDeleteReportSubmit(postId: number) {
+    mutate(postId);
+  }
 
   const optionList = data?.optionList || [];
   const maxPage = data?.maxPage || 0;
@@ -34,7 +47,7 @@ export default function NotificationOptionListContainer({ userId, queryState, on
         ) : isPending ? (
           <ReportCardSkeleton />
         ) : userId ? (
-          <NotificationReportOptionList items={optionList} /> // 보고서 옵션 리스트
+          <NotificationReportOptionList onDeleteReportSubmit={onDeleteReportSubmit} items={optionList} /> // 보고서 옵션 리스트
         ) : (
           <CredentialMessage className="mt-4" />
         ) // 비회원 메시지

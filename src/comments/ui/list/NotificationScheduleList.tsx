@@ -5,7 +5,7 @@ import List from './List';
 import ListItem from '../item/ListItem';
 
 import type { ReportOptionType } from '@src/services/adsense.service';
-import getIcons from '@src/utils/icons';
+import getIcons from '@src/utils/iconUtils';
 
 interface PropsType {
   items: ScheduleList;

@@ -1,5 +1,6 @@
 'use client';
 import { Method } from '@src/configs/fetch.config';
+import { defaultOptions } from '@src/configs/tanstack.config';
 import { commonService } from '@src/services/common.service';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -15,18 +16,12 @@ interface CommonServiceProps {
     retry?: number;
   };
 }
-export const defaultOptions = {
-  enabled: true,
-  staleTime: 1000 * 60 * 5, // 5 minutes
-  refetchInterval: 1000 * 60 * 15, // 15 minutes
-  retry: 3,
-};
 
-export default function useQueryReact(
+export default function useFetchQuery(
   { reqUrl, method, token, body, options = defaultOptions }: CommonServiceProps,
   ...key: any[]
 ) {
-  const { ...props } = useQuery({
+  return useQuery({
     queryKey: key,
     queryFn: () =>
       commonService({
@@ -39,6 +34,4 @@ export default function useQueryReact(
     ...options,
     refetchOnMount: true,
   });
-
-  return { ...props };
 }

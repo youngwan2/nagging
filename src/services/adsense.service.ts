@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
-import { prisma } from '../../lib/prisma/client';
+import { prisma } from '../../prisma/client';
 
 /** 애드센스 계정에 대한 알림을 표시 */
 export async function getAdsenseAlert(userId: string, token: string) {
@@ -37,8 +37,6 @@ async function getAdsenseAccountFromDb(userId: string) {
   } catch (error) {
     console.error(error);
     return false;
-  } finally {
-    await close();
   }
 }
 

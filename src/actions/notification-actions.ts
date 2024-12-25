@@ -1,8 +1,8 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { connect } from '../../lib/prisma/client';
 import { getAbsenseAccountIdWithUserId } from '@src/services/adsense.service';
+import { prisma } from '../../prisma/client';
 
 type InitialState = {
   message: string;
@@ -18,8 +18,6 @@ export async function createReportOption(initialState: InitialState, formData: F
 
   const accountId = await getAbsenseAccountIdWithUserId(userId);
   if (!accountId) return { ...initialState, success: false, message: '애드센스 계정 없음', loading: true };
-
-  const { prisma, close } = await connect();
 
   const dateRange = {
     reportName:
@@ -57,7 +55,6 @@ export async function createReportOption(initialState: InitialState, formData: F
     console.error('보고서 옵션 저장 실패:', error);
     return { ...initialState, message: '저장에 실패하였습니다.', success: false, loading: true };
   } finally {
-    await close();
     return { ...initialState, loading: false, message: '작업 완료' };
   }
 }

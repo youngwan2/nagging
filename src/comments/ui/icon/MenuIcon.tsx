@@ -1,6 +1,6 @@
 'use client';
 import useResize from '@src/hooks/useResize';
-import getIcons from '@src/utils/icons';
+import getIcons from '@src/utils/iconUtils';
 
 export default function MenuIcon() {
   const { isMobile, isOpen, setToggle } = useResize();

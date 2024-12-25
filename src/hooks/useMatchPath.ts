@@ -3,8 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-// interface Props { }
-
 export default function useMatchPath(targetPathName: string) {
   const [isMatch, setIsMatch] = useState(false);
   const pathname = usePathname();

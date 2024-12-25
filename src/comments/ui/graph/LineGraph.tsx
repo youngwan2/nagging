@@ -1,7 +1,7 @@
 'use client';
 
 import Heading from '@src/comments/ui/heading/Heading';
-import { FlattenedData } from '@src/types/anlaytics.types';
+import { FlattenedData } from '@src/types/analytics.types';
 import { LineChart, XAxis, YAxis, CartesianGrid, Line, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface PropsType {

@@ -1,6 +1,6 @@
 'use client';
 
-import useQueryReact from '@src/hooks/useQueryReact';
+import useQueryReact from '@src/hooks/queries/useFetchQuery';
 import { useReports } from '@src/hooks/useReports';
 
 import LineGraph from '@src/comments/ui/graph/LineGraph';

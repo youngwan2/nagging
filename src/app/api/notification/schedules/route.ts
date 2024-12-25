@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cronParser } from '@src/utils/cron-parser';
-import { prisma } from '../../../../../lib/prisma/client';
+import { cronParser } from '@src/utils/cronUtils';
+import { prisma } from '../../../../../prisma/client';
 
 export async function GET(req: NextRequest) {
   const rawToken = req.headers.get('Authorization') || '';

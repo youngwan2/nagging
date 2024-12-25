@@ -1,7 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useEffect } from 'react';
+import { useActionState, useEffect } from 'react';
 
 import Button from './Button';
 import Form from '../form/Form';
@@ -14,7 +13,7 @@ export function AdsenseButton() {
     hasId: false,
   };
 
-  const [state, formAction, pending] = useFormState(adsenseDataFetch, initialState);
+  const [state, formAction, pending] = useActionState(adsenseDataFetch, initialState);
 
   useEffect(() => {
     if (state?.hasId === true) {

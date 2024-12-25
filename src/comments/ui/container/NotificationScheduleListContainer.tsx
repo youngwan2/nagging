@@ -5,14 +5,19 @@ import Container from './Container';
 import ErrorMessage from '../message/ErrorMessage';
 import EmptyMessage from '../message/EmptyMessage';
 
-import type { QueryState } from './NotificationPageContainer';
 import ScheduleCardSkeleton from '../skeleton/ScheduleCardSkeleton';
+import { Method } from '@src/configs/fetch.config';
+import useFetchQuery from '@src/hooks/queries/useFetchQuery';
 
-interface PropsType {
-  queryState: QueryState;
-}
-export default function NotificationScheduleListContainer({ queryState }: PropsType) {
-  const { data, isError, isPending } = queryState;
+export default function NotificationScheduleListContainer({ token }: { token: string }) {
+  const scheduleListReqOptions = {
+    reqUrl: '/api/notification/schedules',
+    method: Method.GET,
+    token,
+  };
+
+  // 등록된 스케줄(보고서 알림)
+  const { data, isPending, isError } = useFetchQuery(scheduleListReqOptions, 'schedules');
 
   return (
     <Container elName={'section'} className="mt-16 w-full">

@@ -2,7 +2,7 @@
 
 import { auth, signOut } from '../../lib/auth';
 import { revalidatePath } from 'next/cache';
-import { connect } from '../../lib/prisma/client';
+import { prisma } from '../../prisma/client';
 
 export async function logout() {
   await signOut();
@@ -15,7 +15,6 @@ export async function withdrawal() {
 
   if (!userId) return false;
 
-  const { prisma, close } = await connect();
   try {
     await prisma.user.delete({
       where: {
@@ -27,7 +26,6 @@ export async function withdrawal() {
     console.error(error);
     return false;
   } finally {
-    close();
     revalidatePath('/');
   }
 }

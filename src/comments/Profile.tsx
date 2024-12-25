@@ -12,14 +12,9 @@ import FlexBox from './ui/wrapper/FlexBox';
 
 import { logout, withdrawal } from '@src/actions/auth-action';
 import toast from 'react-hot-toast';
+import { ProfileProps } from '@src/types/profile.types';
 
-interface PropsType {
-  image?: string | null;
-  name?: string | null;
-  email?: string | null;
-}
-
-export default function Profile({ image, name, email }: PropsType) {
+export default function Profile({ image, name, email }: ProfileProps) {
   const [isToggle, setIsToggle] = useState(false);
 
   function handleClose() {
@@ -36,16 +31,7 @@ export default function Profile({ image, name, email }: PropsType) {
   return (
     <>
       <Button className="mr-2" onClick={() => setIsToggle(true)}>
-        <Image
-          className="rounded-full"
-          width={35}
-          height={35}
-          onError={(e) => {
-            e.currentTarget.src = '/icons/profile.png';
-          }}
-          src={image || '/icons/profile.png'}
-          alt="유저 프로필 이미지"
-        />
+        <Image className="rounded-full" width={35} height={35} src={image} alt="유저 프로필 이미지" />
       </Button>
 
       {/* 모달 */}
@@ -92,7 +78,7 @@ export default function Profile({ image, name, email }: PropsType) {
   );
 }
 
-function UserInfo({ name, email }: Pick<PropsType, 'name' | 'email'>) {
+function UserInfo({ name, email }: Pick<ProfileProps, 'name' | 'email'>) {
   return (
     <div className="flex-col items-start mb-2">
       <Text elementName={'p'} className="pl-2 dark:text-gray-500">

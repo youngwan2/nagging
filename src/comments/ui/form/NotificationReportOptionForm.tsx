@@ -1,9 +1,5 @@
 'use client';
 
-import { useFormState } from 'react-dom';
-import { useRefetchTrigger } from '@src/store/triggerStore';
-import { useRouter } from 'next/navigation';
-
 import Input from '@src/comments/ui/Input/Input';
 import Button from '@src/comments/ui/button/Button';
 import Form from '@src/comments/ui/form/Form';
@@ -15,9 +11,8 @@ import Text from '@src/comments/ui/text/Text';
 import FlexBox from '../wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
-import { createReportOption } from '@src/actions/notification-actions';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { FormEvent } from 'react';
+import { useCreateReportMutation } from '@src/hooks/mutations/useReportMutation';
 
 const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } = createInitData();
 
@@ -26,24 +21,16 @@ interface PropsType {
 }
 
 export default function NotificationReportOptionForm({ userId = '' }: PropsType) {
-  const { setIsRefetch } = useRefetchTrigger();
-  const { refresh } = useRouter();
+  const { mutate, isPending } = useCreateReportMutation();
 
-  // reference:  https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#passing-additional-arguments
-  const [state, formAction, pending] = useFormState(createReportOption, {
-    message: '',
-    success: false,
-    loading: false,
-  });
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    mutate(formData);
+  }
 
-  useEffect(() => {
-    if (state?.message === '애드센스 계정 없음')
-      toast.error(
-        '애드센스 계정 정보가 없으므로 서비스 이용이 제한 됩니다. 애드센스 가입 및 AD 조회 후 다시시도 해주세요.',
-      );
-  }, [state]);
   return (
-    <Form action={formAction} className={'max-w-[645px] w-full'}>
+    <Form onSubmit={handleSubmit} method="post" className={'max-w-[645px] w-full'}>
       {/* 보고서 이름 */}
       <Label className="dark:text-white mt-3  w-full  max-w-[645px] flex flex-col">
         보고서 이름(Report Name)
@@ -121,11 +108,9 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
         className={`w-full p-3 rounded-md mt-5 bg-gradient-to-br from-slate-500 to-slate-800 text-white hover:from-slate-800 hover:to-slate-500`}
         onClick={() => {
           if (!userId) return alert('해당 서비스는 로그인 후 이용 가능합니다.');
-          setIsRefetch(true);
-          refresh();
         }}
       >
-        {!pending ? '보고서 등록' : '등록중..'}
+        {!isPending ? '보고서 등록' : '등록중..'}
       </Button>
       <input type="text" name="user-id" defaultValue={userId} className="hidden" />
     </Form>

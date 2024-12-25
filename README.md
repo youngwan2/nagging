@@ -147,193 +147,64 @@ graph TD
 ```
 📦src
  ┣ 📂actions -------------------------------------------> 서버 액션
- ┃ ┣ 📜adsense-actions.ts
- ┃ ┗ 📜notification-actions.ts
  ┣ 📂app -----------------------------------------------> 페이지
  ┃ ┣ 📂(policy) -------------> 이용약관, 개인정보처리방침
  ┃ ┃ ┣ 📂privacy-policy
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┗ 📂terms-of-service
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂api  ----------------> API Route
  ┃ ┃ ┣ 📂adsense
  ┃ ┃ ┃ ┣ 📂payments
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┃ ┗ 📂reports
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┣ 📂auth
  ┃ ┃ ┃ ┗ 📂[...nextauth]
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┗ 📂notification
  ┃ ┃ ┃ ┣ 📂reports
  ┃ ┃ ┃ ┃ ┣ 📂[reportId]
- ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┃ ┣ 📂schedules
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┃ ┗ 📂tasks
  ┃ ┃ ┃ ┃ ┣ 📂sync-task
- ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┃ ┃ ┃ ┗ 📂[reportId]
- ┃ ┃ ┃ ┃ ┃ ┗ 📜route.ts
  ┃ ┣ 📂auth
  ┃ ┃ ┗ 📂signin
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┣ 📂dashboard
  ┃ ┃ ┣ 📂anlaytics
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂info
- ┃ ┃ ┃ ┗ 📜page.tsx
  ┃ ┃ ┣ 📂notification-settings
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📜loading.tsx
- ┃ ┃ ┗ 📜page.tsx
- ┃ ┣ 📜error.tsx
- ┃ ┣ 📜favicon.ico
- ┃ ┣ 📜globals.css
- ┃ ┣ 📜layout.tsx
- ┃ ┣ 📜loading.tsx
- ┃ ┣ 📜manifest.json
- ┃ ┣ 📜not-found.tsx
- ┃ ┗ 📜page.tsx
  ┣ 📂components --------------------------------------> 컴포넌트
  ┃ ┣ 📂auth
- ┃ ┃ ┗ 📜SignOutIcon.tsx
  ┃ ┣ 📂section
- ┃ ┃ ┣ 📜ProfitSection.tsx
- ┃ ┃ ┗ 📜Section.tsx
  ┃ ┣ 📂ui
  ┃ ┃ ┣ 📂button
- ┃ ┃ ┃ ┣ 📜AdsenseButton.tsx
- ┃ ┃ ┃ ┣ 📜Button.tsx
- ┃ ┃ ┃ ┗ 📜ChartButton.tsx
  ┃ ┃ ┣ 📂card
- ┃ ┃ ┃ ┣ 📜Card.tsx
- ┃ ┃ ┃ ┣ 📜CardBody.tsx
- ┃ ┃ ┃ ┣ 📜CardFooter.tsx
- ┃ ┃ ┃ ┣ 📜CardHeader.tsx
- ┃ ┃ ┃ ┣ 📜HomeCard.tsx
- ┃ ┃ ┃ ┗ 📜SummaryCard.tsx
  ┃ ┃ ┣ 📂container
- ┃ ┃ ┃ ┣ 📜AlertCardContainer.tsx
- ┃ ┃ ┃ ┣ 📜AnalyticsContainer.tsx
- ┃ ┃ ┃ ┣ 📜CalendarContainer.tsx
- ┃ ┃ ┃ ┣ 📜Container.tsx
- ┃ ┃ ┃ ┣ 📜InformationContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationOptionFormContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationOptionListContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationPageContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationScheduleButtonContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationScheduleListContainer.tsx
- ┃ ┃ ┃ ┣ 📜NotificationTaskButtonContainer.tsx
- ┃ ┃ ┃ ┗ 📜QuickAccessContainer.tsx
  ┃ ┃ ┣ 📂form
- ┃ ┃ ┃ ┣ 📜Form.tsx
- ┃ ┃ ┃ ┣ 📜LoginForm.tsx
- ┃ ┃ ┃ ┗ 📜NotificationReportOptionForm.tsx
  ┃ ┃ ┣ 📂graph
- ┃ ┃ ┃ ┗ 📜LineGraph.tsx
  ┃ ┃ ┣ 📂heading
- ┃ ┃ ┃ ┗ 📜Heading.tsx
  ┃ ┃ ┣ 📂icon
- ┃ ┃ ┃ ┣ 📜CalendarIcon.tsx
- ┃ ┃ ┃ ┣ 📜MenuIcon.tsx
- ┃ ┃ ┃ ┗ 📜NotificationIcon.tsx
  ┃ ┃ ┣ 📂Input
- ┃ ┃ ┃ ┣ 📜ChartInput.tsx
- ┃ ┃ ┃ ┗ 📜Input.tsx
  ┃ ┃ ┣ 📂item
- ┃ ┃ ┃ ┣ 📜ListItem.tsx
- ┃ ┃ ┃ ┗ 📜NotificationReportOptionListItem.tsx
  ┃ ┃ ┣ 📂label
- ┃ ┃ ┃ ┗ 📜Label.tsx
  ┃ ┃ ┣ 📂layout
- ┃ ┃ ┃ ┣ 📜Footer.tsx
- ┃ ┃ ┃ ┗ 📜Header.tsx
  ┃ ┃ ┣ 📂list
- ┃ ┃ ┃ ┣ 📜List.tsx
- ┃ ┃ ┃ ┣ 📜NotificationReportOptionList.tsx
- ┃ ┃ ┃ ┗ 📜NotificationScheduleList.tsx
  ┃ ┃ ┣ 📂message
- ┃ ┃ ┃ ┣ 📜CredentialMessage.tsx
- ┃ ┃ ┃ ┣ 📜EmptyMessage.tsx
- ┃ ┃ ┃ ┣ 📜ErrorMessage.tsx
- ┃ ┃ ┃ ┗ 📜LoginRequireMessage.tsx
  ┃ ┃ ┣ 📂option
- ┃ ┃ ┃ ┗ 📜SelectOption.tsx
  ┃ ┃ ┣ 📂pagination
- ┃ ┃ ┃ ┗ 📜PaginationContainer.tsx
  ┃ ┃ ┣ 📂select
- ┃ ┃ ┃ ┣ 📜NotificationSelect.tsx
- ┃ ┃ ┃ ┗ 📜Select.tsx
  ┃ ┃ ┣ 📂skeleton
- ┃ ┃ ┃ ┣ 📜CardSkeleton.tsx
- ┃ ┃ ┃ ┣ 📜ExchangeRateTableSkeleton.tsx
- ┃ ┃ ┃ ┣ 📜GraphSkeleton.tsx
- ┃ ┃ ┃ ┣ 📜ReportCardSkeleton.tsx
- ┃ ┃ ┃ ┗ 📜ScheduleCardSkeleton.tsx
  ┃ ┃ ┣ 📂spinner
- ┃ ┃ ┃ ┣ 📜LoadingSpinner.tsx
- ┃ ┃ ┃ ┗ 📜ParticleLoading.tsx
  ┃ ┃ ┣ 📂table
- ┃ ┃ ┃ ┗ 📜ExchangeRatesTable.tsx
  ┃ ┃ ┣ 📂text
- ┃ ┃ ┃ ┣ 📜SplitText.tsx
- ┃ ┃ ┃ ┗ 📜Text.tsx
  ┃ ┃ ┗ 📂wrapper
- ┃ ┃ ┃ ┗ 📜FlexBox.tsx
  ┃ ┣ 📂__test__
- ┃ ┃ ┗ 📜DarkMode.test.tsx
- ┃ ┣ 📜DarkMode.tsx
- ┃ ┣ 📜memo.txt
- ┃ ┣ 📜Navigation.tsx
- ┃ ┗ 📜Provider.tsx
  ┣ 📂configs ---------------------> 구성파일
- ┃ ┣ 📜fetch.config.ts
- ┃ ┗ 📜url.config.ts
  ┣ 📂constants -------------------> 상수
- ┃ ┣ 📜cron.ts
- ┃ ┗ 📜currencies.ts
  ┣ 📂hooks -----------------------> 커스텀 훅
  ┃ ┣ 📂__test__
- ┃ ┣ 📜useCustomRouter.tsx
- ┃ ┣ 📜useMatchPath.tsx
- ┃ ┣ 📜usePromiseToast.tsx
- ┃ ┣ 📜useQueryReact.tsx
- ┃ ┣ 📜useReports.tsx
- ┃ ┣ 📜useResize.tsx
- ┃ ┗ 📜useTextSplit.tsx
  ┣ 📂mocks -------------------------> 테스트 전용 목 데이터, 목 서버 등 설정 파일
- ┃ ┣ 📜handlers.ts
- ┃ ┣ 📜localStorage.mock.ts
- ┃ ┣ 📜matchMedia.mock.ts
- ┃ ┣ 📜server.ts
- ┃ ┗ 📜useState.mock.ts
  ┣ 📂services ---------------------> API
- ┃ ┣ 📜adsense.service.ts
- ┃ ┣ 📜common.service.ts
- ┃ ┣ 📜google.service.ts
- ┃ ┗ 📜notification.service.ts
  ┣ 📂store ------------------------> Zustand
  ┃ ┣ 📂types
- ┃ ┃ ┗ 📜store.type.d.ts
- ┃ ┣ 📜dateRangeStore.ts
- ┃ ┣ 📜menuStore.ts
- ┃ ┗ 📜triggerStore.ts
  ┣ 📂types
- ┃ ┣ 📜anlaytics.types.d.ts
- ┃ ┗ 📜api-ad.types.d.ts
  ┣ 📂utils ------------------------> 유틸
  ┃ ┣ 📂__test__
- ┃ ┃ ┗ 📜function.test.ts
- ┃ ┣ 📜cron-parser.ts
- ┃ ┣ 📜function.ts
- ┃ ┣ 📜icons.tsx
- ┃ ┗ 📜setupTests.ts
- ┣ 📜auth.ts ---------------------> next-auth 인증 설정 파일
- ┣ 📜joi.ts
- ┣ 📜middlewaree.ts
- ┣ 📜next-auth.d.ts
- ┣ 📜nodemailer.ts --------------> 메일
- ┗ 📜task.ts --------------------> 크론 작업
 ```

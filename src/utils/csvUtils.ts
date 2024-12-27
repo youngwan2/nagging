@@ -10,8 +10,8 @@ export const arrayToCSV: ArrayToCsvProps = (array) => {
 };
 
 /** CSV 파일 생성 */
-export const createCsvFile = (csvForamtData: string) => {
-  return new Blob([csvForamtData], { type: 'text/csv;charset=utf-8' });
+export const createCsvFile = (csvFormatData: string) => {
+  return new Blob([csvFormatData], { type: 'text/csv;charset=utf-8' });
 };
 
 /** 생성한 CSV 다운로드 */

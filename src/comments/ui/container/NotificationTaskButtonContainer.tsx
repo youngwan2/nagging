@@ -1,18 +1,15 @@
 'use client';
 
-import usePromiseToast from '@src/hooks/usePromiseToast';
-import { useRefetchTrigger } from '@src/store/triggerStore';
+import {
+  useCreateNotificationMutation,
+  useImmediateNotificationMutation,
+} from '@src/hooks/mutations/useTaskNotificationMutation';
 
 import Button from '../button/Button';
 import Text from '../text/Text';
 import Container from './Container';
 import FlexBox from '../wrapper/FlexBox';
-
-import { Method } from '@src/configs/fetch.config';
-
-import { everyMonth, everyWeek, everyYear } from '@src/constants/cron';
-import { commonService } from '@src/services/common.service';
-import toast from 'react-hot-toast';
+import { cronOptions } from '@src/constants/cron';
 
 interface PropsType {
   reportId: number;
@@ -20,8 +17,8 @@ interface PropsType {
 }
 
 export default function NotificationTaskButtonContainer({ reportId, onDeleteReportSubmit }: PropsType) {
-  const { setToastState, toastState } = usePromiseToast();
-  const { setIsRefetch } = useRefetchTrigger();
+  const { mutate: immediateMutate, isPending } = useImmediateNotificationMutation();
+  const { mutate: createMutate, isPending: isCreateNotificationPending } = useCreateNotificationMutation();
 
   /** 보고서 삭제 */
   async function handleDeleteReportOption(reportId: number) {
@@ -32,81 +29,36 @@ export default function NotificationTaskButtonContainer({ reportId, onDeleteRepo
     onDeleteReportSubmit(reportId);
   }
 
-  /** 즉시 받기 */
-  async function handleImmediateReport() {
-    const url = `/api/notification/tasks/${reportId}?immediate=true`;
-
-    try {
-      commonService({
-        reqUrl: url,
-        method: Method.POST,
-      }).then(() => setIsRefetch(true));
-    } catch (error) {
-      console.error(error);
-    }
+  /** 보고서 알림 즉시 받기 */
+  async function handleImmediateReport(reportId: number) {
+    immediateMutate(reportId);
   }
 
-  /** 작업 등록 */
+  /** 보고서 알림 등록 */
   async function handleCreateTaskNotification(expression: string) {
-    toast.loading('등록중');
-    const url = `/api/notification/tasks/${reportId}`;
-    try {
-      commonService({
-        reqUrl: url,
-        method: Method.POST,
-        body: { cron: expression },
-      }).then(() => {
-        setIsRefetch(true);
-        toast.success('등록완료');
-      });
-    } catch (error) {
-      console.error(error);
-      toast.error('등록 실패');
-    } finally {
-      toast.remove();
-    }
+    createMutate({ reportId, expression });
   }
-
-  const scheduleOptions = [
-    {
-      label: '주 단위',
-      expression: everyWeek,
-      title: '매주 월요일 오전 06:00 정기 보고',
-    },
-    {
-      label: '월 단위',
-      expression: everyMonth,
-      title: '매월 첫째주 1일 오전 06:00 정기 보고',
-    },
-    {
-      label: '년 단위',
-      expression: everyYear,
-      title: '매년 1월 1일 오전 06:00 정기 보고',
-    },
-  ];
 
   return (
     <>
       <SettingsContainer title="정기 알림 설정">
-        <ButtonGroup options={scheduleOptions} onClick={handleCreateTaskNotification} />
+        <ButtonGroup
+          options={cronOptions}
+          onClick={handleCreateTaskNotification}
+          isPending={isCreateNotificationPending}
+        />
       </SettingsContainer>
 
       <SettingsContainer title="일회성 알림 설정">
         <FlexBox className="flex items-center">
           <Button
-            title="5초 뒤 1회"
+            title="즉시 보고서 알림 받기"
             onClick={() => {
-              setToastState({
-                func: handleImmediateReport,
-                success: '전송 완료',
-                error: '전송 실패',
-                loading: '전송중..',
-                isActive: true,
-              });
+              handleImmediateReport(reportId);
             }}
             className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
           >
-            {toastState.isActive ? '처리중' : '즉시 받기'}
+            {isPending ? '처리중' : '즉시 받기'}
           </Button>
         </FlexBox>
       </SettingsContainer>
@@ -117,7 +69,7 @@ export default function NotificationTaskButtonContainer({ reportId, onDeleteRepo
             onClick={() => handleDeleteReportOption(reportId)}
             className="border mx-1 bg-red-500 text-white hover:bg-red-600 rounded-md p-1"
           >
-            {toastState.isActive ? '처리중' : '보고서 삭제'}
+            {'보고서 삭제'}
           </Button>
         </FlexBox>
       </SettingsContainer>
@@ -139,9 +91,11 @@ function SettingsContainer({ title, children }: { title: string; children: React
 function ButtonGroup({
   options,
   onClick,
+  isPending,
 }: {
   options: Array<{ label: string; expression: string; title: string }>;
   onClick: (expression: string) => void;
+  isPending: boolean;
 }) {
   return (
     <FlexBox className="flex items-center">
@@ -152,7 +106,7 @@ function ButtonGroup({
           title={option.title}
           className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
         >
-          {option.label}
+          {isPending ? '처리중' : option.label}
         </Button>
       ))}
     </FlexBox>

@@ -12,9 +12,7 @@ interface PropsType {
 }
 
 export default function NotificationScheduleList({ items }: PropsType) {
-  if (!items) return null;
-
-  const { nextScheduleInfo, scheduleList } = items;
+  const { nextScheduleInfo, scheduleList } = items ?? { nextScheduleInfo: [], scheduleList: [] };
   const { AlertCircleIcon, ClockIcon, CalendarIcon } = getIcons();
 
   return (

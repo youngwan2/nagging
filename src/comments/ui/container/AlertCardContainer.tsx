@@ -5,8 +5,8 @@ import EmptyMessage from '../message/EmptyMessage';
 
 import { auth } from '../../../../lib/auth';
 import { Session } from 'next-auth';
-import { getSchedule } from '@src/services/notification.service';
 import { getAdsenseAlert } from '@src/services/adsense.service';
+import { getSchedule } from '@src/services/schedule-server.service';
 
 export default async function AlertCardContainer() {
   const session = (await auth()) as Session;

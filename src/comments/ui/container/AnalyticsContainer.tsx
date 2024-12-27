@@ -15,10 +15,11 @@ import CredentialMessage from '../message/CredentialMessage';
 import ErrorMessage from '../message/ErrorMessage';
 
 import { Method } from '@src/configs/fetch.config';
-import { arrayToCSV, createCsvFile, download, flattenRows } from '@src/utils/function';
 import { PiFileCsvThin } from 'react-icons/pi';
 
 import type { ReportRequest } from '@src/services/adsense.service';
+import { flattenRows } from '@src/utils/formatUtils';
+import { arrayToCSV, createCsvFile, download } from '@src/utils/csvUtils';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {

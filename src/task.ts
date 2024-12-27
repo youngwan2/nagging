@@ -97,13 +97,13 @@ export function createTask(expression: string, cronFunction: (...rest: any) => v
 export async function removeTask(userId: string) {
   const cronGroup = cron.getTasks();
   const size = cronGroup.size;
-  if (size === 0 || !userId) return false;
+  if (size === 0) return false;
   else {
-    const hasTask = cronGroup.has(userId);
-    const task = cronGroup.get(userId);
+    const hasTask = cronGroup.has(userId); // 현재 유저의 작업이 있는지
+    const task = cronGroup.get(userId); // 있으면 가져오기
 
     if (hasTask && task) {
-      task.stop();
+      task.stop(); // 작업 중지
       cronGroup.delete(userId);
       return true;
     }
@@ -142,7 +142,7 @@ export async function sendNotification(
 }
 
 /** DB에 저장된 보고서 옵션 조회  */
-export async function getReportOptionFromDb(_reportId: number, userId: string) {
+export async function getReportOptionFromDb(reportId: number, userId: string) {
   try {
     const result = (
       await prisma.notificationReports.findMany({
@@ -151,6 +151,7 @@ export async function getReportOptionFromDb(_reportId: number, userId: string) {
         },
         where: {
           userId,
+          reportId,
         },
       })
     )[0];

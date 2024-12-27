@@ -5,11 +5,7 @@ import NotificationPageContainer from '@src/comments/ui/container/NotificationPa
 
 import { commonService } from '@src/services/common.service';
 import { Method } from '@src/configs/fetch.config';
-
-const options = {
-  reqUrl: '/api/notification/reports?page=1',
-  method: Method.GET,
-};
+import { QUERY_KEYS } from '@src/hooks/queries/queryKeys';
 
 const initialPage = 1;
 
@@ -20,6 +16,11 @@ export default async function page() {
 
   const queryClient = new QueryClient();
 
+  const options = {
+    reqUrl: '/api/notification/reports?page=1',
+    method: Method.GET,
+  };
+
   const scheduleListReqOptions = {
     reqUrl: '/api/notification/schedules',
     method: Method.GET,
@@ -28,12 +29,12 @@ export default async function page() {
 
   // 보고서 옵션 및 스케줄 목록을 미리 페칭
   await queryClient.prefetchQuery({
-    queryKey: ['reports', initialPage],
+    queryKey: QUERY_KEYS.REPORT.PER_PAGE(initialPage),
     queryFn: await commonService(options),
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['schedules'],
+    queryKey: QUERY_KEYS.SCHEDULE.LIST,
     queryFn: await commonService(scheduleListReqOptions),
   });
 

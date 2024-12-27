@@ -8,16 +8,16 @@ import EmptyMessage from '../message/EmptyMessage';
 import ScheduleCardSkeleton from '../skeleton/ScheduleCardSkeleton';
 import { Method } from '@src/configs/fetch.config';
 import useFetchQuery from '@src/hooks/queries/useFetchQuery';
+import { QUERY_KEYS } from '@src/hooks/queries/queryKeys';
 
-export default function NotificationScheduleListContainer({ token }: { token: string }) {
+export default function NotificationScheduleListContainer() {
   const scheduleListReqOptions = {
     reqUrl: '/api/notification/schedules',
     method: Method.GET,
-    token,
   };
 
   // 등록된 스케줄(보고서 알림)
-  const { data, isPending, isError } = useFetchQuery(scheduleListReqOptions, 'schedules');
+  const { data: schedules, isPending, isError } = useFetchQuery(scheduleListReqOptions, QUERY_KEYS.SCHEDULE.LIST);
 
   return (
     <Container elName={'section'} className="mt-16 w-full">
@@ -30,8 +30,14 @@ export default function NotificationScheduleListContainer({ token }: { token: st
       </Text>
 
       {/* 목록 */}
-      {!data || (data.message && <EmptyMessage />)}
-      {isPending ? <ScheduleCardSkeleton /> : !isError ? <NotificationScheduleList items={data} /> : <ErrorMessage />}
+      {!schedules || (schedules.message && <EmptyMessage />)}
+      {isPending ? (
+        <ScheduleCardSkeleton />
+      ) : !isError ? (
+        <NotificationScheduleList items={schedules} />
+      ) : (
+        <ErrorMessage />
+      )}
     </Container>
   );
 }

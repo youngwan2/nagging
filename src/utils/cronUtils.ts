@@ -1,5 +1,5 @@
 import parser from 'cron-parser';
-import cron from 'node-cron';
+import cron, { validate } from 'node-cron';
 
 // reference: https://github.com/harrisiirak/cron-parser#readme
 
@@ -28,8 +28,8 @@ export function cronParser(standardDate: Date, cronExpression: string) {
       const options = genOptions(standardDate);
       const interval = parser.parseExpression(cronExpression, options);
 
-      const nextReminder = new Date(interval.next().toString()).toLocaleString();
-      const subsequentReminder = new Date(interval.next().toString()).toLocaleString();
+      const nextReminder = new Date(interval.next().toString()).toLocaleString(); // 다음 알림
+      const subsequentReminder = new Date(interval.next().toString()).toLocaleString(); // 다다음 알림
 
       return {
         nextReminder,
@@ -40,5 +40,16 @@ export function cronParser(standardDate: Date, cronExpression: string) {
 
       return false;
     }
+  }
+}
+
+/**
+ * 올바른 크론표현식인지 검증
+ * @param cronExpression 크론표현식
+ */
+export async function validateCronExpression(cronExpression: string) {
+  const isValid = validate(cronExpression);
+  if (!isValid) {
+    throw new Error('올바른 표현식이 아닙니다.');
   }
 }

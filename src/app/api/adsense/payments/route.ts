@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 // import prisma from '@src/../prisma/client';
-import { connect } from '../../../../../prisma/client';
 import { adsense_v2 } from 'googleapis';
 import { getCredentials, getPayments } from '@src/services/adsense.service';
+import { prisma } from '../../../../../prisma/client';
 
 export async function POST(req: NextRequest) {
-  const { prisma, close } = await connect();
   const userId = JSON.parse(await req.text()).userId;
   const raw = req.headers.get('Authorization')?.split(' ') || '';
   const accessToken = raw[1];
@@ -66,14 +65,11 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('/api/adsense/payments', error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500, statusText: '네트워크 에러' });
-  } finally {
-    await close();
   }
 }
 
 /** 수익금(지불) 데이터베이스 저장 */
 async function setPayment(userId: string, paid: string[]) {
-  const { prisma, close } = await connect();
   try {
     await prisma.adsensePayment.create({
       data: {
@@ -84,8 +80,6 @@ async function setPayment(userId: string, paid: string[]) {
   } catch (error) {
     console.error(error);
     throw new Error('애드센스 지급 데이터 구글 요청 실패');
-  } finally {
-    await close();
   }
 }
 /**
@@ -93,7 +87,6 @@ async function setPayment(userId: string, paid: string[]) {
  * @param userId 유저 식별을 위한 ID
  */
 async function getDbPayment(userId: string) {
-  const { prisma, close } = await connect();
   try {
     const paymentInfo = (await prisma.adsensePayment.findFirst({
       select: {
@@ -109,8 +102,6 @@ async function getDbPayment(userId: string) {
   } catch (error) {
     console.error(error);
     throw new Error('페이먼트 조회실패');
-  } finally {
-    await close();
   }
 }
 

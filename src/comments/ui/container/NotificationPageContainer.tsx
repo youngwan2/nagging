@@ -14,7 +14,7 @@ interface PropsType {
 }
 
 const initialPage = 1;
-export default function NotificationPageContainer({ userId, token }: PropsType) {
+export default function NotificationPageContainer({ userId }: PropsType) {
   const [page, setPage] = useState(initialPage);
 
   // 페이지 변경
@@ -28,19 +28,11 @@ export default function NotificationPageContainer({ userId, token }: PropsType) 
         {/* 보고서 설정 */}
         <NotificationOptionFormContainer userId={userId} />
         {/* 알림 스케줄 목록*/}
-        <NotificationScheduleListContainer token={token} />
+        <NotificationScheduleListContainer />
       </FlexBox>
 
       {/* 보고서 옵션 목록*/}
       <NotificationOptionListContainer userId={userId} onPageChange={onPageChange} page={page} />
     </Container>
   );
-}
-
-// 타입 정의
-export interface QueryState {
-  data: any;
-  isPending: boolean;
-  isRefetching: boolean;
-  isError: boolean;
 }

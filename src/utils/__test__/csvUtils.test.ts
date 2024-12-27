@@ -1,6 +1,6 @@
-import { arrayToCSV, createCsvFile, download } from '../function';
+import { arrayToCSV, createCsvFile, download } from '../csvUtils';
 
-describe('functin.ts', () => {
+describe('csvUtils.ts', () => {
   // arrayToCSV 함수 테스트
   describe('arrayToCSV', () => {
     it('객체 배열을 CSV 형식으로 변환해야 한다', () => {

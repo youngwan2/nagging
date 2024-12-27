@@ -1,19 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { cronParser } from '@src/utils/cronUtils';
 import { prisma } from '../../../../../prisma/client';
+import { auth } from '../../../../../lib/auth';
+import { Session } from 'next-auth';
 
-export async function GET(req: NextRequest) {
-  const rawToken = req.headers.get('Authorization') || '';
-  const prefix = rawToken?.split(' ')[0];
-  const token = rawToken?.split(' ')[1];
-
-  if (prefix !== 'Bearer') return NextResponse.json({ message: '잘못된 토큰 형식' });
-
+export async function GET() {
   try {
+    const { access_token } = ((await auth()) as Session) || { userId: '', accessToken: '' };
+    if (!access_token) return NextResponse.json({ message: '접근 권한이 없습니다.', status: 403 });
+
     const userId = (
       await prisma.account.findMany({
         where: {
-          access_token: token,
+          access_token: access_token,
         },
         select: { userId: true },
       })
@@ -28,6 +27,34 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json({ scheduleList, nextScheduleInfo });
     }
+  } catch (error) {
+    console.error('notification/schedules/route.ts', error);
+    return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
+  }
+}
+
+// 예약된 알림 제거
+export async function DELETE() {
+  try {
+    const { access_token } = ((await auth()) as Session) || { userId: '', accessToken: '' };
+    if (!access_token) return NextResponse.json({ message: '접근 권한이 없습니다.', status: 403 });
+
+    const userId = (
+      await prisma.account.findMany({
+        where: {
+          access_token: access_token,
+        },
+        select: { userId: true },
+      })
+    )[0].userId;
+
+    prisma.notificationCron.delete({
+      where: {
+        userId,
+      },
+    });
+
+    return NextResponse.json({ message: '성공적으로 취소되었습니다.', status: 204 });
   } catch (error) {
     console.error('notification/schedules/route.ts', error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });

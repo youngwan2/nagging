@@ -2,8 +2,9 @@ import { auth } from '../../../../../../lib/auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../../prisma/client';
 
-export async function DELETE(_: NextRequest, res: { params: { reportId: number } }) {
-  const reportId = Number(res.params.reportId);
+export async function DELETE(_: NextRequest, { params }: { params: Promise<{ reportId: string }> }) {
+  const reportId = Number((await params).reportId);
+
   try {
     const userId = (await auth())?.userId;
 

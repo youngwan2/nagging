@@ -1,29 +1,32 @@
-import { cronParser } from '@src/utils/cronUtils';
-import { prisma } from '../../prisma/client';
+import { Method } from '@src/configs/fetch.config';
 
-/**
- * 디비로 부터 등록된 사용자 스케줄 정보를 조회
- * @param userId
- * @returns
- */
-export async function getSchedule(userId: string) {
+export async function immediateNotification(reportId: number) {
   try {
-    const schedule = await prisma.notificationCron.findFirst({
-      select: {
-        notificationReports: true,
-        cronExpression: true,
-      },
-      where: {
-        userId,
-      },
-    });
-
-    const cronExpression = schedule?.cronExpression || '';
-    const scheduleDate = cronParser(new Date(), cronExpression);
-    return { ...schedule, ...scheduleDate };
+    const url = `/api/notification/tasks/${reportId}/immediate-notification`;
+    return (
+      await fetch(url, {
+        method: Method.POST,
+      })
+    ).body;
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      throw new Error('즉시 알림 받기 실패:' + error.message);
+    }
+  }
+}
 
-    throw new Error('스케줄 알림 목록 조회 실패');
+export async function setNotificationTask(reportId: number, expression: string) {
+  try {
+    const url = `/api/notification/tasks/${reportId}`;
+    return (
+      await fetch(url, {
+        method: Method.POST,
+        body: JSON.stringify({ cron: expression }),
+      })
+    ).body;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error('알림 등록 실패:' + error.message);
+    }
   }
 }

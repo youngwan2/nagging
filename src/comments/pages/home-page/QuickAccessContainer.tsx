@@ -1,6 +1,6 @@
-import HomeCard from '../card/HomeCard';
-import Heading from '../heading/Heading';
-import Container from './Container';
+import HomeCard from '../../ui/card/HomeCard';
+import Heading from '../../ui/heading/Heading';
+import Container from '../../ui/container/Container';
 
 export default function QuickAccessContainer() {
   return (
@@ -15,7 +15,7 @@ export default function QuickAccessContainer() {
       <HomeCard
         koTitle="간편 수익통계"
         enTitle="Simple Income Statistics"
-        href="/dashboard/anlaytics"
+        href="/dashboard/analytics"
         text="연도별로 수익통계를 확인하고, 최근 수익금 지불여부를 확인할 수 있습니다."
       />
       <HomeCard

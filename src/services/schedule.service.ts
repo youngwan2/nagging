@@ -1,5 +1,4 @@
-export async function deleteNotificationTask(_reportId: string) {
-  console.log('알림이 취소된 보고서:', _reportId);
+export async function deleteNotificationTask() {
   try {
     return (
       await fetch(`/api/notification/schedules`, {

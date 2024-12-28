@@ -6,7 +6,7 @@ import CardBody from '@src/comments/ui/card/CardBody';
 import CardFooter from '@src/comments/ui/card/CardFooter';
 import CardHeader from '@src/comments/ui/card/CardHeader';
 import Container from '@src/comments/ui/container/Container';
-import LoginForm from '@src/comments/ui/form/LoginForm';
+import LoginForm from '@src/comments/auth/LoginForm';
 
 import { auth } from '../../lib/auth';
 

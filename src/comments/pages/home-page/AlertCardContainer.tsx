@@ -1,7 +1,7 @@
-import Heading from '../heading/Heading';
-import Container from './Container';
-import HomeCard from '../card/HomeCard';
-import EmptyMessage from '../message/EmptyMessage';
+import Heading from '../../ui/heading/Heading';
+import Container from '../../ui/container/Container';
+import HomeCard from '../../ui/card/HomeCard';
+import EmptyMessage from '../../ui/message/EmptyMessage';
 
 import { auth } from '../../../../lib/auth';
 import { Session } from 'next-auth';

@@ -1,5 +1,5 @@
+import { CurrencyPair } from '@src/types/currency.types';
 import React from 'react';
-import { CurrencyPair } from '../container/InformationContainer';
 
 interface PropsType {
   currencyPairs: CurrencyPair[];
@@ -31,13 +31,13 @@ export default function ExchangeRatesTable({ currencyPairs, selectedPair, onClic
                 onClick={() => onClick(pair.pair)}
               >
                 {/* 식별 */}
-                <td className="md:px-4 p-2 text-left">{i + 1}</td>
+                <td className="md:px-4 p-1 text-left">{i + 1}</td>
                 {/* 환전 단위 */}
-                <td className="md:px-4 p-2 text-left">{pair.pair}</td>
+                <td className="md:px-4 p-1 text-left">{pair.pair}</td>
                 {/* 환율 */}
-                <td className="md:px-4 p-2 text-right">{pair.rate.toFixed(2)}</td>
+                <td className="md:px-4 p-1 text-right">{pair.rate.toFixed(2)}</td>
                 {/* 날짜 */}
-                <td className="md:px-4 p-2 text-right">{pair.date}</td>
+                <td className="md:px-4 p-1 text-right">{pair.date}</td>
               </tr>
             ))}
           </tbody>

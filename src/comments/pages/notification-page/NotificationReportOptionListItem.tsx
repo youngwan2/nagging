@@ -1,7 +1,7 @@
-import ListItem from '../item/ListItem';
-import ItemTitle from '../heading/Heading';
-import Text from '../text/Text';
-import Container from '../container/Container';
+import ListItem from '../../ui/item/ListItem';
+import ItemTitle from '../../ui/heading/Heading';
+import Text from '../../ui/text/Text';
+import Container from '../../ui/container/Container';
 
 import { MdOutlineNotifications } from 'react-icons/md';
 import { type UserReportOptionList } from '@src/app/dashboard/notification-settings/_types/types';

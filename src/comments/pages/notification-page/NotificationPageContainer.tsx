@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
-import Container from './Container';
+import Container from '../../ui/container/Container';
 import NotificationOptionFormContainer from './NotificationOptionFormContainer';
 import NotificationScheduleListContainer from './NotificationScheduleListContainer';
 import NotificationOptionListContainer from './NotificationOptionListContainer';
-import FlexBox from '../wrapper/FlexBox';
+import FlexBox from '../../ui/wrapper/FlexBox';
 
 interface PropsType {
   userId?: string;

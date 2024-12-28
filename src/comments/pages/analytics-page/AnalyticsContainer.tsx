@@ -3,16 +3,16 @@
 import useQueryReact from '@src/hooks/queries/useFetchQuery';
 import { useReports } from '@src/hooks/useReports';
 
-import LineGraph from '@src/comments/ui/graph/LineGraph';
+import LineGraph from '@src/comments/pages/analytics-page/LineGraph';
 import Container from '@src/comments/ui/container/Container';
 import ChartContainer from '@src/comments/ui/container/Container';
 import Heading from '@src/comments/ui/heading/Heading';
 import Text from '@src/comments/ui/text/Text';
-import CalendarContainer from '@src/comments/ui/container/CalendarContainer';
-import Button from '../button/Button';
-import GraphSkeleton from '../skeleton/GraphSkeleton';
-import CredentialMessage from '../message/CredentialMessage';
-import ErrorMessage from '../message/ErrorMessage';
+import CalendarContainer from '@src/comments/pages/analytics-page/CalendarContainer';
+import Button from '../../ui/button/Button';
+import GraphSkeleton from '../../ui/skeleton/GraphSkeleton';
+import CredentialMessage from '../../auth/CredentialMessage';
+import ErrorMessage from '../../ui/message/ErrorMessage';
 
 import { Method } from '@src/configs/fetch.config';
 import { PiFileCsvThin } from 'react-icons/pi';

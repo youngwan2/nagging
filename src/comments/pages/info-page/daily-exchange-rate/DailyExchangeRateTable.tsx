@@ -1,22 +1,18 @@
 'use client';
 import React from 'react';
 
-import Container from './Container';
-import Heading from '../heading/Heading';
-import Text from '../text/Text';
-import ExchangeRateTableSkeleton from '../skeleton/ExchangeRateTableSkeleton';
-import ContentView from '@src/comments/pages/info-page/ContentView';
-import ErrorMessage from '../message/ErrorMessage';
+import Container from '../../../ui/container/Container';
+import Heading from '../../../ui/heading/Heading';
+import Text from '../../../ui/text/Text';
+import ExchangeRateTableSkeleton from '../../../ui/skeleton/ExchangeRateTableSkeleton';
+import ContentView from '@src/comments/pages/info-page/daily-exchange-rate/ContentView';
+import ErrorMessage from '../../../ui/message/ErrorMessage';
 
-import { useCurrencyData } from '@src/hooks/useCurrencyData';
+import { useCurrencyDataState } from '@src/hooks/useCurrencyDataState';
 
-interface PropsType {
-  token?: string;
-}
-
-export default function InformationContainer({}: PropsType) {
-  const { date, setDate, isError, isPending, currencyPairs, selectedPair, setSelectedPair, selectedCurrencyPair } =
-    useCurrencyData();
+export default function DailyExchangeRateTable() {
+  const { date, setDate, isError, isLoading, currencyPairs, selectedPair, setSelectedPair, selectedCurrencyPair } =
+    useCurrencyDataState();
 
   const handlePairSelect = (pair: string) => setSelectedPair(pair);
   const handleDateSelect = (date: string) => setDate(date);
@@ -32,8 +28,8 @@ export default function InformationContainer({}: PropsType) {
   }
 
   return (
-    <Container elName="section" className="w-full">
-      {isPending ? (
+    <Container elName="div" className="w-full">
+      {isLoading ? (
         <PendingView date={date} />
       ) : (
         <ContentView

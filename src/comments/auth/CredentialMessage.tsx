@@ -1,7 +1,7 @@
 import React from 'react';
-import Text from '../text/Text';
-import MessageContainer from '../container/Container';
-import Heading from '../heading/Heading';
+import Text from '../ui/text/Text';
+import MessageContainer from '../ui/container/Container';
+import Heading from '../ui/heading/Heading';
 import getIcons from '@src/utils/iconUtils';
 
 interface PropsType {

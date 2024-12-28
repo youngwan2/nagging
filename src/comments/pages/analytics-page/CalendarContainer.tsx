@@ -1,9 +1,9 @@
-import ChartInput from '../Input/ChartInput';
-import InputContainer from './Container';
-import Label from '../label/Label';
-import Button from '../button/Button';
-import Text from '../text/Text';
-import Form from '../form/Form';
+import ChartInput from '../../ui/Input/ChartInput';
+import InputContainer from '../../ui/container/Container';
+import Label from '../../ui/label/Label';
+import Button from '../../ui/button/Button';
+import Text from '../../ui/text/Text';
+import Form from '../../ui/form/Form';
 
 interface PropsType {
   onSearch: (form: FormData) => void;

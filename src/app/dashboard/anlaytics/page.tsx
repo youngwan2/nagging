@@ -1,6 +1,6 @@
 import { auth } from '../../../../lib/auth';
-import ProfitSection from '@src/comments/section/ProfitSection';
-import AnalyticsContainer from '@src/comments/ui/container/AnalyticsContainer';
+import ProfitSection from '@src/comments/ui/section/ProfitSection';
+import AnalyticsContainer from '@src/comments/pages/analytics-page/AnalyticsContainer';
 export default async function page() {
   const session = await auth();
 

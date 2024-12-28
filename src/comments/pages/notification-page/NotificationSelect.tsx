@@ -1,5 +1,5 @@
-import SelectOption from '../option/SelectOption';
-import Select from './Select';
+import SelectOption from '../../ui/option/SelectOption';
+import Select from '../../ui/select/Select';
 
 interface PropsType {
   options: any[];

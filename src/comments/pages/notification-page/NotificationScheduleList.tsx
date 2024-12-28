@@ -1,8 +1,8 @@
 import React from 'react';
 
-import NotificationScheduleButtonContainer from '../container/NotificationScheduleButtonContainer';
-import List from './List';
-import ListItem from '../item/ListItem';
+import NotificationScheduleButtonContainer from './NotificationScheduleButtonContainer';
+import List from '../../ui/list/List';
+import ListItem from '../../ui/item/ListItem';
 
 import type { ReportOptionType } from '@src/services/adsense.service';
 import getIcons from '@src/utils/iconUtils';

@@ -1,7 +1,7 @@
-import Button from '../button/Button';
-import Form from './Form';
+import Button from '../ui/button/Button';
+import Form from '../ui/form/Form';
 
-import { signIn } from '../../../../lib/auth';
+import { signIn } from '../../../lib/auth';
 
 interface PropsType {
   text: string;

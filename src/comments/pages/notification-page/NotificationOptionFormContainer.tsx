@@ -1,7 +1,7 @@
-import NotificationReportOptionForm from '../form/NotificationReportOptionForm';
-import Heading from '../heading/Heading';
-import Text from '../text/Text';
-import Container from './Container';
+import NotificationReportOptionForm from './NotificationReportOptionForm';
+import Heading from '../../ui/heading/Heading';
+import Text from '../../ui/text/Text';
+import Container from '../../ui/container/Container';
 
 interface PropsType {
   userId?: string;

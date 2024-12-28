@@ -1,11 +1,11 @@
-import { auth } from '../../../lib/auth';
+import { auth } from '../../../../lib/auth';
 
 import Section from './Section';
-import Heading from '../ui/heading/Heading';
-import Container from '../ui/container/Container';
-import SummaryCard from '../ui/card/SummaryCard';
-import EmptyMessage from '../ui/message/EmptyMessage';
-import CredentialMessage from '../ui/message/CredentialMessage';
+import Heading from '../heading/Heading';
+import Container from '../container/Container';
+import SummaryCard from '../card/SummaryCard';
+import EmptyMessage from '../message/EmptyMessage';
+import CredentialMessage from '../../auth/CredentialMessage';
 
 import { Method } from '@src/configs/fetch.config';
 import { commonService } from '@src/services/common.service';

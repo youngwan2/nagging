@@ -5,10 +5,10 @@ import Button from '@src/comments/ui/button/Button';
 import Form from '@src/comments/ui/form/Form';
 import Label from '@src/comments/ui/label/Label';
 import SelectOption from '@src/comments/ui/option/SelectOption';
-import NotificationSelect from '@src/comments/ui/select/NotificationSelect';
+import NotificationSelect from '@src/comments/pages/notification-page/NotificationSelect';
 import Select from '@src/comments/ui/select/Select';
 import Text from '@src/comments/ui/text/Text';
-import FlexBox from '../wrapper/FlexBox';
+import FlexBox from '../../ui/wrapper/FlexBox';
 
 import { currencies } from '@src/constants/currencies';
 import { FormEvent } from 'react';

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { cronParser } from '@src/utils/cronUtils';
 import { prisma } from '../../../../../prisma/client';
 import { auth } from '../../../../../lib/auth';
 import { Session } from 'next-auth';
+import { mappingNextScheduleInfo } from '@src/utils/scheduleUtils';
 
 export async function GET() {
   try {
@@ -48,9 +48,20 @@ export async function DELETE() {
       })
     )[0].userId;
 
-    prisma.notificationCron.delete({
+    // 예약 알림 제거
+    await prisma.notificationCron.delete({
       where: {
         userId,
+      },
+    });
+
+    // 예약 알림 상태 비활성화
+    await prisma.notificationReports.updateMany({
+      where: {
+        userId,
+      },
+      data: {
+        task: false,
       },
     });
 
@@ -59,67 +70,6 @@ export async function DELETE() {
     console.error('notification/schedules/route.ts', error);
     return NextResponse.json({ error: '네트워크 에러' }, { status: 500 });
   }
-}
-
-interface NotificationReport {
-  reportId: number;
-  userId: string;
-  report: string;
-  createdAt: Date;
-  updatedAt: Date;
-  task: boolean;
-}
-
-interface NotificationSchedule {
-  notificationReports: NotificationReport;
-  cronExpression: string;
-  createdAt: Date;
-}
-
-interface ScheduleInfo {
-  nextReminder: string;
-  subsequentReminder: string;
-}
-
-interface UserSchedule {
-  reportId: number;
-  nextScheduleInfo: ScheduleInfo;
-}
-
-interface NextSchedule {
-  [userId: string]: UserSchedule;
-}
-
-/**
- * 다음 알림 일정 정보들 맵핑
- * @param scheduleList
- * @returns
- */
-function mappingNextScheduleInfo(scheduleList: NotificationSchedule[], userId: string = '') {
-  const nextSchedule: NextSchedule = {
-    [userId]: {
-      reportId: 0,
-      nextScheduleInfo: {
-        nextReminder: '',
-        subsequentReminder: '',
-      },
-    },
-  };
-  for (const schedule of scheduleList) {
-    const { userId, reportId } = schedule.notificationReports;
-    const standardDate = schedule.createdAt;
-    const cronExpression = schedule.cronExpression;
-
-    const nextScheduleInfo = cronParser(standardDate, cronExpression);
-
-    if (!nextScheduleInfo) return false;
-
-    nextSchedule[userId] = {
-      reportId,
-      nextScheduleInfo,
-    };
-  }
-  return nextSchedule;
 }
 
 /**

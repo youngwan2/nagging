@@ -12,4 +12,8 @@ export const QUERY_KEYS = {
     DETAILS: (reportId: string) => ['reports', reportId],
     LIST: ['reports'],
   },
+  CURRENCY: {
+    LIST: ['currencies'],
+    DETAILS: (date: string) => ['currencies', date],
+  },
 };

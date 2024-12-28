@@ -1,5 +1,5 @@
-import QuickAccessContainer from '@src/comments/ui/container/QuickAccessContainer';
-import AlertCardContainer from '@src/comments/ui/container/AlertCardContainer';
+import QuickAccessContainer from '@src/comments/pages/home-page/QuickAccessContainer';
+import AlertCardContainer from '@src/comments/pages/home-page/AlertCardContainer';
 import Container from '@src/comments/ui/container/Container';
 import { syncTask } from '@src/task';
 
@@ -23,7 +23,7 @@ async function syncCron() {
     const isSync = await syncTask(); // 동기화 처리
     if (isSync) return { message: '동기화 성공' };
     else return { message: '동기화 실패' };
-  } catch (error) {
-    return { message: '네트워크 에러' };
+  } catch {
+    throw new Error('네트워크 에러');
   }
 }

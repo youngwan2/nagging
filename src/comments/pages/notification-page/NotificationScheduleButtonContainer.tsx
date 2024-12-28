@@ -1,7 +1,8 @@
 'use client';
 
 import { useDeleteNotificationTaskMutation } from '@src/hooks/mutations/useScheduleMutation';
-import Button from '../button/Button';
+import Button from '../../ui/button/Button';
+import toast from 'react-hot-toast';
 
 interface PropsType {
   reportId: string;
@@ -11,13 +12,11 @@ export default function NotificationScheduleButtonContainer({ reportId }: PropsT
 
   /** 알림 제거 */
   async function handleDeleteTaskNotification(reportId: string) {
-    if (
-      !confirm(
-        `알림을 취소하면 보고서 식별코드: ${reportId} 에 해당하는 보고서 알림이 현재 목록에서 제거 됩니다. 정말로 취소 하시겠습니까?`,
-      )
-    ) {
-      mutate(reportId);
-    }
+    const isCancel = confirm(
+      `알림을 취소하면 보고서 식별코드: ${reportId} 에 해당하는 보고서 알림이 현재 목록에서 제거 됩니다. 정말로 취소 하시겠습니까?`,
+    );
+    if (isCancel) return mutate();
+    toast('요청을 취소하였습니다.');
   }
 
   return (

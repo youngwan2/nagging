@@ -1,5 +1,5 @@
 import ErrorMessage from '@src/comments/ui/message/ErrorMessage';
-import ExchangeRatesTable from '@src/comments/ui/table/ExchangeRatesTable';
+import ExchangeRatesTable from '@src/comments/pages/info-page/daily-exchange-rate/ExchangeRatesTable';
 import Text from '@src/comments/ui/text/Text';
 import { ContentViewProps } from '@src/types/info-page.type';
 

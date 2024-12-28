@@ -1,7 +1,7 @@
-import List from './List';
-import NotificationReportOptionListItem from '../item/NotificationReportOptionListItem';
-import NotificationTaskButtonContainer from '../container/NotificationTaskButtonContainer';
-import EmptyMessage from '../message/EmptyMessage';
+import List from '../../ui/list/List';
+import NotificationReportOptionListItem from './NotificationReportOptionListItem';
+import NotificationTaskButtonContainer from './NotificationTaskButtonContainer';
+import EmptyMessage from '../../ui/message/EmptyMessage';
 import { type UserReportOptionList } from '@src/app/dashboard/notification-settings/_types/types';
 
 interface PropsType {

@@ -5,10 +5,10 @@ import {
   useImmediateNotificationMutation,
 } from '@src/hooks/mutations/useTaskNotificationMutation';
 
-import Button from '../button/Button';
-import Text from '../text/Text';
-import Container from './Container';
-import FlexBox from '../wrapper/FlexBox';
+import Button from '../../ui/button/Button';
+import Text from '../../ui/text/Text';
+import Container from '../../ui/container/Container';
+import FlexBox from '../../ui/wrapper/FlexBox';
 import { cronOptions } from '@src/constants/cron';
 
 interface PropsType {

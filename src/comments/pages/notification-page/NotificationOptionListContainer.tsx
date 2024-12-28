@@ -1,11 +1,11 @@
-import Heading from '../heading/Heading';
-import Text from '../text/Text';
-import NotificationReportOptionList from '../list/NotificationReportOptionList';
-import PaginationContainer from '../pagination/PaginationContainer';
-import Container from './Container';
-import ReportCardSkeleton from '../skeleton/ReportCardSkeleton';
-import ErrorMessage from '../message/ErrorMessage';
-import CredentialMessage from '../message/CredentialMessage';
+import Heading from '../../ui/heading/Heading';
+import Text from '../../ui/text/Text';
+import NotificationReportOptionList from './NotificationReportOptionList';
+import PaginationContainer from '../../ui/pagination/PaginationContainer';
+import Container from '../../ui/container/Container';
+import ReportCardSkeleton from '../../ui/skeleton/ReportCardSkeleton';
+import ErrorMessage from '../../ui/message/ErrorMessage';
+import CredentialMessage from '../../auth/CredentialMessage';
 
 import { Method } from '@src/configs/fetch.config';
 import useFetchQuery from '@src/hooks/queries/useFetchQuery';

@@ -1,11 +1,11 @@
-import Heading from '../heading/Heading';
-import NotificationScheduleList from '../list/NotificationScheduleList';
-import Text from '../text/Text';
-import Container from './Container';
-import ErrorMessage from '../message/ErrorMessage';
-import EmptyMessage from '../message/EmptyMessage';
+import Heading from '../../ui/heading/Heading';
+import NotificationScheduleList from './NotificationScheduleList';
+import Text from '../../ui/text/Text';
+import Container from '../../ui/container/Container';
+import ErrorMessage from '../../ui/message/ErrorMessage';
+import EmptyMessage from '../../ui/message/EmptyMessage';
 
-import ScheduleCardSkeleton from '../skeleton/ScheduleCardSkeleton';
+import ScheduleCardSkeleton from '../../ui/skeleton/ScheduleCardSkeleton';
 import { Method } from '@src/configs/fetch.config';
 import useFetchQuery from '@src/hooks/queries/useFetchQuery';
 import { QUERY_KEYS } from '@src/hooks/queries/queryKeys';

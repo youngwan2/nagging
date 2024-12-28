@@ -1,7 +1,7 @@
 import { auth } from '../../../../lib/auth';
 import { HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
-import NotificationPageContainer from '@src/comments/ui/container/NotificationPageContainer';
+import NotificationPageContainer from '@src/comments/pages/notification-page/NotificationPageContainer';
 
 import { commonService } from '@src/services/common.service';
 import { Method } from '@src/configs/fetch.config';

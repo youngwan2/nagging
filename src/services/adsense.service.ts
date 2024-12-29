@@ -41,7 +41,7 @@ async function getAdsenseAccountFromDb(userId: string) {
 }
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
-export async function hasAccountId(userId: string) {
+export async function hasAccountId(userId?: string) {
   if (!userId) return false;
 
   try {
@@ -57,7 +57,7 @@ export async function hasAccountId(userId: string) {
     return false;
   } catch (error) {
     console.error(error);
-    throw new Error('애드센스 계정 정보 조회 실패');
+    return false;
   }
 }
 

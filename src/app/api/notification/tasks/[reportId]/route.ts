@@ -53,14 +53,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ rep
   }
 }
 
-export async function DELETE(_req: NextRequest, res: { params: { reportId: number } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ reportId: string }> }) {
+  const reportId = Number((await params).reportId);
   if (cronGroup.size === 0) {
     return NextResponse.json({ message: '예약된 알림이 존재하지 않습니다.' });
   }
 
   try {
     const { userId } = await getUserData();
-    const reportId = Number(res.params.reportId);
 
     const userCronInfo = await prisma.notificationCron.findMany({
       where: { userId },

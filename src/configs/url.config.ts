@@ -1,6 +1,4 @@
-const host = process.env.NEXT_PUBLIC_HOST || 'nagging.site';
-
 export const urlConfigs = {
-  protocol: process.env.NODE_ENV === 'production' ? 'https://' : 'http://',
-  host: process.env.NODE_ENV === 'production' ? host : 'localhost:3000',
+  protocol: process.env.NEXT_PUBLIC_PROCOTOL || 'http://',
+  host: process.env.NEXT_PUBLIC_HOST || 'localhost:3000',
 };

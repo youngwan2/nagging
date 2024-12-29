@@ -22,6 +22,7 @@
 ### 도메인 주소
 
 - https://nagging.site (중단/변경 예정)
+- 테스트 배포(데모): https://port-next-nagging-m59c3x7u39153c8e.sel4.cloudtype.app
 
 ## 배포 아키텍처
 

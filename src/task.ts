@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
-import { tokenRefresh } from './services/google.service';
+// import { tokenRefresh } from './services/google.service';
 import {
   ReportOptionType,
   generateCsvReport,
@@ -10,77 +10,77 @@ import {
 import { prisma } from '../prisma/client';
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
-export async function syncTask() {
-  // 예약된 task 가 true 인 경우인 작업만 조회
-  try {
-    const jobs = await prisma.notificationCron.findMany({
-      include: {
-        user: {
-          select: {
-            email: true,
-          },
-        },
-        notificationReports: {
-          select: {
-            report: true,
-            task: true,
-          },
-        },
-      },
-      where: {
-        notificationReports: {
-          task: true,
-        },
-      },
-    });
+// export async function syncTask() {
+//   // 예약된 task 가 true 인 경우인 작업만 조회
+//   try {
+//     const jobs = await prisma.notificationCron.findMany({
+//       include: {
+//         user: {
+//           select: {
+//             email: true,
+//           },
+//         },
+//         notificationReports: {
+//           select: {
+//             report: true,
+//             task: true,
+//           },
+//         },
+//       },
+//       where: {
+//         notificationReports: {
+//           task: true,
+//         },
+//       },
+//     });
 
-    if (jobs.length < 1) return false;
+//     if (jobs.length < 1) return false;
 
-    // 등록된 모든 작업을 순회하여 동기화
-    jobs.forEach(async (job) => {
-      // 계정 정보 조회
-      const accountInfos = (await prisma.account.findFirst({
-        select: {
-          refresh_token: true,
-        },
-        where: {
-          userId: job.userId,
-        },
-      })) as {
-        access_token: string;
-        expires_at: number;
-        refresh_token: string;
-      };
-      const { refresh_token: refreshToken, access_token: accessToken, expires_at } = accountInfos;
-      const currentTimeStamp = Math.floor(Date.now() / 1000);
+//     // 등록된 모든 작업을 순회하여 동기화
+//     jobs.forEach(async (job) => {
+//       // 계정 정보 조회
+//       const accountInfos = (await prisma.account.findFirst({
+//         select: {
+//           refresh_token: true,
+//         },
+//         where: {
+//           userId: job.userId,
+//         },
+//       })) as {
+//         access_token: string;
+//         expires_at: number;
+//         refresh_token: string;
+//       };
+//       const { refresh_token: refreshToken, access_token: accessToken, expires_at } = accountInfos;
+//       const currentTimeStamp = Math.floor(Date.now() / 1000);
 
-      // 액세스 토큰 만료 전 작업 동기화 진행
-      if (expires_at > currentTimeStamp) {
-        const task = createTask(
-          job.cronExpression,
-          () => sendNotification(job.userId, job.notificationReports.report, accessToken, job.user.email),
-          job.userId,
-        );
-        task.start();
-        return true;
-        // 액세스 토큰 만료 후 재발급 후 작업 동기화 진행
-      } else {
-        const newToken = await tokenRefresh(refreshToken);
-        if (!newToken) return false;
-        const task = createTask(
-          job.cronExpression,
-          () => sendNotification(job.userId, job.notificationReports.report, newToken, job.user.email),
-          job.userId,
-        );
-        task.start();
-        return true;
-      }
-    });
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}
+//       // 액세스 토큰 만료 전 작업 동기화 진행
+//       if (expires_at > currentTimeStamp) {
+//         const task = createTask(
+//           job.cronExpression,
+//           () => sendNotification(job.userId, job.notificationReports.report, accessToken, job.user.email),
+//           job.userId,
+//         );
+//         task.start();
+//         return true;
+//         // 액세스 토큰 만료 후 재발급 후 작업 동기화 진행
+//       } else {
+//         const newToken = await tokenRefresh(refreshToken);
+//         if (!newToken) return false;
+//         const task = createTask(
+//           job.cronExpression,
+//           () => sendNotification(job.userId, job.notificationReports.report, newToken, job.user.email),
+//           job.userId,
+//         );
+//         task.start();
+//         return true;
+//       }
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return false;
+//   }
+// }
 
 /** 작업 등록 */
 export function createTask(expression: string, cronFunction: (...rest: any) => void, userId: string) {

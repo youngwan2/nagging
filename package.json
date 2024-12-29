@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "start:migrate": "prisma migrate deploy && npm run start",
     "test": "vitest",
@@ -54,7 +54,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^22",
+    "@types/node": "^22.10.2",
     "@types/node-cron": "^3.0.11",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
@@ -80,7 +80,8 @@
     "prettier": "^3.4.2",
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },
   "lint-staged": {

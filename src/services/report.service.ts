@@ -1,11 +1,12 @@
 // 보고서 옵션 추가
 export async function createReportOption(formData: FormData) {
+  const dimension = formData.get('dimension');
   const dateRange = {
     reportName:
       formData.get('report-name')?.toString() ||
       `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()} 에 생성된 보고서`,
     dateRange: 'CUSTOM',
-    dimensions: [formData.get('dimension')?.toString()] || ['MONTH'],
+    dimensions: dimension ? [dimension] : ['MONTH'],
     startDate: {
       day: Number(formData.get('start-day')) || 1,
       month: Number(formData.get('start-month')) || 1,

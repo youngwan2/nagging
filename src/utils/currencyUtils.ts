@@ -1,18 +1,7 @@
-import { CurrencyPair } from '@src/types/currency.types';
+import { CurrencyPair, DataType, DotLineChartDataType } from '@src/types/currency.types';
 import { Data } from '@src/types/data.types';
 
-/** >>>>>>> 환율 <<<<<<< */
-export function formatDate(date: Date) {
-  let year = date.getFullYear();
-  let month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
-  let day = date.getDate().toString().padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-}
-
-/**
- *  data 를 [string, string] 형태로 변환 후 반환하는 함수
- */
+/** data 를 [string, string] 형태로 변환 후 반환하는 함수 */
 export function selectPair(data: Data, target: string[] = ['krw']) {
   if (!data || !data.usd || !data.date) return [];
   return Object.entries(data.usd).filter((unit) => target.includes(unit[0])) || ['krw', 0];
@@ -30,4 +19,19 @@ export function mappingPair(initialPair: [string, string][] = [], date: string =
       date: date ?? new Date().toLocaleDateString(),
     };
   });
+}
+
+/** 점선 그래프의 데이터로 사용할 수 있도록 기존 쿼리 데이터를 맵핑 */
+export function mappingCurrencyData(key: string, data?: any[] | DotLineChartDataType[]): DataType[] {
+  if (data?.length) {
+    return data.map((d) => {
+      return {
+        name: d.date,
+        [key]: d.usd[key],
+        standard: 1365.69, // temp
+      };
+    });
+  }
+
+  return [];
 }

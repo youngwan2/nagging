@@ -23,7 +23,7 @@ interface Date {
   day: number;
 }
 
-interface ReportDataResponse {
+export interface ReportDataResponse {
   totalMatchedRows: string;
   headers: Header[];
   rows: Row[];

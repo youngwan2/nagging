@@ -14,6 +14,7 @@ export const QUERY_KEYS = {
   },
   CURRENCY: {
     LIST: ['currencies'],
+    TIMELINE_LIST: ['currencies-timeline'],
     DETAILS: (date: string) => ['currencies', date],
   },
 };

@@ -1,7 +1,7 @@
 import ErrorMessage from '@src/comments/ui/message/ErrorMessage';
-import ExchangeRatesTable from '@src/comments/pages/info-page/daily-exchange-rate/ExchangeRatesTable';
 import Text from '@src/comments/ui/text/Text';
-import { ContentViewProps } from '@src/types/info-page.type';
+import ExchangeRatesTable from './ExchangeRatesTable';
+import { ContentViewProps } from '@src/types/exchange-rate-page.types';
 
 export default function ContentView({
   date,

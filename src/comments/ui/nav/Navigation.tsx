@@ -15,10 +15,10 @@ export default function Navigation() {
   const navItems = [
     { href: '/dashboard', title: '홈 이동', icon: IoHomeOutline, label: '홈' },
     {
-      href: '/dashboard/info',
-      title: '정보글',
+      href: '/dashboard/exchange-rate',
+      title: '환율 정보',
       icon: RiFileListFill,
-      label: '정보',
+      label: '환율 정보',
     },
     {
       href: '/dashboard/notification-settings',
@@ -27,7 +27,7 @@ export default function Navigation() {
       label: '보고서',
     },
     {
-      href: '/dashboard/anlaytics',
+      href: '/dashboard/analytics',
       title: '간편 통계',
       icon: GoGraph,
       label: '간편 통계',

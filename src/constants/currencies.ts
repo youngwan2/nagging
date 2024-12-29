@@ -1,4 +1,6 @@
-export const currencies = {
+import { CurrencyType } from '@src/types/currency.types';
+
+export const currencies: CurrencyType = {
   usd: '미국 달러',
   eur: '유로',
   jpy: '일본 엔',
@@ -49,4 +51,4 @@ export const currencies = {
   omr: '오만 리얄',
   jod: '요르단 디나르',
   mad: '모로코 디르함',
-};
+} as const;

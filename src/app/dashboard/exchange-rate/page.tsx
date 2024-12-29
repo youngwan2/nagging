@@ -1,9 +1,9 @@
 'use client';
 
-import DailyExchangeRate from '@src/comments/pages/info-page/daily-exchange-rate/DailyExchangeRate';
-import RateTrendAnalysis from '@src/comments/pages/info-page/rate-trend-analytis/RateTrendAnalysis';
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import DailyExchangeRate from '@src/comments/pages/exchange-rate-page/daily-exchange-rate/DailyExchangeRate';
+import RateTrendAnalysis from '@src/comments/pages/exchange-rate-page/rate-trend-analytis/RateTrendAnalysis';
 
 export default function InformationPage() {
   const [isFlip, setIsFlip] = useState(true);

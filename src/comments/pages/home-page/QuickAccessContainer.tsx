@@ -9,7 +9,7 @@ export default function QuickAccessContainer() {
       <HomeCard
         koTitle="환율 정보"
         enTitle="Exchange Rate Information"
-        href="/dashboard/info"
+        href="/dashboard/exchange-rate"
         text={`간편하게 참고할 수 있는 오늘의 환율 정보를 확인할 수 있습니다. USD 를 기준으로 총 50 개국의 정보를 확인할 수 있습니다(단, 매일 오전 10:30 ~ 이후로 금일 정보 조회가 가능합니다. 이전 시간에는 latest 를 기준으로 조회 가능한 과거 날짜를 기준으로 보여줍니다.). `}
       />{' '}
       <HomeCard

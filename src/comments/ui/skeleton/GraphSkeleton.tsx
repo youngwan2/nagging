@@ -23,7 +23,6 @@ export default function GraphSkeleton() {
         </div>
       </div>
 
-      {/* SVG for line graph effect */}
       <svg
         className="absolute top-4 left-4 w-[calc(100%-2rem)] h-[calc(100%-2rem)]"
         viewBox="0 0 350 100"
@@ -45,7 +44,6 @@ export default function GraphSkeleton() {
         </defs>
       </svg>
 
-      {/* CSS for line drawing animation */}
       <style jsx>{`
         @keyframes draw {
           to {

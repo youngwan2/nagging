@@ -45,7 +45,7 @@ export default async function ProfitSection() {
         </Heading>
         <CredentialMessage
           className="max-w-[768px] mx-auto"
-          message="접근 권한이 없습니다. 로그인 후에도 동일한 메시지가 표시된다면, 우측 상단의 Adsense 버튼을 클릭하여 애드센스 계정 조회를 요청해주세요."
+          message="접근 권한이 없습니다. 로그인 후에도 동일한 메시지가 표시된다면, 우측 상단의 [AD 조회] 요청 후 시도 해주세요."
         />
       </Section>
     );

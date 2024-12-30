@@ -4,8 +4,8 @@ export interface MenuToggleState {
   setToggle: (newState: boolean) => void;
 }
 
-// 트리거
-export interface TriggerState {
-  isRefetch: boolean;
-  setIsRefetch: (isRefetch: boolean) => void;
+// 애드센스 계정 id 상태
+export interface AdsenseAuthState {
+  hasUserAdsenseId: boolean;
+  setHasUserAdsenseId: (newState: boolean) => void;
 }

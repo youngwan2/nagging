@@ -10,6 +10,8 @@ import Text from '../../ui/text/Text';
 import Container from '../../ui/container/Container';
 import FlexBox from '../../ui/wrapper/FlexBox';
 import { cronOptions } from '@src/constants/cron';
+import { useAdsenseAuthState } from '@src/store/adsenseAuthStore';
+import toast from 'react-hot-toast';
 
 interface PropsType {
   reportId: number;
@@ -19,6 +21,8 @@ interface PropsType {
 export default function NotificationTaskButtonContainer({ reportId, onDeleteReportSubmit }: PropsType) {
   const { mutate: immediateMutate, isPending } = useImmediateNotificationMutation();
   const { mutate: createMutate, isPending: isCreateNotificationPending } = useCreateNotificationMutation();
+
+  const { hasUserAdsenseId } = useAdsenseAuthState();
 
   /** 보고서 삭제 */
   async function handleDeleteReportOption(reportId: number) {
@@ -31,11 +35,15 @@ export default function NotificationTaskButtonContainer({ reportId, onDeleteRepo
 
   /** 보고서 알림 즉시 받기 */
   async function handleImmediateReport(reportId: number) {
+    if (!hasUserAdsenseId)
+      return toast('알림 서비스는 우측 상단의 사용자 아이콘 우측의 [AD조회] 후 이용이 가능합니다.');
     immediateMutate(reportId);
   }
 
   /** 보고서 알림 등록 */
   async function handleCreateTaskNotification(expression: string) {
+    if (!hasUserAdsenseId)
+      return toast('알림 서비스는 우측 상단의 사용자 아이콘 우측의 [AD조회] 후 이용이 가능합니다.');
     createMutate({ reportId, expression });
   }
 

@@ -1,8 +1,14 @@
 'use client';
+import { useAdsenseAuthState } from '@src/store/adsenseAuthStore';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 export default function GuideToast({ hasUser, name }: { hasUser: boolean; name: string }) {
+  const { setHasUserAdsenseId } = useAdsenseAuthState();
+  useEffect(() => {
+    setHasUserAdsenseId(hasUser);
+  }, [hasUser]);
+
   const showToast = () => {
     if (hasUser) return;
     toast.custom(
@@ -33,7 +39,7 @@ export default function GuideToast({ hasUser, name }: { hasUser: boolean; name: 
           <div className="ml-4 flex-1">
             <p className="text-sm font-medium text-gray-900">새로운 알림</p>
             <p className="mt-1 text-sm text-gray-500">
-              {name === '방문자'
+              {name === '방문자' || name === '익명'
                 ? name +
                   '님! 환영합니다. 정상 서비스 이용을 위해서는 로그인 후 사용자 아이콘 우측의 [AD 조회]가 필요합니다.'
                 : name +

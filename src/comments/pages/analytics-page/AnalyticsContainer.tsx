@@ -17,9 +17,9 @@ import ErrorMessage from '../../ui/message/ErrorMessage';
 import { Method } from '@src/configs/fetch.config';
 import { PiFileCsvThin } from 'react-icons/pi';
 
-import type { ReportRequest } from '@src/services/adsense.service';
 import { flattenRows } from '@src/utils/formatUtils';
 import { arrayToCSV, createCsvFile, download } from '@src/utils/csvUtils';
+import { ReportRequest } from '@src/types/adsense.types';
 
 // 보고서 조회 필터
 const dateRange: ReportRequest = {

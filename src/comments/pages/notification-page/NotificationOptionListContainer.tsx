@@ -7,9 +7,8 @@ import ReportCardSkeleton from '../../ui/skeleton/ReportCardSkeleton';
 import ErrorMessage from '../../ui/message/ErrorMessage';
 import CredentialMessage from '../../auth/CredentialMessage';
 
-import { Method } from '@src/configs/fetch.config';
-import useFetchQuery from '@src/hooks/queries/useFetchQuery';
 import { useDeleteReportMutation } from '@src/hooks/mutations/useReportMutation';
+import { useFetchNotificationOptionQuery } from '@src/hooks/queries/useFetchNotificationQuery';
 
 interface PropsType {
   userId?: string;
@@ -18,15 +17,10 @@ interface PropsType {
 }
 
 export default function NotificationOptionListContainer({ userId, onPageChange, page }: PropsType) {
-  const { mutate } = useDeleteReportMutation();
-
-  const reportOptionListOptions = {
-    reqUrl: '/api/notification/reports?page=' + page,
-    method: Method.GET,
-  };
+  const { mutate } = useDeleteReportMutation(page);
 
   // 생성된 보고서 옵션 목록
-  const { data, isPending, isError } = useFetchQuery(reportOptionListOptions, 'reports', page);
+  const { data, isPending, isError } = useFetchNotificationOptionQuery(page);
 
   function onDeleteReportSubmit(postId: number) {
     mutate(postId);
@@ -47,7 +41,7 @@ export default function NotificationOptionListContainer({ userId, onPageChange, 
         ) : isPending ? (
           <ReportCardSkeleton />
         ) : userId ? (
-          <NotificationReportOptionList onDeleteReportSubmit={onDeleteReportSubmit} items={optionList} /> // 보고서 옵션 리스트
+          <NotificationReportOptionList onDeleteReportSubmit={onDeleteReportSubmit} optionList={optionList} /> // 보고서 옵션 리스트
         ) : (
           <CredentialMessage className="mt-4" />
         ) // 비회원 메시지

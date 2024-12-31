@@ -1,21 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-
 import Container from '../../ui/container/Container';
 import NotificationOptionFormContainer from './NotificationOptionFormContainer';
 import NotificationScheduleListContainer from './NotificationScheduleListContainer';
 import NotificationOptionListContainer from './NotificationOptionListContainer';
 import FlexBox from '../../ui/wrapper/FlexBox';
+import { usePageState } from '@src/store/notificationStore';
 
 interface PropsType {
   userId?: string;
   token: string;
 }
 
-const initialPage = 1;
 export default function NotificationPageContainer({ userId }: PropsType) {
-  const [page, setPage] = useState(initialPage);
+  const { page, setPage } = usePageState();
 
   // 페이지 변경
   function onPageChange(page: number) {

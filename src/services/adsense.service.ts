@@ -2,6 +2,7 @@ import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
 import { PrismaClient } from '@prisma/client';
 import { prisma } from '../../prisma/client';
+import { ReportOptionType, ReportRequest } from '@src/types/adsense.types';
 
 /** 애드센스 계정에 대한 알림을 표시 */
 export async function getAdsenseAlert(userId: string, token: string) {
@@ -41,7 +42,7 @@ async function getAdsenseAccountFromDb(userId: string) {
 }
 
 /** 데이터베이스에 저장된 애드센스 계정 정보 조회 */
-export async function hasAccountId(userId?: string) {
+export async function hasAccountId(userId?: string | null) {
   if (!userId) return false;
 
   try {
@@ -117,22 +118,6 @@ export async function getPayments(accountName: string | null | undefined, auth: 
   }
 }
 
-export type CustomDate = {
-  day?: number;
-  month?: number;
-  year: number;
-};
-
-export interface ReportRequest {
-  dateRange: 'CUSTOM';
-  dimensions: string[];
-  endDate: CustomDate;
-  metrics: string[];
-  reportingTimeZone: 'ACCOUNT_TIME_ZONE';
-  startDate: CustomDate;
-  currencyCode: string;
-}
-
 /**
  * 보고서 생성
  * @param accountName getAccountInfo 로 부터 반환받은 accountName
@@ -169,24 +154,6 @@ export async function generateReport(
     console.error('보고서 생성 실패:', error);
     throw new Error('보고서 생성에 실패했습니다.');
   }
-}
-
-export interface ReportOptionType {
-  reportName: string;
-  dateRange: 'CUSTOM';
-  dimensions: ['WEEK'] | ['MONTH'] | ['YEAR'];
-  startDate: { day: number; month: number; year: number };
-  endDate: { day: number; month: number; year: number };
-  metrics:
-    | ['CLICKS']
-    | ['COST_PER_CLICK']
-    | ['ESTIMATED_EARNINGS']
-    | ['CLICKS', 'COST_PER_CLICK']
-    | ['CLICKS', 'ESTIMATED_EARNINGS']
-    | ['COST_PER_CLICK', 'ESTIMATED_EARNINGS']
-    | ['CLICKS', 'COST_PER_CLICK', 'ESTIMATED_EARNINGS'];
-  reportingTimeZone: 'ACCOUNT_TIME_ZONE';
-  currencyCode: string;
 }
 
 /**

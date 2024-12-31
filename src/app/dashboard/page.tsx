@@ -1,11 +1,12 @@
 import QuickAccessContainer from '@src/comments/pages/home-page/QuickAccessContainer';
 import AlertCardContainer from '@src/comments/pages/home-page/AlertCardContainer';
 import Container from '@src/comments/ui/container/Container';
-import { auth } from '../../../lib/auth';
-import { hasAccountId } from '@src/services/adsense.service';
-import GuideToast from '@src/comments/ui/message/GuideToast';
+import GuideToast from '@src/comments/ui/toast/GuideToast';
+
 import { Session, User } from 'next-auth';
 import { DEFAULT_PROFILE_NAME } from '@src/constants/profile';
+import { auth } from '../../../lib/auth';
+import { hasAccountId } from '@src/services/adsense.service';
 
 export default async function Home() {
   const session = ((await auth()) as Session) || {

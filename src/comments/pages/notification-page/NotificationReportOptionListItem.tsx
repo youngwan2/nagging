@@ -5,23 +5,8 @@ import Container from '../../ui/container/Container';
 
 import { MdOutlineNotifications } from 'react-icons/md';
 import { type UserReportOptionList } from '@src/app/dashboard/notification-settings/_types/types';
-
-interface DateType {
-  day: number;
-  month: number;
-  year: number;
-}
-
-interface ReportFilter {
-  reportName: string;
-  dateRange: 'CUSTOM'; // 예시로 다른 날짜 범위도 추가
-  dimensions: 'DATE' | 'WEEK' | 'MONTH';
-  startDate: DateType;
-  endDate: DateType;
-  metrics: ('ESTIMATED_EARNINGS' | 'CLICKS' | 'COST_PER_CLICK')[];
-  reportingTimeZone: 'ACCOUNT_TIME_ZONE';
-  currencyCode: string;
-}
+import { type ReportFilter } from '@src/types/report.types';
+import { metrics } from '@src/constants/report';
 
 interface PropsType {
   item: UserReportOptionList;
@@ -88,14 +73,8 @@ export default function NotificationReportOptionListItem({ item, taskManagementB
               <span className="mx-1">-</span>
             ) : (
               report.metrics.map((metric, index) => (
-                <span key={index} className="mx-1">
-                  {metric === 'CLICKS'
-                    ? '광고 클릭 횟수 '
-                    : metric === 'COST_PER_CLICK'
-                      ? '클릭 당 수익 '
-                      : metric === 'ESTIMATED_EARNINGS'
-                        ? '추정 수익'
-                        : '조회항목 없음'}
+                <span key={index} className="m-1 ">
+                  {`${getMetricsText(metric)}`} <br />
                 </span>
               ))
             )}
@@ -140,4 +119,9 @@ function NotificationIcon() {
       <div className="absolute -top-1 -right-1 w-2 h-2 dark:bg-orange-300 bg-green-500 rounded-full animate-pulse"></div>
     </div>
   );
+}
+
+/** 지표 목록과 일치하는 타겟이 존재하면 해당 지표의 한글 텍스트를 반환한다. */
+function getMetricsText(targetMetricValue: string) {
+  return metrics.find((metric) => metric.value === targetMetricValue)?.text ?? '조회항목 없음';
 }

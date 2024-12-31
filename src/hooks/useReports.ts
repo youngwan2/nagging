@@ -1,5 +1,5 @@
 // 'use client';
-import { CustomDate, ReportRequest } from '@src/services/adsense.service';
+import { CustomDate, ReportRequest } from '@src/types/adsense.types';
 import { useReducer } from 'react';
 
 // 타입 정의

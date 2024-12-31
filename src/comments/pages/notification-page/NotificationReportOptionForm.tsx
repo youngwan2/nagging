@@ -9,19 +9,22 @@ import NotificationSelect from '@src/comments/pages/notification-page/Notificati
 import Select from '@src/comments/ui/select/Select';
 import Text from '@src/comments/ui/text/Text';
 import FlexBox from '../../ui/wrapper/FlexBox';
+import { metrics, timeUnitOptions } from '@src/constants/report';
 
 import { currencies } from '@src/constants/currencies';
 import { FormEvent } from 'react';
 import { useCreateReportMutation } from '@src/hooks/mutations/useReportMutation';
+import { usePageState } from '@src/store/notificationStore';
 
-const { currencyCode, days, metrics, month, timeUnitOptions, years, endYears } = createInitData();
+const { currencyCode, days, month, years, endYears } = createInitData();
 
 interface PropsType {
   userId?: string;
 }
 
 export default function NotificationReportOptionForm({ userId = '' }: PropsType) {
-  const { mutate, isPending } = useCreateReportMutation();
+  const page = usePageState().page;
+  const { mutate, isPending } = useCreateReportMutation(page);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -81,7 +84,7 @@ export default function NotificationReportOptionForm({ userId = '' }: PropsType)
           ※ 드래그를 통해 중복선택 가능(
           {'[Ctrl + Click] 을 통해 부분 선택 가능'})
         </Text>
-        <Select className="p-2 rounded-md mt-2 " multiple name="metrics" defaultValue={['ESTIMATED_EARNINGS']}>
+        <Select className="p-2 rounded-md mt-2 min-h-52 " multiple name="metrics" defaultValue={['ESTIMATED_EARNINGS']}>
           {metrics.map((metric) => (
             <SelectOption key={metric.text} text={metric.text} value={metric.value} />
           ))}
@@ -134,26 +137,11 @@ function createInitData() {
     endYears.push(i);
   }
 
-  const metrics = [
-    { text: '광고 클릭수', value: 'CLICKS' },
-    { text: '광고 클릭 당 수익', value: 'COST_PER_CLICK' },
-    { text: '추정 수익금', value: 'ESTIMATED_EARNINGS' },
-    { text: '페이지 뷰', value: 'PAGE_VIEWS' },
-  ];
-
-  const timeUnitOptions = [
-    { text: '주 단위', value: 'WEEK' },
-    { text: '월 단위', value: 'MONTH' },
-    { text: '일 단위', value: 'DATE' },
-  ];
-
   return {
     currencyCode,
     days,
     month,
     years,
     endYears,
-    metrics,
-    timeUnitOptions,
   };
 }

@@ -9,3 +9,8 @@ export interface AdsenseAuthState {
   hasUserAdsenseId: boolean;
   setHasUserAdsenseId: (newState: boolean) => void;
 }
+
+export interface PageState {
+  page: number;
+  setPage: (newPage: number) => void;
+}

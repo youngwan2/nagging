@@ -31,6 +31,9 @@ export default function CodeSelector({ code, handleChange }: { code: string; han
           <p className="text-sm text-gray-600 dark:text-gray-300">
             <strong>화폐명:</strong> {currencies[code]}
           </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            <strong>매매기준율(standard):</strong> 1365.89 (현재는 한국 기준으로 제한)
+          </p>
         </div>
       </div>
     </div>

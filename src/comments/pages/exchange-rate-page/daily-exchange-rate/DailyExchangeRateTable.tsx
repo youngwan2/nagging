@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 
+import ContentView from './ContentView';
 import Container from '../../../ui/container/Container';
 import Heading from '../../../ui/heading/Heading';
 import Text from '../../../ui/text/Text';
@@ -8,7 +9,6 @@ import ExchangeRateTableSkeleton from '../../../ui/skeleton/ExchangeRateTableSke
 import ErrorMessage from '../../../ui/message/ErrorMessage';
 
 import { useCurrencyDataState } from '@src/hooks/useCurrencyDataState';
-import ContentView from './ContentView';
 
 export default function DailyExchangeRateTable() {
   const { date, setDate, isError, isLoading, currencyPairs, selectedPair, setSelectedPair, selectedCurrencyPair } =

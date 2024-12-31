@@ -8,9 +8,12 @@ import { IoHomeOutline } from 'react-icons/io5';
 import { CiSettings } from 'react-icons/ci';
 import { GoGraph } from 'react-icons/go';
 import { RiFileListFill } from 'react-icons/ri';
+import { useEffect } from 'react';
+import { useAdsenseAuthState } from '@src/store/adsenseAuthStore';
 
-export default function Navigation() {
+export default function Navigation({ hasUser }: { hasUser: boolean }) {
   const { isOpen, isMobile } = useResize();
+  const { setHasUserAdsenseId } = useAdsenseAuthState();
 
   const navItems = [
     { href: '/dashboard', title: '홈 이동', icon: IoHomeOutline, label: '홈' },
@@ -35,6 +38,10 @@ export default function Navigation() {
   ];
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    setHasUserAdsenseId(hasUser);
+  }, []);
 
   // 모바일 레이아웃
   if (isMobile) {

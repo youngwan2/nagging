@@ -11,6 +11,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import type { Metadata, Viewport } from 'next';
 import Navigation from '@src/comments/ui/nav/Navigation';
+import { auth } from '../../lib/auth';
+import { Session } from 'next-auth';
+import { hasAccountId } from '@src/services/adsense.service';
 
 const pretendard = localFront({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -63,17 +66,21 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: '#FFFFFF',
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = (await auth()) as Session;
+  const userId = session?.userId || null;
+  const hasUser = await hasAccountId(userId);
+
   return (
     <html lang="kr" className={`dark ${pretendard.variable}`}>
       <body className={pretendard.className}>
         <Header />
         <div className="flex justify-between">
-          <Navigation />
+          <Navigation hasUser={hasUser} />
           <Toaster />
           <main className="md:px-24 md:w-full w-auto px-5 py-14 justify-start flex min-h-screen  flex-col items-center dark:bg-black transition-colors">
             <ReactQueryProvider>

@@ -3,6 +3,7 @@
 import { MouseEventHandler } from 'react';
 
 interface PropsType {
+  ariaLabel?: string;
   className: string;
   children: React.ReactNode;
   title?: string;
@@ -11,9 +12,10 @@ interface PropsType {
   onClick?: MouseEventHandler<HTMLButtonElement> | ((state: any) => void);
 }
 
-export default function Button({ className, title, type, children, disabled, onClick }: PropsType) {
+export default function Button({ ariaLabel, className, title, type, children, disabled, onClick }: PropsType) {
   return (
     <button
+      aria-label={ariaLabel}
       disabled={disabled}
       className={'dark:text-white  text-black ' + className}
       title={title}

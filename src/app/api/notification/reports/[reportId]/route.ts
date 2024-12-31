@@ -9,7 +9,6 @@ export async function DELETE(_: NextRequest, { params }: { params: Promise<{ rep
     const userId = (await auth())?.userId;
 
     if (!userId) return NextResponse.json({ message: '접근 권한이 없습니다.', status: 401 });
-
     await prisma.notificationReports.delete({
       where: {
         reportId,

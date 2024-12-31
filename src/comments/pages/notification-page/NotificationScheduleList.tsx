@@ -4,8 +4,9 @@ import NotificationScheduleButtonContainer from './NotificationScheduleButtonCon
 import List from '../../ui/list/List';
 import ListItem from '../../ui/item/ListItem';
 
-import type { ReportOptionType } from '@src/services/adsense.service';
 import getIcons from '@src/utils/iconUtils';
+import type { ReportOptionType } from '@src/types/adsense.types';
+import type { ScheduleList } from '@src/types/schedule.types';
 
 interface PropsType {
   items: ScheduleList;
@@ -57,7 +58,7 @@ export default function NotificationScheduleList({ items }: PropsType) {
   );
 }
 
-function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
   return (
     <div className="flex items-center text-gray-700 dark:text-gray-300">
       <span className="mr-2">{icon}</span>
@@ -70,25 +71,4 @@ function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string;
 /** JSON 데이터를 자바스크립트 객체로 변환 */
 function stringParser(json: string): ReportOptionType {
   return JSON.parse(json);
-}
-
-// 타입
-
-interface ScheduleList {
-  nextScheduleInfo: {
-    [userId: string]: {
-      reportId: string;
-      nextScheduleInfo: {
-        nextReminder: string;
-        subsequentReminder: string;
-      };
-    };
-  };
-  scheduleList: Array<{
-    createdAt: string;
-    notificationReports: {
-      reportId: string;
-      report: string;
-    };
-  }>;
 }

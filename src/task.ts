@@ -1,13 +1,9 @@
 import cron from 'node-cron';
 import { sendMail } from '@src/nodemailer';
 // import { tokenRefresh } from './services/google.service';
-import {
-  ReportOptionType,
-  generateCsvReport,
-  getAbsenseAccountIdWithUserId,
-  getCredentials,
-} from './services/adsense.service';
+import { generateCsvReport, getAbsenseAccountIdWithUserId, getCredentials } from './services/adsense.service';
 import { prisma } from '../prisma/client';
+import { ReportOptionType } from './types/adsense.types';
 
 /** 작업 동기화(서버 재시작 시 기존 크론 동기화) */
 // export async function syncTask() {

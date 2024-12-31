@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { currencies } from '@src/constants/currencies';
 import { mappingPair, selectPair } from '@src/utils/currencyUtils';
 import { useFetchCurrencyQuery } from './queries/useFetchCurrencyQuery';
+import { getCurrentDateOrLatest } from '@src/utils/dateUtils';
 
 const currencyCodes = Object.keys(currencies);
 
 export const useCurrencyDataState = () => {
-  const { data, isError, isLoading } = useFetchCurrencyQuery();
+  const { data, isError, isLoading } = useFetchCurrencyQuery(getCurrentDateOrLatest());
 
   const initialPair = selectPair(data, currencyCodes) as [string, string][];
   const currencyPairs = mappingPair(initialPair, data?.date || '');

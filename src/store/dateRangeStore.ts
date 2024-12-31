@@ -1,4 +1,4 @@
-import { ReportRequest } from '@src/services/adsense.service';
+import { ReportRequest } from '@src/types/adsense.types';
 import { createStore } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 

@@ -5,12 +5,12 @@ import EmptyMessage from '../../ui/message/EmptyMessage';
 import { type UserReportOptionList } from '@src/app/dashboard/notification-settings/_types/types';
 
 interface PropsType {
-  items: UserReportOptionList[];
+  optionList: UserReportOptionList[];
   onDeleteReportSubmit: (postId: number) => void;
 }
 
-export default function NotificationReportOptionList({ items, onDeleteReportSubmit }: PropsType) {
-  if (items.length < 1)
+export default function NotificationReportOptionList({ optionList, onDeleteReportSubmit }: PropsType) {
+  if (optionList.length < 1)
     return (
       <EmptyMessage
         className="mt-4"
@@ -20,7 +20,7 @@ export default function NotificationReportOptionList({ items, onDeleteReportSubm
     );
   return (
     <List>
-      {items.map((item) => (
+      {optionList.map((item) => (
         <NotificationReportOptionListItem
           key={item.reportId}
           item={item}

@@ -1,11 +1,4 @@
-export interface NotificationReport {
-  reportId: number;
-  userId: string;
-  report: string;
-  createdAt: Date;
-  updatedAt: Date;
-  task: boolean;
-}
+import { NotificationReport } from './report.types';
 
 export interface NotificationSchedule {
   notificationReports: NotificationReport;
@@ -25,4 +18,25 @@ export interface UserSchedule {
 
 export interface NextSchedule {
   [userId: string]: UserSchedule;
+}
+
+interface Schedule {
+  notificationReports: NotificationReport;
+  createdAt: string;
+  cronExpression: string;
+}
+
+interface NextScheduleInfo {
+  nextReminder: string;
+  subsequentReminder: string;
+}
+
+interface UserNextScheduleInfo {
+  reportId: number;
+  nextScheduleInfo: NextScheduleInfo;
+}
+
+export interface ScheduleList {
+  scheduleList: Schedule[];
+  nextScheduleInfo: { [key: string]: UserNextScheduleInfo };
 }

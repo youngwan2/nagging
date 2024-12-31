@@ -1,3 +1,11 @@
+export function getCurrentDateOrLatest() {
+  const now = new Date();
+  const cutoffTime = new Date();
+  cutoffTime.setHours(10, 30, 0, 0); // 오전 10시 30분 설정
+
+  return now >= cutoffTime ? formatDate(now) : 'latest';
+}
+
 /** 날짜 포맷을 변경 */
 export function formatDate(date: Date) {
   let year = date.getFullYear();
@@ -24,7 +32,7 @@ enum DateRange {
 
 // 날짜 값들을 객체로 저장
 export const dateRanges = {
-  [DateRange.CURRENT]: formatDate(new Date()),
+  [DateRange.CURRENT]: getCurrentDateOrLatest(),
   [DateRange.THREE_MONTHS_AGO]: formatDate(getDateMonthsAgo(3)),
   [DateRange.SIX_MONTHS_AGO]: formatDate(getDateMonthsAgo(6)),
   [DateRange.NINE_MONTHS_AGO]: formatDate(getDateMonthsAgo(9)),

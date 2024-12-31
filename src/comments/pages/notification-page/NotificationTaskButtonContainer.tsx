@@ -20,7 +20,10 @@ interface PropsType {
 
 export default function NotificationTaskButtonContainer({ reportId, onDeleteReportSubmit }: PropsType) {
   const { mutate: immediateMutate, isPending } = useImmediateNotificationMutation();
-  const { mutate: createMutate, isPending: isCreateNotificationPending } = useCreateNotificationMutation();
+  const { mutate: createMutate, isPending: notificationCreateIsPending } = useCreateNotificationMutation();
+  function onCreateNotificationSchedule(reportId: number, expression: string) {
+    createMutate({ reportId, expression });
+  }
 
   const { hasUserAdsenseId } = useAdsenseAuthState();
 
@@ -44,7 +47,7 @@ export default function NotificationTaskButtonContainer({ reportId, onDeleteRepo
   async function handleCreateTaskNotification(expression: string) {
     if (!hasUserAdsenseId)
       return toast('알림 서비스는 우측 상단의 사용자 아이콘 우측의 [AD조회] 후 이용이 가능합니다.');
-    createMutate({ reportId, expression });
+    onCreateNotificationSchedule(reportId, expression);
   }
 
   return (
@@ -53,7 +56,7 @@ export default function NotificationTaskButtonContainer({ reportId, onDeleteRepo
         <ButtonGroup
           options={cronOptions}
           onClick={handleCreateTaskNotification}
-          isPending={isCreateNotificationPending}
+          isPending={notificationCreateIsPending}
         />
       </SettingsContainer>
 
@@ -109,12 +112,13 @@ function ButtonGroup({
     <FlexBox className="flex items-center">
       {options.map((option) => (
         <Button
+          disabled={isPending}
           key={option.expression}
           onClick={() => onClick(option.expression)}
           title={option.title}
-          className="border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)]"
+          className={`border mx-1 hover:bg-slate-200 rounded-md p-1 dark:hover:bg-[rgba(255,255,255,0.2)] ${isPending ? 'cursor-not-allowed' : ''}`}
         >
-          {isPending ? '처리중' : option.label}
+          {isPending ? '등록중' : option.label}
         </Button>
       ))}
     </FlexBox>

@@ -14,8 +14,8 @@ export default function ContentView({
   return (
     <>
       <Text elementName="p">
-        1일 간격으로 업데이트되는 {currencyPairs.length}개국의 환율 정보를 확인할 수 있습니다. 환율은 제공되는 은행,
-        기준 시간에 따라서 약간의 차이가 발생할 수 있으므로 참고 바랍니다.
+        - 1일 간격으로 업데이트되는 {currencyPairs.length}개국의 환율 정보를 확인할 수 있습니다. <br />- API 시차로 인해
+        매일 오전 10:30 기준으로 금일 환율을 확인할 수 있습니다.
       </Text>
       <Text elementName="p" className=" text-muted-foreground text-[14px] text-end py-3">
         {date}

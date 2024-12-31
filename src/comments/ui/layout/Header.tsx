@@ -22,6 +22,7 @@ export default async function Header() {
     <header className="justify-between mx-auto w-full h-[50px] flex items-center border-b-[1px] dark:bg-[#212125] bg-[#fbfbfb] dark:border-gray-700 transition-colors  ">
       <FlexBox className="items-center justify-between max-w-[250px] w-full">
         <Heading level="1" className="dark:text-[white] px-[5px] text-[1.05rem]">
+          {/* 사이트 로고 */}
           <Link href="/dashboard" className="w-[100px] flex items-center  p-[3px] mx-4">
             <Image
               width={26}
@@ -36,6 +37,7 @@ export default async function Header() {
             </Text>
           </Link>
         </Heading>
+        {/* 테마 토글 */}
         <DarkMode />
       </FlexBox>
 

@@ -3,6 +3,7 @@ import { prisma } from '../../../../../prisma/client';
 import { auth } from '../../../../../lib/auth';
 import { Session } from 'next-auth';
 import { mappingNextScheduleInfo } from '@src/utils/scheduleUtils';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
   try {
@@ -64,7 +65,7 @@ export async function DELETE() {
         task: false,
       },
     });
-
+    revalidatePath('/dashboard/notification-settings');
     return NextResponse.json({ message: '성공적으로 취소되었습니다.', status: 204 });
   } catch (error) {
     console.error('notification/schedules/route.ts', error);
